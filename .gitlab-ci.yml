@@ -1,0 +1,48 @@
+variables:
+  NODE_VERSION: "10"
+  PHP_VERSION: "7.4"
+
+cache: {}
+
+stages:
+  - cs
+  - test
+  - release
+
+js-cs:
+  image: registry.gitlab.com/dedi-agency/interne/docker-images/node:${NODE_VERSION}
+  stage: cs
+  script:
+    - make front-test-cs ENV=ci
+  except:
+    - tags
+
+php-cs:
+  image: registry.gitlab.com/dedi-agency/interne/docker-images/php-fpm:${PHP_VERSION}
+  stage: cs
+  script:
+    - sudo sed -i "s/memory_limit = .*/memory_limit = 4G/" /etc/php7/php.ini
+    - make back-test-cs ENV=ci
+  except:
+    - tags
+
+php-test-spec:
+  image: registry.gitlab.com/dedi-agency/interne/docker-images/php-fpm:${PHP_VERSION}
+  stage: test
+  script:
+    - sudo sed -i "s/memory_limit = .*/memory_limit = 4G/" /etc/php7/php.ini
+    - make test-spec ENV=ci
+  except:
+    - tags
+
+semantic_release:
+  stage: release
+  image: node:10
+  variables:
+    GITLAB_TOKEN: $ACCESS_TOKEN
+  script:
+    - npm install @semantic-release/{git,commit-analyzer,release-notes-generator,changelog,gitlab,gitlab-config}
+    - npx semantic-release -e @semantic-release/gitlab-config
+  only:
+    refs:
+      - master
