@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Event;
-
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
@@ -42,7 +42,7 @@ class DynamicRelationWithReferenceableContentSubscriber implements EventSubscrib
             'joinTable' => [
                 'name' => strtolower($namingStrategy->classToTableName($metadata->getName())) . '_referenceable_content_id',
                 'referencedColumnName' => $namingStrategy->referenceColumnName(),
-            ]
+            ],
         ]);
     }
 }

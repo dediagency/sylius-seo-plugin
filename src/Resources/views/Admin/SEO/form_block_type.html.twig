@@ -1,5 +1,123 @@
 {% block dedi_sylius_seo_plugin_content_seo_widget %}
-    {% from '@SyliusAdmin/Macro/translationForm.html.twig' import translationForm %}
+    {% import '@SyliusUi/Macro/flags.html.twig' as flags %}
 
-    {{ translationForm(form.translations) }}
+    {% if form.parent.vars.value.referenceableContent is defined %}
+        {% set resource = form.parent.vars.value %}
+    {% else %}
+        {% set resource = value %}
+    {% endif %}
+
+    <div class="ui two column stackable grid">
+        <div class="column">
+            <div class="ui message info">
+                <i class="close icon"></i>
+                <div class="header">{{ 'dedi_sylius_seo_plugin.ui.info_title'|trans }}</div>
+                <p>{{ 'dedi_sylius_seo_plugin.ui.info_description'|trans }}</p>
+            </div>
+
+            <div class="ui accordion" id="seo-advanced-button">
+                <div class="title"><i class="dropdown icon"></i> {{ 'dedi_sylius_seo_plugin.ui.advanced_options'|trans }}</div>
+            </div>
+
+            <div class="ui styled fluid accordion" id="seo-advanced-panel">
+                {% for locale, translationForm in form.translations %}
+                    <div data-locale="{{ locale }}">
+                        <div class="title{% if 0 == loop.index0 %} active{% endif %}">
+                            <i class="dropdown icon"></i>
+                            {{ flags.fromLocaleCode(locale) }} {{ locale|sylius_locale_name }}
+                        </div>
+
+                        <div class="ui content seo-advanced-panel-content {% if 0 == loop.index0 %} active{% endif %}">
+                            {{ form_row(translationForm.notIndexable) }}
+                            {{ form_row(translationForm.metadataTitle, { 'attr': { 'data-form-title': '' }}) }}
+                            {{ form_row(translationForm.metadataDescription, { 'attr': { 'data-form-description': '' }}) }}
+
+                            <h4 class="ui header">
+                                OpenGraph
+                                <small>
+                                    <a target="_blank" href="https://ogp.me/">{{ 'dedi_sylius_seo_plugin.ui.open_graph_info'|trans }}</a>
+                                </small>
+                            </h4>
+
+                            <div class="ui clear divider"></div>
+
+                            {{ form_row(translationForm.openGraphMetadataTitle, { 'attr': { 'data-form-og-title': '' }}) }}
+                            {{ form_row(translationForm.openGraphMetadataDescription, { 'attr': { 'data-form-og-description': '' }}) }}
+                            {{ form_row(translationForm.openGraphMetadataImage, { 'attr': { 'data-form-og-image': '' }}) }}
+                            {{ form_row(translationForm.openGraphMetadataType) }}
+                        </div>
+
+                        {% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
+                        <div class="preview-default-data" style="display: none;">
+                            <span class="title">{{ resource.metadataTitle }}</span>
+                            <span class="description">{{ resource.metadataDescription }}</span>
+                            <span class="og-title">{{ resource.openGraphMetadataTitle }}</span>
+                            <span class="og-description">{{ resource.openGraphMetadataDescription }}</span>
+                            <span class="og-image">{{ resource.openGraphMetadataImage }}</span>
+                            <span class="og-url">{{ resource.openGraphMetadataUrl|default(sylius.channel.hostname) }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="previews-column" class="column">
+            <div class="ui sticky">
+                <h4 class="ui header">Google</h4>
+
+                <div id="google-preview" class="google-preview preview-container">
+                    <header class="preview-header">
+                        <aside class="preview-url">
+                            {{ sylius.channel.hostname }} <i class="caret down icon"></i>
+                        </aside>
+                        <h3 class="preview-title"></h3>
+                    </header>
+
+                    <div class="preview-content">
+                        <p class="preview-description"></p>
+                    </div>
+                </div>
+
+                <h4 class="ui header">Twitter</h4>
+
+                <div id="twitter-preview" class="twitter-preview preview-container">
+                    <div class="preview-left">
+                        <img class="preview-image" src="">
+                    </div>
+
+                    <div class="preview-right">
+                        <header class="preview-header">
+                            <h3 class="preview-title"></h3>
+                        </header>
+
+                        <div class="preview-content">
+                            <p class="preview-description"></p>
+                            <aside class="preview-url"></aside>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="ui header">Facebook</h4>
+
+                <div id="facebook-preview" class="twitter-preview preview-container">
+                    <div class="preview-left">
+                        <img class="preview-image" src="">
+                    </div>
+
+                    <div class="preview-right">
+                        <header class="preview-header">
+                            <aside class="preview-url"></aside>
+                            <h3 class="preview-title"></h3>
+                        </header>
+
+                        <div class="preview-content">
+                            <p class="preview-description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('bundles/dedisyliusseoplugin/js/seo-content-form.js') }}"></script>
 {% endblock %}

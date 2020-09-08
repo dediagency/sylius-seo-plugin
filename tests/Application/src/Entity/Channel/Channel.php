@@ -23,7 +23,7 @@ class Channel extends BaseChannel implements ReferenceableInterface
 
     public function getMetadataTitle(): ?string
     {
-        if (is_null($this->getReferenceableContent()->getMetadataTitle())) {
+        if (null === $this->getReferenceableContent()->getMetadataTitle()) {
             return $this->getName();
         }
 
@@ -32,7 +32,7 @@ class Channel extends BaseChannel implements ReferenceableInterface
 
     public function getMetadataDescription(): ?string
     {
-        if (is_null($this->getReferenceableContent()->getMetadataDescription())) {
+        if (null === $this->getReferenceableContent()->getMetadataDescription()) {
             return $this->getDescription();
         }
 

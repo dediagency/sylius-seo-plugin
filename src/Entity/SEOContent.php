@@ -131,6 +131,6 @@ class SEOContent implements SEOContentInterface
 
     protected function createTranslation(): SEOContentTranslation
     {
-        return new SEOContentTranslation;
+        return new SEOContentTranslation();
     }
 }

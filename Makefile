@@ -13,11 +13,11 @@ DOCKER_UP_OPTIONS = --remove-orphans -d
 DOCKER_CMD = docker-compose
 SUB_MAKE := $(shell which make)
 DOCKER_COMPOSE_RUN = $(DOCKER_CMD) run --rm
-NPM_CMD = $(DOCKER_CMD) run node npm
+NPM_CMD = $(DOCKER_CMD) run --rm node npm
 PHP_CMD = $(DOCKER_CMD) exec $(DOCKER_OPTIONS) php
-PHP_CLI_CMD = $(DOCKER_CMD) run php-cli
+PHP_CLI_CMD = $(DOCKER_CMD) run --rm php-cli
 CONSOLE_CMD = $(PHP_CMD) bin/console
-BUILD_CMD = $(NPM_CMD) run build
+BUILD_CMD = $(NPM_CMD) run --rm build
 COMPOSER_CMD = $(DOCKER_COMPOSE_RUN) composer composer
 COMPOSER_CMD_INSTALL = $(COMPOSER_CMD) install
 
