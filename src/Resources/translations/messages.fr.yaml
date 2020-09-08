@@ -1,0 +1,13 @@
+dedi_sylius_seo_plugin:
+    ui:
+        seo: SEO
+    form:
+        not_indexable: Ne pas rendre indexable le contenu
+        metadata_title: Métadonnée titre
+        metadata_description: Métadonnée description
+
+        og_metadata_title: Métadonnée OpenGraph titre
+        og_metadata_description: Métadonnée OpenGraph description
+        og_metadata_url: Métadonnée OpenGraph URL du contenu
+        og_metadata_image: Métadonnée OpenGraph image
+        og_metadata_type: Métadonnée OpenGraph type

@@ -1,0 +1,13 @@
+dedi_sylius_seo_plugin:
+    ui:
+        seo: SEO
+    form:
+        not_indexable: Content not indexable
+        metadata_title: Metadata title
+        metadata_description: Metadata description
+
+        og_metadata_title: OpenGraph metadata title
+        og_metadata_description: OpenGraph metadata description
+        og_metadata_url: OpenGraph metadata description
+        og_metadata_image: OpenGraph metadata image
+        og_metadata_type: OpenGraph metadata type

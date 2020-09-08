@@ -1,0 +1,8 @@
+sylius_ui:
+    events:
+        dedi_sylius_seo_plugin.metatags:
+            blocks:
+                dedi_seo_metatags: DediSyliusSEOPlugin:Shop/Header:_metatags.html.twig
+        dedi_sylius_seo_plugin.title:
+            blocks:
+                dedi_seo_title: DediSyliusSEOPlugin:Shop/Header:_title.html.twig
