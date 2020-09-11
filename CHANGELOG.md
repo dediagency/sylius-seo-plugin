@@ -1,3 +1,10 @@
+## [0.1.1](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.1.0...v0.1.1) (2020-09-11)
+
+
+### Bug Fixes
+
+* Correction nom composer du plugin | :bug: :wrench: ([752d4cf](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/752d4cf0a831368081f2c7c1d8ff84498fe648ef))
+
 # [0.1.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.0.0...v0.1.0) (2020-09-11)
 
 
