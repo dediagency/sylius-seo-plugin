@@ -14,7 +14,7 @@ use Sylius\Component\Core\Model\Taxon as BaseTaxon;
  */
 class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 {
-    public function getRichSnippetType(): string
+    public function getRichSnippetSubjectType(): string
     {
         return 'taxon';
     }

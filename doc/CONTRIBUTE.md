@@ -68,3 +68,5 @@ After installation and with docker containers running, go to http://0.0.0.0:9000
 ### Contribution
     
 Learn more about our contribution workflow on http://docs.sylius.org/en/latest/contributing/.
+
+- [Learn how to create new RichSnippets](doc/RICH_SNIPPETS.md)

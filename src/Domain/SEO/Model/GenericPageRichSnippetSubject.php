@@ -24,7 +24,7 @@ class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
         return null;
     }
 
-    public function getRichSnippetType(): string
+    public function getRichSnippetSubjectType(): string
     {
         return $this->type;
     }

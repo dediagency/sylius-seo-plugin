@@ -27,6 +27,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
     {
         if (null === $this->getReferenceableContent()->getMetadataTitle()) {
             $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
+
             return $this->getMainTaxon()->getName() . ' | ' . $this->getName();
         }
 
@@ -37,6 +38,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
     {
         if (null === $this->getReferenceableContent()->getMetadataDescription()) {
             $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
+
             return $this->getShortDescription();
         }
 
@@ -65,7 +67,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return $this->getMainTaxon();
     }
 
-    public function getRichSnippetType(): string
+    public function getRichSnippetSubjectType(): string
     {
         return 'product';
     }

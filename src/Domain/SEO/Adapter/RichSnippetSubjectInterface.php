@@ -11,7 +11,7 @@ interface RichSnippetSubjectInterface
      */
     public function getId();
 
-    public function getRichSnippetType(): string;
+    public function getRichSnippetSubjectType(): string;
 
     /**
      * @return string

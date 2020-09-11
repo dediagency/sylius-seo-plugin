@@ -17,6 +17,13 @@ final class RichSnippetSubjectUrlFactory implements RichSnippetSubjectUrlFactory
         $this->urlGenerators = iterator_to_array($urlGenerators);
     }
 
+    /**
+     * Iterates over SubjectUrlGeneratorInterface[] in order to generate the url to a given subject.
+     *
+     * @param RichSnippetSubjectInterface $subject
+     *
+     * @return string
+     */
     public function buildUrl(RichSnippetSubjectInterface $subject): string
     {
         foreach ($this->urlGenerators as $generator) {

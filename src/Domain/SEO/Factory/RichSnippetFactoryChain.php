@@ -16,6 +16,16 @@ final class RichSnippetFactoryChain
         $this->factories = iterator_to_array($factories);
     }
 
+    /**
+     * Iterates over RichSnippetFactoryInterface[] in order to find a factory for the given $type and $subject
+     *
+     * @param string $type
+     * @param RichSnippetSubjectInterface $subject
+     *
+     * @return RichSnippetFactoryInterface|mixed
+     *
+     * @throws RichSnippetFactoryNotFoundException
+     */
     public function getRichSnippetFactory(string $type, RichSnippetSubjectInterface $subject)
     {
         foreach ($this->factories as $factory) {

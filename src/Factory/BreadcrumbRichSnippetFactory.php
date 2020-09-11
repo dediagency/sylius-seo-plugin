@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Factory;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\BreadcrumbRichSnippet;
@@ -45,7 +45,7 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
     private function build(
         RichSnippetSubjectInterface $subject,
         BreadcrumbRichSnippet $richSnippet,
-        bool $isLead = false
+        bool $isLeaf = false
     ): BreadcrumbRichSnippet {
         if ($parent = $subject->getParent()) {
             $this->build($parent, $richSnippet);
@@ -55,7 +55,7 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
 
         $richSnippet->addElement(
             $subject->getName(),
-            $isLead ? null : $this->richSnippetSubjectUrlFactory->buildUrl($subject)
+            $isLeaf ? null : $this->richSnippetSubjectUrlFactory->buildUrl($subject)
         );
 
         return $richSnippet;
