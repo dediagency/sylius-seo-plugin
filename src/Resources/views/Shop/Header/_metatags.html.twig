@@ -1,0 +1,37 @@
+{% set locale = sylius.localeCode|default(sylius_base_locale) %}
+{% if resource is defined and resource.referenceableContent is defined and resource.referenceableContent is not null %}
+    {% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
+    {% set seo = resource %}
+{% endif %}
+
+{% if sylius.channel.referenceableContent is defined and sylius.channel.referenceableContent is not null %}
+    {% set donothing = sylius.channel.referenceableContent.setCurrentLocale(locale) %}
+    {% set baseSeo = sylius.channel %}
+{% endif %}
+
+{% if seo is defined %}
+    {% if seo.notIndexable %}
+        <meta name="robots" content="noindex">
+    {% endif %}
+
+    {% if seo.openGraphMetadataTitle or seo.metadataTitle %}
+        <meta property="og:title" content="{{ seo.openGraphMetadataTitle|default(seo.metadataTitle) }}" />
+    {% elseif baseSeo is defined and (baseSeo.openGraphMetadataTitle or baseSeo.metadataTitle) %}
+        <meta property="og:title" content="{{ baseSeo.openGraphMetadataTitle|default(seo.metadataTitle) }}" />
+    {% endif %}
+
+    {% if seo.openGraphMetadataDescription or seo.metadataDescription %}
+        <meta property="og:description" content="{{ seo.openGraphMetadataDescription|default(seo.metadataDescription) }}" />
+        <meta name="description" content="{{ seo.metadataDescription|default(seo.openGraphMetadataDescription) }}" />
+    {% elseif baseSeo is defined and (baseSeo.openGraphMetadataDescription or baseSeo.metadataDescription) %}
+        <meta property="og:description" content="{{ baseSeo.openGraphMetadataDescription|default(baseSeo.metadataDescription) }}" />
+        <meta name="description" content="{{ baseSeo.metadataDescription|default(baseSeo.openGraphMetadataDescription) }}" />
+    {% endif %}
+
+    {% if seo.openGraphMetadataImage %}
+        <meta property="og:image" content="{{ seo.openGraphMetadataImage }}" />
+    {% endif %}
+
+    <meta property="og:type" content="{{ seo.openGraphMetadataType|default('website') }}" />
+    <meta property="og:url" content="{{ seo.openGraphMetadataUrl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
+{% endif %}

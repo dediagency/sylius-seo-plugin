@@ -1,0 +1,17 @@
+dedi_sylius_seo_plugin:
+    ui:
+        seo: SEO
+        open_graph_info: Plus d'information sur OpenGraph
+        advanced_options: Options avancées
+        info_title: Comment fonctionne le réferencement de mon contenu ?
+        info_description: Une partie du contenu est généré automatiquement à partir des informations précédement renseignées. En cliquant sur "Options avancées", vous pouvez modifier toutes les métadonnées.
+    form:
+        not_indexable: Ne pas rendre indexable le contenu
+        metadata_title: Métadonnée titre
+        metadata_description: Métadonnée description
+
+        og_metadata_title: Métadonnée OpenGraph titre
+        og_metadata_description: Métadonnée OpenGraph description
+        og_metadata_url: Métadonnée OpenGraph URL du contenu
+        og_metadata_image: Métadonnée OpenGraph image
+        og_metadata_type: Métadonnée OpenGraph type

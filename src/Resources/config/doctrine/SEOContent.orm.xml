@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Dedi\SyliusSEOPlugin\Entity\SEOContent" table="dedi_sylius_seo_content">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+    </mapped-superclass>
+</doctrine-mapping>
