@@ -1,5 +1,5 @@
 {
-    "name": "dedi/plugin-seo-plugin",
+    "name": "dedi/sylius-seo-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin"],
     "description": "Sylius SEO plugin by Dedi.",
