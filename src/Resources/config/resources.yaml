@@ -1,0 +1,2 @@
+imports:
+    - { resource: "resources/content_seo.yaml" }

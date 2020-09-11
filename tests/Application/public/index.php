@@ -1,10 +1,12 @@
 <?php
 
-use Tests\Dedi\SyliusSEOPlugin\Application\Kernel;
+declare(strict_types=1);
+
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
+use Tests\Dedi\SyliusSEOPlugin\Application\Kernel;
 
-require dirname(__DIR__).'/config/bootstrap.php';
+require dirname(__DIR__) . '/config/bootstrap.php';
 
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);

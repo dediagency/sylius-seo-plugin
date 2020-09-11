@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/form.xml"/>
+    </imports>
+
     <services>
-        <!-- Put your services here -->
+        <service id="dedi_sylius_seo_plugin.subscriber.dynamic_relation_with_content_seo" class="Dedi\SyliusSEOPlugin\Event\DynamicRelationWithReferenceableContentSubscriber">
+            <tag name="doctrine.event_subscriber"/>
+        </service>
     </services>
 </container>

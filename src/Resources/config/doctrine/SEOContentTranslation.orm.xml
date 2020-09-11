@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Dedi\SyliusSEOPlugin\Entity\SEOContentTranslation" table="dedi_sylius_seo_content_translation">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="notIndexable" column="seo_not_indexable" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+
+        <field name="metadataTitle" column="seo_metadata_title" nullable="true"/>
+        <field name="metadataDescription" column="seo_metadata_description" nullable="true"/>
+
+        <field name="openGraphMetadataTitle" column="seo_og_metadata_title" nullable="true"/>
+        <field name="openGraphMetadataDescription" column="seo_og_metadata_description" nullable="true"/>
+        <field name="openGraphMetadataUrl" column="seo_og_metadata_url" nullable="true"/>
+        <field name="openGraphMetadataImage" column="seo_og_metadata_image" nullable="true"/>
+        <field name="openGraphMetadataType" column="seo_og_metadata_type" nullable="true"/>
+    </mapped-superclass>
+</doctrine-mapping>

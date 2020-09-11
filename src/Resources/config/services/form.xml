@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.form.type.seo_content" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentType">
+            <argument key="$dataClass">%dedi_sylius_seo_plugin.model.seo_content.class%</argument>
+
+            <argument key="$validationGroups" type="collection">
+                <argument>default</argument>
+                <argument>sylius</argument>
+            </argument>
+
+            <tag name="form.type"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.form.type.seo_content_translation" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentTranslationType">
+            <argument key="$dataClass">%dedi_sylius_seo_plugin.model.seo_content_translation.class%</argument>
+
+            <argument key="$validationGroups" type="collection">
+                <argument>default</argument>
+                <argument>sylius</argument>
+            </argument>
+
+            <tag name="form.type"/>
+        </service>
+    </services>
+</container>
