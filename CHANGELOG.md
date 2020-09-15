@@ -1,3 +1,10 @@
+## [0.1.2](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.1.1...v0.1.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* Correction du script | :bug: ([8e74c77](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/8e74c778bd7f7a3ed09dd0a0b6d6950c2788a295))
+
 ## [0.1.1](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.1.0...v0.1.1) (2020-09-11)
 
 
