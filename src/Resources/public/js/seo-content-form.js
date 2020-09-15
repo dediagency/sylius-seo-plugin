@@ -88,7 +88,7 @@ const updatePreviewWidgets = function(form) {
  * @param {number} max
  */
 const setCounter = function(el, count, max) {
-    let counterContainer = parent.querySelector('.counter');
+    let counterContainer = el.querySelector('.counter');
     if (!counterContainer) {
         counterContainer = document.createElement('div');
         counterContainer.className = 'counter';
