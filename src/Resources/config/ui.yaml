@@ -6,3 +6,6 @@ sylius_ui:
         dedi_sylius_seo_plugin.title:
             blocks:
                 dedi_seo_title: DediSyliusSEOPlugin:Shop/Header:_title.html.twig
+        dedi_sylius_seo_plugin.rich_snippets:
+            blocks:
+                dedi_seo_metatags: DediSyliusSEOPlugin:Shop/Header:_richSnippets.html.twig

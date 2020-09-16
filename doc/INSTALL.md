@@ -105,6 +105,63 @@ For example into layout template with Product's referenceable content
 </head>
 ```
 
+### 5 Add the Rich Snippets configuration
+
+Make your `Product` and `Taxon` clases implement the `RichSnippetSubjectInterface` interface.
+
+```php
+class Product extends BaseProduct implements RichSnippetSubjectInterface
+{
+    // ...
+    public function getParent()
+    {
+        return $this->getMainTaxon();
+    }
+
+    public function getRichSnippetType(): string
+    {
+        return 'product';
+    }
+
+}
+```
+
+```php
+class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
+{
+    // ...
+    public function getRichSnippetType(): string
+    {
+        return 'taxon';
+    }
+}
+```
+
+### 5 Call Rich Snippets header events
+
+This can be added your main layout
+
+```twig
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    {% block metatags %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
+    {% endblock %}
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+```
+
+### Bonus - Learn how to create new RichSnippet / RichSnippetSubject
+
+- [Learn how to create new RichSnippets](doc/RICH_SNIPPETS.md)
+
+
 ### Bonus - Set default values for SEO informations
 
 To set default values for all SEO metadata, override `ReferenceableTrait` methods like this :
