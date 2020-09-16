@@ -1,3 +1,11 @@
+# [0.2.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.1.2...v0.2.0) (2020-09-16)
+
+
+### Features
+
+* **rich-snippets:** Ajout d'une doc ([6cd0e7d](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/6cd0e7d8ed3e9e1dc2abc01c93b09ca4c068fdf1))
+* **rich-snippets:** Ajout des rich snippet breadcrumb ([052b24d](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/052b24d047d24fea0fdd366601e03b6118b17476))
+
 ## [0.1.2](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.1.1...v0.1.2) (2020-09-15)
 
 
