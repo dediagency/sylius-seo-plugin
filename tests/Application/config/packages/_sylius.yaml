@@ -19,6 +19,12 @@ sylius_product:
             classes:
                 model: Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product\Product
 
+sylius_taxonomy:
+    resources:
+        taxon:
+            classes:
+                model: Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Taxon\Taxon
+
 sylius_channel:
     resources:
         channel:
