@@ -29,7 +29,7 @@
     {% endif %}
 
     {% if seo.openGraphMetadataImage %}
-        <meta property="og:image" content="{{ seo.openGraphMetadataImage }}" />
+        <meta property="og:image" content="{{ dedi_sylius_seo_get_image_url(seo.openGraphMetadataImage) }}" />
     {% endif %}
 
     <meta property="og:type" content="{{ seo.openGraphMetadataType|default('website') }}" />

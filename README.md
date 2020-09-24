@@ -14,7 +14,7 @@
 
 <p align="center">Sylius SEO plugin by Dedi. Add metadata and OpenGraph into header for all Sylius resources.</p>
 
-![docs/data/seo_plugin_example.png](docs/data/seo_plugin_example.png)
+![docs/data/seo_plugin_example.png](doc/data/seo_plugin_example.png)
 
 ## Documentation
 
