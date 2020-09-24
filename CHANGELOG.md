@@ -1,3 +1,10 @@
+## [0.3.1](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.3.0...v0.3.1) (2020-09-24)
+
+
+### Bug Fixes
+
+* Corrige fonction twig image | :bug: ([a39fda8](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/a39fda8e3c671794a734048ca0fc67269bacb2b6))
+
 # [0.3.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.2.0...v0.3.0) (2020-09-24)
 
 
