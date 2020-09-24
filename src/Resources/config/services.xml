@@ -80,10 +80,14 @@
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
         </service>
 
-
-        <!-- Rich Snippets Twig Extension -->
+        <!-- Twig Extension -->
         <service id="dedi_sylius_seo_plugin.rich_snippets.twig.rich_snippets_extension" class="Dedi\SyliusSEOPlugin\Twig\RichSnippetsExtension">
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.metadata.twig.metadata_image_extension" class="Dedi\SyliusSEOPlugin\Twig\ReferenceableImageExtension">
+            <argument key="$filterExtension" type="service" id="liip_imagine.templating.filter_extension"/>
             <tag name="twig.extension"/>
         </service>
     </services>

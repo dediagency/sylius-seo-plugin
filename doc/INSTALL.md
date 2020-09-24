@@ -1,6 +1,6 @@
 # Installation
 
-Run `composer require dedi/plugin-seo-plugin`
+Run `composer require dedi/sylius-seo-plugin`
 
 Change your `config/bundles.php` file to add the line for the plugin :
 

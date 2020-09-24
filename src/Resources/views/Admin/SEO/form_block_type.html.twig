@@ -53,7 +53,7 @@
                             <span class="description">{{ resource.metadataDescription }}</span>
                             <span class="og-title">{{ resource.openGraphMetadataTitle }}</span>
                             <span class="og-description">{{ resource.openGraphMetadataDescription }}</span>
-                            <span class="og-image">{{ resource.openGraphMetadataImage }}</span>
+                            <span class="og-image">{{ dedi_sylius_seo_get_image_url(resource.openGraphMetadataImage) }}</span>
                             <span class="og-url">{{ resource.openGraphMetadataUrl|default(sylius.channel.hostname) }}</span>
                         </div>
                     </div>
