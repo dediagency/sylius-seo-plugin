@@ -1,3 +1,10 @@
+# [0.3.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.2.0...v0.3.0) (2020-09-24)
+
+
+### Features
+
+* Ajout extension twig pour gérer l'image metadata | :sparkles: :art: ([0873536](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/08735364a6fb156f944bce39b0cc5b2f8aa85aa7))
+
 # [0.2.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.1.2...v0.2.0) (2020-09-16)
 
 
