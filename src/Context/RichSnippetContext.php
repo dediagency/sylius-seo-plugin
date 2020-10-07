@@ -43,7 +43,7 @@ final class RichSnippetContext
         $richSnippets = [];
 
         foreach ($this->richSnippetFactories as $factory) {
-            if ($factory->can($factory->getType(), $subject)) {
+            if ($factory->can($subject)) {
                 $richSnippets[] = $factory->buildRichSnippet($subject);
             }
         }
