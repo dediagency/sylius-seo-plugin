@@ -15,10 +15,8 @@ In order to be easily extensible, several `Chain of Responsibility` design patte
 
 | Class | Method |
 | ----- | ------ |
-| RichSnippetContext | getSubject() |
-| RichSnippetContext | getAvailableRichSnippetsUrls() |
+| RichSnippetContext | getAvailableRichSnippets() |
 | RichSnippetContext | guessSubject() |
-| RichSnippetFactoryChain | getRichSnippetFactory() |
 | RichSnippetSubjectUrlFactory | buildUrl() |
 
 ## Creating a new Subject type

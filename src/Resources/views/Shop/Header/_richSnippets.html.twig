@@ -1,7 +1,5 @@
-{% set urls = dedi_sylius_seo_get_rich_snippets_url() %}
+{% set richSnippets = dedi_sylius_seo_get_rich_snippets() %}
 
-{% for url in urls %}
-    <script type="application/ld+json">
-        {{ render(path('dedi_sylius_seo_rich_snippet', url)) }}
-    </script>
+{% for richSnippet in richSnippets %}
+    <script type="application/ld+json">{{ richSnippet.data|json_encode|raw }}</script>
 {% endfor %}
