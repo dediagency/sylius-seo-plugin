@@ -6,16 +6,14 @@ namespace Dedi\SyliusSEOPlugin\Factory;
 
 use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\BreadcrumbRichSnippet;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\HomepageRichSnippetSubject;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 
-final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
+final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {
-    public const TYPE = 'breadcrumb';
-
     private RichSnippetSubjectUrlFactory $richSnippetSubjectUrlFactory;
     private HomepageSubjectFetcher $homepageSubjectFetcher;
 
@@ -25,16 +23,6 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
     ) {
         $this->richSnippetSubjectUrlFactory = $richSnippetSubjectUrlFactory;
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;
-    }
-
-    public function getType(): string
-    {
-        return self::TYPE;
-    }
-
-    public function can(string $type, RichSnippetSubjectInterface $subject): bool
-    {
-        return self::TYPE === $type;
     }
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
@@ -59,5 +47,15 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
         );
 
         return $richSnippet;
+    }
+
+    protected function getHandledSubjectTypes(): array
+    {
+        return [
+            'homepage',
+            'contact',
+            'taxon',
+            'product',
+        ];
     }
 }
