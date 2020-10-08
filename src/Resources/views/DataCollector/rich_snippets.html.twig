@@ -1,0 +1,46 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span class="sf-toolbar-value">{{ collector.richSnippets|length }}</span>
+        <span class="sf-toolbar-label">{{ 'dedi_sylius_seo_plugin.ui.rich_snippets'|trans }}</span>
+    {% endset %}
+
+    {% set text %}
+        {% for richSnippet in collector.richSnippets %}
+            <div class="sf-toolbar-info-piece">
+                <span>{{ richSnippet.type }}</span>
+            </div>
+        {% endfor %}
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url, name: 'dedi_sylius_seo_plugin.rich_snippets' }) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <strong>{{ 'dedi_sylius_seo_plugin.ui.rich_snippets'|trans }}</strong>
+        <span class="count">
+            <span>{{ collector.richSnippets|length }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>{{ 'dedi_sylius_seo_plugin.ui.rich_snippets'|trans }}</h2>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+
+        {% for richSnippet in collector.richSnippets %}
+            <tr>
+                <td>{{ richSnippet.type }}</td>
+                <td>
+                    <pre>{{ richSnippet.data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -37,4 +37,9 @@ class BreadcrumbRichSnippet implements RichSnippetInterface
             ],
         ];
     }
+
+    public function getType(): string
+    {
+        return 'breadcrumb';
+    }
 }

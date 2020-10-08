@@ -1,6 +1,7 @@
 dedi_sylius_seo_plugin:
     ui:
         seo: SEO
+        rich_snippets: Rich Snippets
         open_graph_info: Plus d'information sur OpenGraph
         advanced_options: Options avancées
         info_title: Comment fonctionne le réferencement de mon contenu ?

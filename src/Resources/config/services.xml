@@ -49,6 +49,11 @@
             <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
         </service>
 
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.product" class="Dedi\SyliusSEOPlugin\Factory\ProductRichSnippetFactory">
+            <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
         <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url" class="Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory">
             <argument key="$urlGenerators" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
         </service>
@@ -77,6 +82,12 @@
         <service id="dedi_sylius_seo_plugin.metadata.twig.metadata_image_extension" class="Dedi\SyliusSEOPlugin\Twig\ReferenceableImageExtension">
             <argument key="$filterExtension" type="service" id="liip_imagine.templating.filter_extension"/>
             <tag name="twig.extension"/>
+        </service>
+
+        <!-- Data Collector -->
+        <service id="dedi_sylius_seo_plugin.data_collector.rich_snippets" class="Dedi\SyliusSEOPlugin\DataCollector\RichSnippetsDataCollector">
+            <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
+            <tag name="data_collector" template="@DediSyliusSEOPlugin/DataCollector/rich_snippets.html.twig" id="dedi_sylius_seo_plugin.rich_snippets"/>
         </service>
     </services>
 </container>
