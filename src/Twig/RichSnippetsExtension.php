@@ -20,7 +20,7 @@ class RichSnippetsExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('dedi_sylius_seo_get_rich_snippets_url', [$this->richSnippetContext, 'getAvailableRichSnippetsUrls']),
+            new TwigFunction('dedi_sylius_seo_get_rich_snippets', [$this->richSnippetContext, 'getAvailableRichSnippets']),
         ];
     }
 }
