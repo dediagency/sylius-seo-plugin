@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model;
+namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 

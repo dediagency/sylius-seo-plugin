@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model;
+namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet;
+
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 
 class BreadcrumbRichSnippet implements RichSnippetInterface
 {

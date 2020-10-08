@@ -35,7 +35,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\GenericPageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\GenericPageRichSnippetSubject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -93,7 +93,7 @@ use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\BreadcrumbRichSnippet;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\BreadcrumbRichSnippet;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 
 final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\GenericPageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\GenericPageRichSnippetSubject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

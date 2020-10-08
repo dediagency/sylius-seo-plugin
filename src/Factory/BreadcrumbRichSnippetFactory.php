@@ -8,8 +8,8 @@ use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\BreadcrumbRichSnippet;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\HomepageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\BreadcrumbRichSnippet;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\HomepageRichSnippetSubject;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 
 final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
