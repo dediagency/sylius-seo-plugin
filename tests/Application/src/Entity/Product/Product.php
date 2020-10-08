@@ -6,7 +6,8 @@ namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
@@ -15,13 +16,15 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
  * @ORM\Entity
  * @ORM\Table(name="sylius_product")
  */
-class Product extends BaseProduct implements ReferenceableInterface, RichSnippetSubjectInterface
+class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
         getMetadataDescription as getBaseMetadataDescription;
         getOpenGraphMetadataImage as getBaseOpenGraphMetadataImage;
     }
+
+    use RichSnippetProductSubjectTrait;
 
     public function getMetadataTitle(): ?string
     {

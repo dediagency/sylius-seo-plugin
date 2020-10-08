@@ -1,5 +1,5 @@
 {% set richSnippets = dedi_sylius_seo_get_rich_snippets() %}
 
 {% for richSnippet in richSnippets %}
-    <script type="application/ld+json">{{ richSnippet.data|json_encode|raw }}</script>
+    <script type="application/ld+json">{{ richSnippet.data|json_encode(constant('JSON_UNESCAPED_SLASHES'))|raw }}</script>
 {% endfor %}

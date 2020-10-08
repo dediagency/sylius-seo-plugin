@@ -2,14 +2,15 @@
 
 {% block toolbar %}
     {% set icon %}
+        {{ include('@DediSyliusSEOPlugin/DataCollector/rich_snippets_icon.svg') }}
         <span class="sf-toolbar-value">{{ collector.richSnippets|length }}</span>
-        <span class="sf-toolbar-label">{{ 'dedi_sylius_seo_plugin.ui.rich_snippets'|trans }}</span>
+        <span class="sf-toolbar-label">Rich Snippets</span>
     {% endset %}
 
     {% set text %}
         {% for richSnippet in collector.richSnippets %}
             <div class="sf-toolbar-info-piece">
-                <span>{{ richSnippet.type }}</span>
+                <span>{{ richSnippet.type|replace({'_': ' ', '-': ' ', '.': ' '})|title }}</span>
             </div>
         {% endfor %}
     {% endset %}
@@ -19,28 +20,56 @@
 
 {% block menu %}
     <span class="label">
-        <strong>{{ 'dedi_sylius_seo_plugin.ui.rich_snippets'|trans }}</strong>
+        <span class="icon">
+            {{ include('@DediSyliusSEOPlugin/DataCollector/rich_snippets_icon.svg') }}
+        </span>
+        <strong>Rich Snippets</strong>
         <span class="count">
             <span>{{ collector.richSnippets|length }}</span>
         </span>
     </span>
 {% endblock %}
 
-{% block panel %}
-    <h2>{{ 'dedi_sylius_seo_plugin.ui.rich_snippets'|trans }}</h2>
-    <table>
-        <tr>
-            <th>Type</th>
-            <th>Value</th>
-        </tr>
+{% block head %}
+    {{ parent() }}
 
-        {% for richSnippet in collector.richSnippets %}
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const copyHtml = document.getElementById('copy-html');
+            copyHtml.addEventListener('click', function () {
+                const input = document.createElement('input');
+                input.setAttribute('value', copyHtml.dataset.htmlContent);
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block panel %}
+    <h2>Rich Snippets</h2>
+    <p>Test these rich snippets using <a href="https://search.google.com/test/rich-results?utm_campaign=sdtt&utm_medium=code" target="_blank">Google RichSnippets tester utility</a></p>
+    <button id="copy-html" class="btn btn-sm" data-html-content="{{ collector.html|escape }}">Copy HTML Response</button>
+
+    <h2>Recap</h2>
+    <table>
+        <thead>
             <tr>
-                <td>{{ richSnippet.type }}</td>
-                <td>
-                    <pre>{{ richSnippet.data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
-                </td>
+                <th>Type</th>
+                <th>Value</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for richSnippet in collector.richSnippets %}
+                <tr>
+                    <th class="font-normal">{{ richSnippet.type|replace({'_': ' ', '-': ' ', '.': ' '})|title }}</th>
+                    <td>
+                        {{ dump(richSnippet.data) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
