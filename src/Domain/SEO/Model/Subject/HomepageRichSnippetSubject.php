@@ -30,7 +30,7 @@ class HomepageRichSnippetSubject implements RichSnippetSubjectInterface
         return $this->name;
     }
 
-    public function getParent()
+    public function getRichSnippetSubjectParent()
     {
         return null;
     }

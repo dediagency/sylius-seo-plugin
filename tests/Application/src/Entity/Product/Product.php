@@ -65,7 +65,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return new SEOContent();
     }
 
-    public function getParent()
+    public function getRichSnippetSubjectParent()
     {
         return $this->getMainTaxon();
     }

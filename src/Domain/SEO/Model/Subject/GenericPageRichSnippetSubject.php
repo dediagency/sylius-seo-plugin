@@ -34,7 +34,7 @@ class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
         return $this->name;
     }
 
-    public function getParent()
+    public function getRichSnippetSubjectParent()
     {
         return $this->parent;
     }

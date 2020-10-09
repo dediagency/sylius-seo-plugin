@@ -21,5 +21,5 @@ interface RichSnippetSubjectInterface
     /**
      * @return self|null
      */
-    public function getParent();
+    public function getRichSnippetSubjectParent();
 }

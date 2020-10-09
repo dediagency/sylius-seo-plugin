@@ -35,7 +35,7 @@ final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
         BreadcrumbRichSnippet $richSnippet,
         bool $isLeaf = false
     ): BreadcrumbRichSnippet {
-        if ($parent = $subject->getParent()) {
+        if ($parent = $subject->getRichSnippetSubjectParent()) {
             $this->build($parent, $richSnippet);
         } elseif (!$subject instanceof HomepageRichSnippetSubject) {
             $this->build($this->homepageSubjectFetcher->fetch(HomepageSubjectFetcher::TYPE), $richSnippet);
