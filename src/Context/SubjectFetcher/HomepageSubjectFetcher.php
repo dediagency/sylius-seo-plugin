@@ -11,8 +11,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HomepageSubjectFetcher implements SubjectFetcherInterface
 {
-    public const TYPE = 'homepage';
-
     private TranslatorInterface $translator;
 
     public function __construct(TranslatorInterface $translator)
@@ -20,12 +18,7 @@ class HomepageSubjectFetcher implements SubjectFetcherInterface
         $this->translator = $translator;
     }
 
-    public function can(string $type, ?int $id): bool
-    {
-        return self::TYPE === $type && null === $id;
-    }
-
-    public function fetch(string $type, ?int $id = null): ?RichSnippetSubjectInterface
+    public function fetch(?int $id = null): ?RichSnippetSubjectInterface
     {
         return new HomepageRichSnippetSubject($this->translator->trans('sylius.ui.home'));
     }
@@ -37,6 +30,6 @@ class HomepageSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
-        return $this->fetch(self::TYPE);
+        return $this->fetch();
     }
 }

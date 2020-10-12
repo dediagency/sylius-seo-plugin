@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaxonSubjectFetcher implements SubjectFetcherInterface
 {
-    private const TYPE = 'taxon';
-
     private LocaleContextInterface $localeContext;
     private TaxonRepositoryInterface $repository;
 
@@ -24,12 +22,7 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
         $this->localeContext = $localeContext;
     }
 
-    public function can(string $type, ?int $id): bool
-    {
-        return self::TYPE === $type && null !== $id;
-    }
-
-    public function fetch(string $type, ?int $id): ?RichSnippetSubjectInterface
+    public function fetch(?int $id): ?RichSnippetSubjectInterface
     {
         return $this->repository->find($id);
     }

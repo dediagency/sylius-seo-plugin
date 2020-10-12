@@ -10,7 +10,7 @@ use Sylius\Component\Core\Model\TaxonInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-final class TaxonUrlGenerator implements SubjectUrlGeneratorInterface
+class TaxonUrlGenerator implements SubjectUrlGeneratorInterface
 {
     private RouterInterface $router;
 

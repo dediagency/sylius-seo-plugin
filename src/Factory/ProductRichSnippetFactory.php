@@ -26,9 +26,6 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
     private PriceHelper $priceHelper;
     private ChannelContextInterface $channelContext;
     private LocaleContextInterface $localeContext;
-    /**
-     * @var CurrencyContextInterface
-     */
     private CurrencyContextInterface $currencyContext;
 
     public function __construct(
@@ -67,7 +64,6 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
                 'gtin8' => $subject->getGtin8(),
             ]);
         }
-
         if ($subject->getGtin13()) {
             $richSnippet->addData([
                 'gtin13' => $subject->getGtin13(),
@@ -129,7 +125,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
         $lowPrice = $highPrice = $this->priceHelper->getPrice(
             $subject->getVariants()->first(),
-            ['channel' => $channel]
+            ['channel' => $channel],
         );
         foreach ($subject->getVariants() as $variant) {
             $price = $this->priceHelper->getPrice(

@@ -19,24 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
 interface SubjectFetcherInterface
 {
     /**
-     * Define if the fetcher can fetch a Subject for a given type and id.
+     * Fetch the Subject for a given id.
      *
-     * @param string $type
-     * @param int|null $id
-     *
-     * @return bool
-     */
-    public function can(string $type, ?int $id): bool;
-
-    /**
-     * Fetch the Subject for a given type and id.
-     *
-     * @param string $type
      * @param int|null $id
      *
      * @return RichSnippetSubjectInterface|null
      */
-    public function fetch(string $type, ?int $id): ?RichSnippetSubjectInterface;
+    public function fetch(?int $id): ?RichSnippetSubjectInterface;
 
     /**
      * Define if the fetcher can fetch a Subject for a given request.

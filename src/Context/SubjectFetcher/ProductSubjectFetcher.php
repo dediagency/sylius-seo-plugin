@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductSubjectFetcher implements SubjectFetcherInterface
 {
-    private const TYPE = 'product';
-
     private ChannelContextInterface $channelContext;
     private LocaleContextInterface $localeContext;
     private ProductRepositoryInterface $repository;
@@ -28,12 +26,7 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
         $this->repository = $repository;
     }
 
-    public function can(string $type, ?int $id): bool
-    {
-        return self::TYPE === $type && null !== $id;
-    }
-
-    public function fetch(string $type, ?int $id): ?RichSnippetSubjectInterface
+    public function fetch(?int $id): ?RichSnippetSubjectInterface
     {
         return $this->repository->find($id);
     }
