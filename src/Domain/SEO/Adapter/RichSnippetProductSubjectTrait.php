@@ -43,6 +43,11 @@ trait RichSnippetProductSubjectTrait
      */
     protected ?string $sku = null;
 
+    /**
+     * @ORM\Column(type="boolean", name="offer_aggregated", nullable=false, options={"default" : 0})
+     */
+    protected bool $offerAggregated = false;
+
     public function getBrand(): ?string
     {
         return $this->brand;
@@ -111,5 +116,15 @@ trait RichSnippetProductSubjectTrait
     public function setSku(?string $sku): void
     {
         $this->sku = $sku;
+    }
+
+    public function isOfferAggregated(): bool
+    {
+        return $this->offerAggregated;
+    }
+
+    public function setOfferAggregated(bool $offerAggregated): void
+    {
+        $this->offerAggregated = $offerAggregated;
     }
 }

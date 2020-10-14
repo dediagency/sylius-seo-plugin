@@ -12,6 +12,8 @@ dedi_sylius_seo_plugin:
         brand_title: Marque du produit
         sku_title: Référence produit spécifique au marchand
         global_identifiers_title: Identifiants globaux
+        offer_type_title: Type d'offre
+        offer_type_description: Configuration du Rich Snippet produit en mode agrégats d'offres ou liste des offres. L'affichage sur le moteur de recherche Google sera affecté.
     form:
         not_indexable: Ne pas rendre indexable le contenu
         metadata_title: Métadonnée titre
@@ -30,3 +32,4 @@ dedi_sylius_seo_plugin:
         gtin14: gtin14
         mpn: mpn
         isbn: isbn
+        offer_aggregated: Mode agrégats

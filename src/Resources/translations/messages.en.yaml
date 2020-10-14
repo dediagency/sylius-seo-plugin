@@ -12,6 +12,8 @@ dedi_sylius_seo_plugin:
         brand_title: Brand of the product
         sku_title: Merchant-specific identifier for product
         global_identifiers_title: Global identifiers
+        offer_type_title: Offer type
+        offer_type_description: The Rich Snippet product will either be using an aggregate offer or the list of offers. This changes how products are rendered on Google search engine.
     form:
         not_indexable: Content not indexable
         metadata_title: Metadata title
@@ -30,3 +32,4 @@ dedi_sylius_seo_plugin:
         gtin14: gtin14
         mpn: mpn
         isbn: isbn
+        offer_aggregated: Aggregated offer
