@@ -150,7 +150,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         $url = $this->productUrlGenerator->generateUrl($subject);
         $currencyCode = $this->currencyContext->getCurrencyCode();
 
-        return array_map(function (ProductVariantInterface $variant) use($channel, $url, $currencyCode) {
+        return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
             $price = $this->priceHelper->getPrice(
                 $variant,
                 ['channel' => $channel]
