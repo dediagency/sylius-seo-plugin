@@ -117,14 +117,4 @@ trait RichSnippetProductSubjectTrait
     {
         $this->sku = $sku;
     }
-
-    public function isOfferAggregated(): bool
-    {
-        return $this->offerAggregated;
-    }
-
-    public function setOfferAggregated(bool $offerAggregated): void
-    {
-        $this->offerAggregated = $offerAggregated;
-    }
 }

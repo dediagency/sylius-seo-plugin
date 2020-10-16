@@ -19,6 +19,4 @@ interface RichSnippetProductSubjectInterface extends RichSnippetSubjectInterface
     public function getIsbn(): ?string;
 
     public function getSku(): ?string;
-
-    public function isOfferAggregated(): bool;
 }

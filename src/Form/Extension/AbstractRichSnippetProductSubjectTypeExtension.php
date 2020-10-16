@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Form\Extension;
 
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
@@ -66,10 +65,6 @@ abstract class AbstractRichSnippetProductSubjectTypeExtension extends AbstractRe
             ])
             ->add('sku', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.sku',
-                'required' => false,
-            ])
-            ->add('offerAggregated', CheckboxType::class, [
-                'label' => 'dedi_sylius_seo_plugin.form.offer_aggregated',
                 'required' => false,
             ])
         ;

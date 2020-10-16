@@ -123,7 +123,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         }
 
         $richSnippet->addData([
-            'offers' => $subject->isOfferAggregated() ? $this->getAggregateOffer($subject) : $this->getOffers($subject),
+            'offers' => $this->getOffers($subject),
         ]);
 
         if ($subject->getAcceptedReviews()->count() > 0) {
@@ -136,39 +136,6 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         }
 
         return $richSnippet;
-    }
-
-    protected function getAggregateOffer(ProductInterface $subject): array
-    {
-        /** @var ChannelInterface $channel */
-        $channel = $this->channelContext->getChannel();
-
-        $lowPrice = $highPrice = $this->priceHelper->getPrice(
-            $subject->getVariants()->first(),
-            ['channel' => $channel],
-        );
-        foreach ($subject->getVariants() as $variant) {
-            $price = $this->priceHelper->getPrice(
-                $variant,
-                ['channel' => $channel]
-            );
-
-            if ($lowPrice > $price) {
-                $lowPrice = $price;
-            } elseif ($highPrice < $price) {
-                $highPrice = $price;
-            }
-        }
-
-        $currencyCode = $this->currencyContext->getCurrencyCode();
-
-        return [
-            '@type' => 'AggregateOffer',
-            'offerCount' => $subject->getVariants()->count(),
-            'lowPrice' => $this->formatCurrencyForRichSnippets($lowPrice, $currencyCode),
-            'highPrice' => $this->formatCurrencyForRichSnippets($highPrice, $currencyCode),
-            'priceCurrency' => $currencyCode,
-        ];
     }
 
     /**
