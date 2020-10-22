@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model;
+namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 
@@ -34,7 +34,7 @@ class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
         return $this->name;
     }
 
-    public function getParent()
+    public function getRichSnippetSubjectParent()
     {
         return $this->parent;
     }

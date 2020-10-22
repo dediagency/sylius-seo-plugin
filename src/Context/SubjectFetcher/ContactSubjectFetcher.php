@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\GenericPageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\GenericPageRichSnippetSubject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -22,17 +22,12 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;
     }
 
-    public function can(string $type, ?int $id): bool
-    {
-        return self::TYPE === $type && null === $id;
-    }
-
-    public function fetch(string $type, ?int $id = null): ?RichSnippetSubjectInterface
+    public function fetch(?int $id = null): ?RichSnippetSubjectInterface
     {
         return new GenericPageRichSnippetSubject(
             $this->translator->trans('sylius.ui.contact_us'),
             self::TYPE,
-            $this->homepageSubjectFetcher->fetch(HomepageSubjectFetcher::TYPE)
+            $this->homepageSubjectFetcher->fetch()
         );
     }
 
@@ -43,6 +38,6 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
-        return $this->fetch(self::TYPE);
+        return $this->fetch();
     }
 }

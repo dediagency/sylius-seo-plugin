@@ -7,4 +7,6 @@ namespace Dedi\SyliusSEOPlugin\Domain\SEO\Model;
 interface RichSnippetInterface
 {
     public function getData(): array;
+
+    public function getType(): string;
 }

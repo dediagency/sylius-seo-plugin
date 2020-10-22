@@ -6,7 +6,8 @@ namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
@@ -15,7 +16,7 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
  * @ORM\Entity
  * @ORM\Table(name="sylius_product")
  */
-class Product extends BaseProduct implements ReferenceableInterface, RichSnippetSubjectInterface
+class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
@@ -23,12 +24,15 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         getOpenGraphMetadataImage as getBaseOpenGraphMetadataImage;
     }
 
+    use RichSnippetProductSubjectTrait;
+
     public function getMetadataTitle(): ?string
     {
         if (null === $this->getReferenceableContent()->getMetadataTitle()) {
             $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
 
-            return $this->getMainTaxon()->getName() . ' | ' . $this->getName();
+            return null === $this->getMainTaxon() ? $this->getName() :
+                $this->getMainTaxon()->getName() . ' | ' . $this->getName();
         }
 
         return $this->getBaseMetadataTitle();
@@ -62,7 +66,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return new SEOContent();
     }
 
-    public function getParent()
+    public function getRichSnippetSubjectParent()
     {
         return $this->getMainTaxon();
     }

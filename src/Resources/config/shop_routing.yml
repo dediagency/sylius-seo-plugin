@@ -1,6 +1,1 @@
 # Delete these routes and define your own shop routes here
-dedi_sylius_seo_rich_snippet:
-  path: /rich-snippet/{richSnippetType}/{subjectType}/{id}
-  defaults:
-    _controller: dedi_sylius_seo_plugin.rich_snippets.controller.breadcrumb
-    id: ~
