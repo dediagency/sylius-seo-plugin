@@ -12,6 +12,7 @@ dedi_sylius_seo_plugin:
         brand_title: Marque du produit
         sku_title: Référence produit spécifique au marchand
         global_identifiers_title: Identifiants globaux
+        google_tracking_info: Si Google Tag Manager et Google Analytics sont configurés, uniquement Google Tag Manager sera utilisé
     form:
         not_indexable: Ne pas rendre indexable le contenu
         metadata_title: Métadonnée titre
@@ -22,6 +23,8 @@ dedi_sylius_seo_plugin:
         og_metadata_url: Métadonnée OpenGraph URL du contenu
         og_metadata_image: Métadonnée OpenGraph image
         og_metadata_type: Métadonnée OpenGraph type
+        google_analytics_code: Code Google Analytics
+        google_tag_manager_id: Id Google Tag Manager
 
         brand: Marque
         sku: sku

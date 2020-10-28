@@ -79,6 +79,20 @@
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
         </service>
 
+        <!-- Form extensions -->
+        <service id="dedi.sylius_seo_plugin.form.extension.channel_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ChannelTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
+        <service id="dedi.sylius_seo_plugin.form.extension.product_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ProductTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
+        <!-- Menu Builder -->
+        <service id="dedi.sylius_seo_plugin.admin.menu_builder.product" class="Dedi\SyliusSEOPlugin\Menu\Admin\ProductMenuBuilder">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.product.form" method="addSeoMenuItem" />
+        </service>
+
         <!-- Twig Extension -->
         <service id="dedi_sylius_seo_plugin.rich_snippets.twig.rich_snippets_extension" class="Dedi\SyliusSEOPlugin\Twig\RichSnippetsExtension">
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>

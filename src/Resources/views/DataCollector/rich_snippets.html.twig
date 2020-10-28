@@ -8,6 +8,12 @@
     {% endset %}
 
     {% set text %}
+        {% if collector.richSnippets is empty %}
+            <div class="sf-toolbar-info-piece">
+                <span>No RichSnippet available on this page</span>
+            </div>
+        {% endif %}
+
         {% for richSnippet in collector.richSnippets %}
             <div class="sf-toolbar-info-piece">
                 <span>{{ richSnippet.type|replace({'_': ' ', '-': ' ', '.': ' '})|title }}</span>

@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class AbstractReferenceableTypeExtension extends AbstractTypeExtension
+abstract class AbstractReferenceableTypeExtension extends AbstractTypeExtension
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,10 +19,5 @@ class AbstractReferenceableTypeExtension extends AbstractTypeExtension
                 'constraints' => [new Valid()],
             ])
         ;
-    }
-
-    public static function getExtendedTypes(): iterable
-    {
-        return [];
     }
 }

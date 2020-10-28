@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Form\Extension;
 
+use Dedi\SyliusSEOPlugin\Form\Type\SEOContentType;
+use Sylius\Bundle\ProductBundle\Form\Type\ProductType;
+use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Valid;
 
-abstract class AbstractRichSnippetProductSubjectTypeExtension extends AbstractReferenceableTypeExtension
+class ProductTypeExtension extends AbstractTypeExtension
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $builder
+            ->add('referenceableContent', SEOContentType::class, [
+                'label' => 'dedi_sylius_seo_plugin.ui.seo',
+                'constraints' => [new Valid()],
+            ])
             ->add('brand', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.brand',
                 'required' => false,
@@ -68,5 +74,10 @@ abstract class AbstractRichSnippetProductSubjectTypeExtension extends AbstractRe
                 'required' => false,
             ])
         ;
+    }
+
+    public static function getExtendedTypes(): iterable
+    {
+        return [ProductType::class];
     }
 }
