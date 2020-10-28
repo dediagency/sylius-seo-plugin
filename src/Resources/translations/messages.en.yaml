@@ -4,7 +4,7 @@ dedi_sylius_seo_plugin:
         open_graph_info: More information about OpenGraph
         advanced_options: Advanced options
         info_title: How work my content's referencement ?
-        info_description: Some information was automatically create from previously data entering. Click on "Advanced options" to override all metadata.
+        info_description: Some info is automatically generated. Click on "Advanced options" to override what is computed.
         product_info_title: Optimizations for RichSnippet product
         product_info_description: The following fields allow to optimize the referencing of the products. It is preferable to fill in at least one field per section.
         product_info_link: More information
@@ -12,6 +12,7 @@ dedi_sylius_seo_plugin:
         brand_title: Brand of the product
         sku_title: Merchant-specific identifier for product
         global_identifiers_title: Global identifiers
+        google_tracking_info: If both Google Analytics and Google Tag Manager are configured, Google Tag Manager will be used over Google Analytics
     form:
         not_indexable: Content not indexable
         metadata_title: Metadata title
@@ -22,6 +23,8 @@ dedi_sylius_seo_plugin:
         og_metadata_url: OpenGraph metadata url
         og_metadata_image: OpenGraph metadata image
         og_metadata_type: OpenGraph metadata type
+        google_analytics_code: Google Analytics Code
+        google_tag_manager_id: Google Tag Manager Id
 
         brand: Brand
         sku: sku

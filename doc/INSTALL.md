@@ -54,10 +54,10 @@ ReferenceableTrait add all required methods. All methods available here : [src/D
 For example with FormTypeExtension of Sylius Product Entity.
 
 ```php
-use Dedi\SyliusSEOPlugin\Form\Extension\AbstractReferenceableTypeExtension;
+use Dedi\SyliusSEOPlugin\Form\Extension\DefaultReferenceableTypeExtension;
 use Sylius\Bundle\ProductBundle\Form\Type\ProductType;
 
-class ProductTypeExtension extends AbstractReferenceableTypeExtension
+class ProductTypeExtension extends DefaultReferenceableTypeExtension
 {
     public static function getExtendedTypes(): iterable
     {
@@ -113,16 +113,15 @@ Make your `Product` and `Taxon` clases implement the `RichSnippetSubjectInterfac
 class Product extends BaseProduct implements RichSnippetSubjectInterface
 {
     // ...
-    public function getParent()
+    public function getRichSnippetSubjectParent()
     {
         return $this->getMainTaxon();
     }
 
-    public function getRichSnippetType(): string
+    public function getRichSnippetSubjectType(): string
     {
         return 'product';
     }
-
 }
 ```
 
@@ -130,7 +129,12 @@ class Product extends BaseProduct implements RichSnippetSubjectInterface
 class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 {
     // ...
-    public function getRichSnippetType(): string
+    public function getRichSnippetSubjectParent()
+    {
+        return $this->getParent();
+    }
+
+    public function getRichSnippetSubjectType(): string
     {
         return 'taxon';
     }
@@ -155,6 +159,20 @@ This can be added your main layout
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
+```
+
+### 6 Add Google Analytics Console Configuration
+
+```php
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelTrait;
+
+class Channel extends BaseChannel implements SeoAwareChannelInterface
+{
+    use SeoAwareChannelTrait;
+
+    // ...
+}
 ```
 
 ### Bonus - Learn how to create new RichSnippet / RichSnippetSubject
