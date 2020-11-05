@@ -7,6 +7,7 @@ cache: {}
 stages:
   - cs
   - test
+  - functional_test
   - release
 
 js-cs:
@@ -18,20 +19,41 @@ js-cs:
     - tags
 
 php-cs:
-  image: registry.gitlab.com/dedi-agency/interne/docker-images/php-fpm:${PHP_VERSION}
+  image: registry.gitlab.com/dedi-agency/interne/docker-images/php:${PHP_VERSION}
+  variables:
+    PHP_MEMORY_LIMIT: 4G
   stage: cs
   script:
-    - sudo sed -i "s/memory_limit = .*/memory_limit = 4G/" /etc/php7/php.ini
     - make back-test-cs ENV=ci
   except:
     - tags
 
 php-test-spec:
-  image: registry.gitlab.com/dedi-agency/interne/docker-images/php-fpm:${PHP_VERSION}
+  image: registry.gitlab.com/dedi-agency/interne/docker-images/php:${PHP_VERSION}
+  variables:
+    PHP_MEMORY_LIMIT: 4G
   stage: test
   script:
-    - sudo sed -i "s/memory_limit = .*/memory_limit = 4G/" /etc/php7/php.ini
     - make test-spec ENV=ci
+  except:
+    - tags
+
+functional_test:
+  image: registry.gitlab.com/dedi-agency/interne/docker-images/php:${PHP_VERSION}
+  variables:
+    PHP_MEMORY_LIMIT: 4G
+    APP_ENV: test
+    DATABASE_URL: sqlite:///${CI_PROJECT_DIR}/etc/db.sqlite
+  stage: functional_test
+  script:
+    - sudo apk add --upgrade sqlite php7-sqlite3 php7-pdo_sqlite
+    - composer install --no-scripts
+    - cd tests/Application
+    - php bin/console doctrine:database:create --no-interaction
+    - php bin/console doctrine:schema:update --force --no-interaction
+    - php bin/console sylius:fixtures:load --no-interaction
+    - cd ../..
+    - php vendor/bin/behat --tags @seo
   except:
     - tags
 
