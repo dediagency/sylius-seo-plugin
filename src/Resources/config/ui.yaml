@@ -9,3 +9,20 @@ sylius_ui:
         dedi_sylius_seo_plugin.rich_snippets:
             blocks:
                 dedi_seo_metatags: DediSyliusSEOPlugin:Shop/Header:_richSnippets.html.twig
+
+        # Layout
+        sylius.shop.layout.head:
+            blocks:
+                dedi_seo_head_google_tracking: DediSyliusSEOPlugin:Shop/Header:_googleTracking.html.twig
+        sylius.shop.layout.before_body:
+            blocks:
+                dedi_seo_body_google_tracking: DediSyliusSEOPlugin:Shop/Body:_googleTracking.html.twig
+
+        # Channel Admin
+        sylius.admin.channel.create.form:
+            blocks:
+                dedi_seo_channel: DediSyliusSEOPlugin:Admin/Channel/Form:_seo.html.twig
+
+        sylius.admin.channel.update.form:
+            blocks:
+                dedi_seo_channel: DediSyliusSEOPlugin:Admin/Channel/Form:_seo.html.twig

@@ -3,14 +3,20 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults public="true" />
-        <!-- Put your Behat services here -->
-
-        <service id="acme_sylius_example.context.ui.shop.welcome" class="Tests\Acme\SyliusExamplePlugin\Behat\Context\Ui\Shop\WelcomeContext">
-            <argument type="service" id="acme_sylius_example.page.shop.static_welcome" />
-            <argument type="service" id="acme_sylius_example.page.shop.dynamic_welcome" />
+        <!-- Contexts -->
+        <service id="dedi_sylius_seo_plugin.context.ui.shop.seo" class="Tests\Dedi\SyliusSEOPlugin\Behat\Context\Ui\Shop\SeoContext">
+            <argument key="$homePage" type="service" id="dedi_sylius_seo_plugin.page.shop.homepage" />
+            <argument key="$contactPage" type="service" id="dedi_sylius_seo_plugin.page.shop.contact_page" />
+            <argument key="$taxonPage" type="service" id="dedi_sylius_seo_plugin.page.shop.taxon_page" />
+            <argument key="$productPage" type="service" id="dedi_sylius_seo_plugin.page.shop.product_page" />
+            <argument key="$productRepository" type="service" id="sylius.repository.product" />
+            <argument key="$entityManager" type="service" id="doctrine.orm.default_entity_manager" />
         </service>
 
-        <service id="acme_sylius_example.page.shop.static_welcome" class="Tests\Acme\SyliusExamplePlugin\Behat\Page\Shop\StaticWelcomePage" parent="sylius.behat.symfony_page" public="false" />
-        <service id="acme_sylius_example.page.shop.dynamic_welcome" class="Tests\Acme\SyliusExamplePlugin\Behat\Page\Shop\DynamicWelcomePage" parent="sylius.behat.symfony_page" public="false" />
+        <!-- Pages -->
+        <service id="dedi_sylius_seo_plugin.page.shop.contact_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\ContactPage" parent="sylius.behat.symfony_page" public="false" />
+        <service id="dedi_sylius_seo_plugin.page.shop.homepage" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\HomePage" parent="sylius.behat.symfony_page" public="false" />
+        <service id="dedi_sylius_seo_plugin.page.shop.product_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\ProductPage" parent="sylius.behat.symfony_page" public="false" />
+        <service id="dedi_sylius_seo_plugin.page.shop.taxon_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\TaxonPage" parent="sylius.behat.symfony_page" public="false" />
     </services>
 </container>

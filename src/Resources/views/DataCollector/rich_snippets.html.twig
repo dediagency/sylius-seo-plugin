@@ -1,0 +1,81 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        {{ include('@DediSyliusSEOPlugin/DataCollector/rich_snippets_icon.svg') }}
+        <span class="sf-toolbar-value">{{ collector.richSnippets|length }}</span>
+        <span class="sf-toolbar-label">Rich Snippets</span>
+    {% endset %}
+
+    {% set text %}
+        {% if collector.richSnippets is empty %}
+            <div class="sf-toolbar-info-piece">
+                <span>No RichSnippet available on this page</span>
+            </div>
+        {% endif %}
+
+        {% for richSnippet in collector.richSnippets %}
+            <div class="sf-toolbar-info-piece">
+                <span>{{ richSnippet.type|replace({'_': ' ', '-': ' ', '.': ' '})|title }}</span>
+            </div>
+        {% endfor %}
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url, name: 'dedi_sylius_seo_plugin.rich_snippets' }) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+            {{ include('@DediSyliusSEOPlugin/DataCollector/rich_snippets_icon.svg') }}
+        </span>
+        <strong>Rich Snippets</strong>
+        <span class="count">
+            <span>{{ collector.richSnippets|length }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const copyHtml = document.getElementById('copy-html');
+            copyHtml.addEventListener('click', function () {
+                const input = document.createElement('input');
+                input.setAttribute('value', copyHtml.dataset.htmlContent);
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block panel %}
+    <h2>Rich Snippets</h2>
+    <p>Test these rich snippets using <a href="https://search.google.com/test/rich-results?utm_campaign=sdtt&utm_medium=code" target="_blank">Google RichSnippets tester utility</a></p>
+    <button id="copy-html" class="btn btn-sm" data-html-content="{{ collector.html|escape }}">Copy HTML Response</button>
+
+    <h2>Recap</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for richSnippet in collector.richSnippets %}
+                <tr>
+                    <th class="font-normal">{{ richSnippet.type|replace({'_': ' ', '-': ' ', '.': ' '})|title }}</th>
+                    <td>
+                        {{ dump(richSnippet.data) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

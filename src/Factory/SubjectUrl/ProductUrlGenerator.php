@@ -10,7 +10,7 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-final class ProductUrlGenerator implements SubjectUrlGeneratorInterface
+class ProductUrlGenerator implements SubjectUrlGeneratorInterface
 {
     private RouterInterface $router;
 

@@ -18,4 +18,9 @@ class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
     {
         return 'taxon';
     }
+
+    public function getRichSnippetSubjectParent()
+    {
+        return $this->getParent();
+    }
 }

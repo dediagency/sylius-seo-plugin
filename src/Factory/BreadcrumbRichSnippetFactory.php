@@ -6,35 +6,23 @@ namespace Dedi\SyliusSEOPlugin\Factory;
 
 use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\BreadcrumbRichSnippet;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\HomepageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactoryInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\BreadcrumbRichSnippet;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\HomepageRichSnippetSubject;
 
-final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
+final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {
-    public const TYPE = 'breadcrumb';
-
-    private RichSnippetSubjectUrlFactory $richSnippetSubjectUrlFactory;
+    private RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory;
     private HomepageSubjectFetcher $homepageSubjectFetcher;
 
     public function __construct(
-        RichSnippetSubjectUrlFactory $richSnippetSubjectUrlFactory,
+        RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory,
         HomepageSubjectFetcher $homepageSubjectFetcher
     ) {
         $this->richSnippetSubjectUrlFactory = $richSnippetSubjectUrlFactory;
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;
-    }
-
-    public function getType(): string
-    {
-        return self::TYPE;
-    }
-
-    public function can(string $type, RichSnippetSubjectInterface $subject): bool
-    {
-        return self::TYPE === $type;
     }
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
@@ -47,10 +35,10 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
         BreadcrumbRichSnippet $richSnippet,
         bool $isLeaf = false
     ): BreadcrumbRichSnippet {
-        if ($parent = $subject->getParent()) {
+        if ($parent = $subject->getRichSnippetSubjectParent()) {
             $this->build($parent, $richSnippet);
         } elseif (!$subject instanceof HomepageRichSnippetSubject) {
-            $this->build($this->homepageSubjectFetcher->fetch(HomepageSubjectFetcher::TYPE), $richSnippet);
+            $this->build($this->homepageSubjectFetcher->fetch(), $richSnippet);
         }
 
         $richSnippet->addElement(
@@ -59,5 +47,15 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
         );
 
         return $richSnippet;
+    }
+
+    protected function getHandledSubjectTypes(): array
+    {
+        return [
+            'homepage',
+            'contact',
+            'taxon',
+            'product',
+        ];
     }
 }

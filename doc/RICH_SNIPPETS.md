@@ -4,21 +4,22 @@ This plugin allow you to add RichSnippet on your pages.
 
 ## How does it work ?
 
-The RichSnippetController is the entrypoint where RichSnippets are generated.
+The `RichSnippetContext::getAvailableRichSnippets()` is the entrypoint where RichSnippets are generated.
 
-1. Depending on the provided parameters (Subject Type and Id), it will first try to find the right `RichSnipetSubjectInterface $subject`.
-2. Then it will get the right factory for the provided Rich Snippet Type.
-3. This factory will then be used to generate a `RichSnippetInterface $richSnippet`.
-4. Held data in the newly created `$richSnippet` will be rendered in the `JSonReponse` sent by the controller. 
+First, the Context will try to find a `RichSnippetSubjectInterface` for the given request. In order to do this, it iterates over `SubjectFetcherInterface`s (see `RichSnippetContext::guessSubject()`).
+
+Then the available `RichSnippetInterface`s for the given subject are created. This is done by iterating over `RichSnippetFactoryInterface`s. These factories are able to tell by themself whether they can handle the given subject.
+
+Finally, `RichSnippetInterface` are returned by the `RichSnippetContext::getAvailableRichSnippets()`.
+
+The twig function `dedi_sylius_seo_get_rich_snippets` is used in `_richSnippets.html` to generate the `RichSnippetInterface`s and render them.
 
 In order to be easily extensible, several `Chain of Responsibility` design pattern have been implemented.
 
 | Class | Method |
 | ----- | ------ |
-| RichSnippetContext | getSubject() |
-| RichSnippetContext | getAvailableRichSnippetsUrls() |
+| RichSnippetContext | getAvailableRichSnippets() |
 | RichSnippetContext | guessSubject() |
-| RichSnippetFactoryChain | getRichSnippetFactory() |
 | RichSnippetSubjectUrlFactory | buildUrl() |
 
 ## Creating a new Subject type
@@ -34,7 +35,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\GenericPageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\GenericPageRichSnippetSubject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -57,7 +58,7 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
         return new GenericPageRichSnippetSubject(
             $this->translator->trans('sylius.ui.contact_us'),
             self::TYPE,
-            $this->homepageSubjectFetcher->fetch(HomepageSubjectFetcher::TYPE)
+            $this->homepageSubjectFetcher->fetch()
         );
     }
 
@@ -77,7 +78,7 @@ For more information, please see `Dedi\SyliusSEOPlugin\Context\SubjectFetcher\Su
 
 ## Creating a new RichSnippetFactory
 
-In order to create a new RichSnippetFactory, you should implement the interface `RichSnippetFactoryInterface` and tag your new service with dedi_sylius_seo_plugin.rich_snippets.factory`.
+In order to create a new RichSnippetFactory, you should extend the class `AbstractRichSnippetFactory` and tag your new service with dedi_sylius_seo_plugin.rich_snippets.factory`.
 
 Example:
 
@@ -88,18 +89,15 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Factory;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\BreadcrumbRichSnippet;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\HomepageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\BreadcrumbRichSnippet;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 
-final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
+final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {
-    public const TYPE = 'breadcrumb';
-
     private RichSnippetSubjectUrlFactory $richSnippetSubjectUrlFactory;
     private HomepageSubjectFetcher $homepageSubjectFetcher;
 
@@ -109,16 +107,6 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
     ) {
         $this->richSnippetSubjectUrlFactory = $richSnippetSubjectUrlFactory;
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;
-    }
-
-    public function getType(): string
-    {
-        return self::TYPE;
-    }
-
-    public function can(string $type, RichSnippetSubjectInterface $subject): bool
-    {
-        return self::TYPE === $type;
     }
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
@@ -133,5 +121,17 @@ final class BreadcrumbRichSnippetFactory implements RichSnippetFactoryInterface
     ): BreadcrumbRichSnippet {
         // ...
     }
+
+    protected function getHandledSubjectTypes(): array
+    {
+        return [
+            'homepage',
+            'contact',
+            'taxon',
+            'product',
+        ];
+    }
 }
 ```
+
+Alternatively, your class can implement `RichSnippetFactoryInterface` in order to have more control over which subject you factory can handle.

@@ -35,7 +35,7 @@ help:
 
 ##
 ## Project setup
-## ENV = dev (default) | production | ci
+## ENV = dev (default) | production | ci
 ##---------------------------------------------------------------
 
 .PHONY: start
@@ -52,7 +52,7 @@ stop: ## Stop docker containers
 
 .PHONY: fixtures
 fixtures: ## Install fixtures
-	@$(CONSOLE_CMD) sylius:fixtures:load
+	@$(CONSOLE_CMD) sylius:fixtures:load --no-interaction
 
 .PHONY: assets
 assets: ## Install assets
@@ -143,6 +143,10 @@ phpspec-run: vendor/autoload.php ## Runs PHPSpec test suite for the optional giv
 
 .PHONY: test-spec
 test-spec: phpspec-run ## Execute specification tests
+
+.PHONY: functional-test
+function-test: vendor/autoload.php ## Execute functional tests
+	@$(PHP_CLI_CMD) vendor/bin/behat --tags @seo
 
 ##
 ## ECS

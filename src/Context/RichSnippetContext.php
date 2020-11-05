@@ -9,12 +9,10 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RouterInterface;
 
 final class RichSnippetContext
 {
     private ?Request $request;
-    private RouterInterface $router;
     /** @var SubjectFetcherInterface[] */
     private array $subjectFetchers;
     /** @var RichSnippetFactoryInterface[] */
@@ -22,43 +20,12 @@ final class RichSnippetContext
 
     public function __construct(
         RequestStack $requestStack,
-        RouterInterface $router,
         iterable $subjectFetchers,
         iterable $richSnippetFactories
     ) {
         $this->request = $requestStack->getMasterRequest();
-        $this->router = $router;
         $this->subjectFetchers = iterator_to_array($subjectFetchers);
         $this->richSnippetFactories = iterator_to_array($richSnippetFactories);
-    }
-
-    /**
-     * Iterates over SubjectFetcherInterface[] in order to find a subject depending on $type.
-     *
-     * @param string $type
-     * @param int|null $id
-     *
-     * @return RichSnippetSubjectInterface
-     *
-     * @throws SubjectNotFoundException
-     */
-    public function getSubject(string $type, ?int $id = null): RichSnippetSubjectInterface
-    {
-        foreach ($this->subjectFetchers as $subjectFetcher) {
-            if ($subjectFetcher->can($type, $id)) {
-                $subject = $subjectFetcher->fetch($type, $id);
-
-                if ($subject) {
-                    return $subject;
-                }
-            }
-        }
-
-        if ($id) {
-            throw new SubjectNotFoundException(sprintf('Subject not found for type: "%s" and id: "%d"', $type, $id));
-        }
-
-        throw new SubjectNotFoundException(sprintf('Subject not found for type: "%s"', $type));
     }
 
     /**
@@ -66,26 +33,22 @@ final class RichSnippetContext
      *
      * @return array
      */
-    public function getAvailableRichSnippetsUrls(): array
+    public function getAvailableRichSnippets(): array
     {
         $subject = $this->guessSubject();
         if (!$subject) {
             return [];
         }
 
-        $urls = [];
+        $richSnippets = [];
 
         foreach ($this->richSnippetFactories as $factory) {
-            if ($factory->can($factory->getType(), $subject)) {
-                $urls[] = [
-                    'richSnippetType' => $factory->getType(),
-                    'subjectType' => $subject->getRichSnippetSubjectType(),
-                    'id' => $subject->getId(),
-                ];
+            if ($factory->can($subject)) {
+                $richSnippets[] = $factory->buildRichSnippet($subject);
             }
         }
 
-        return $urls;
+        return $richSnippets;
     }
 
     /**

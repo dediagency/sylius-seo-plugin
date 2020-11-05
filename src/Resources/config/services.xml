@@ -11,17 +11,9 @@
         </service>
 
         <!-- Rich Snippets -->
-        <!-- Rich Snippets Controller -->
-        <service id="dedi_sylius_seo_plugin.rich_snippets.controller.breadcrumb" class="Dedi\SyliusSEOPlugin\Controller\RichSnippet\RichSnippetController">
-            <argument key="$factoryChain" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory_chain"/>
-            <argument key="$richSnippetSubjectContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
-            <tag name="controller.service_arguments"/>
-        </service>
-
         <!-- Rich Snippets Subject -->
         <service id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context" class="Dedi\SyliusSEOPlugin\Context\RichSnippetContext">
             <argument key="$requestStack" type="service" id="request_stack"/>
-            <argument key="$router" type="service" id="router.default"/>
             <argument key="$subjectFetchers" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
             <argument key="$richSnippetFactories" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.factory"/>
         </service>
@@ -51,13 +43,20 @@
         </service>
 
         <!-- Rich Snippets Factory -->
-        <service id="dedi_sylius_seo_plugin.rich_snippets.factory_chain" class="Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryChain">
-            <argument key="$factories" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.factory"/>
-        </service>
-
         <service id="dedi_sylius_seo_plugin.rich_snippets.factory.breadcrumb" class="Dedi\SyliusSEOPlugin\Factory\BreadcrumbRichSnippetFactory">
             <argument key="$richSnippetSubjectUrlFactory" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url"/>
             <argument key="$homepageSubjectFetcher" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.homepage_subject_fetcher"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.product" class="Dedi\SyliusSEOPlugin\Factory\ProductRichSnippetFactory">
+            <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
+            <argument key="$priceHelper" type="service" id="sylius.templating.helper.price"/>
+            <argument key="$channelContext" type="service" id="sylius.context.channel.cached"/>
+            <argument key="$localeContext" type="service" id="sylius.context.locale.composite"/>
+            <argument key="$currencyContext" type="service" id="sylius.context.shopper"/>
+            <argument key="$productUrlGenerator" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator"/>
+            <argument key="$availabilityChecker" type="service" id="sylius.availability_checker.default"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
         </service>
 
@@ -80,6 +79,20 @@
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
         </service>
 
+        <!-- Form extensions -->
+        <service id="dedi.sylius_seo_plugin.form.extension.channel_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ChannelTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
+        <service id="dedi.sylius_seo_plugin.form.extension.product_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ProductTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
+        <!-- Menu Builder -->
+        <service id="dedi.sylius_seo_plugin.admin.menu_builder.product" class="Dedi\SyliusSEOPlugin\Menu\Admin\ProductMenuBuilder">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.product.form" method="addSeoMenuItem" />
+        </service>
+
         <!-- Twig Extension -->
         <service id="dedi_sylius_seo_plugin.rich_snippets.twig.rich_snippets_extension" class="Dedi\SyliusSEOPlugin\Twig\RichSnippetsExtension">
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
@@ -89,6 +102,12 @@
         <service id="dedi_sylius_seo_plugin.metadata.twig.metadata_image_extension" class="Dedi\SyliusSEOPlugin\Twig\ReferenceableImageExtension">
             <argument key="$filterExtension" type="service" id="liip_imagine.templating.filter_extension"/>
             <tag name="twig.extension"/>
+        </service>
+
+        <!-- Data Collector -->
+        <service id="dedi_sylius_seo_plugin.data_collector.rich_snippets" class="Dedi\SyliusSEOPlugin\DataCollector\RichSnippetsDataCollector">
+            <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
+            <tag name="data_collector" template="@DediSyliusSEOPlugin/DataCollector/rich_snippets.html.twig" id="dedi_sylius_seo_plugin.rich_snippets"/>
         </service>
     </services>
 </container>

@@ -5,6 +5,14 @@ dedi_sylius_seo_plugin:
         advanced_options: Options avancées
         info_title: Comment fonctionne le réferencement de mon contenu ?
         info_description: Une partie du contenu est généré automatiquement à partir des informations précédement renseignées. En cliquant sur "Options avancées", vous pouvez modifier toutes les métadonnées.
+        product_info_title: Optimisations RichSnippet product
+        product_info_description: Les champs suivants permettent d'optimiser le référencement des produits. Il est préférable de remplir au moins un champs par section.
+        product_info_link: Plus d'informations
+        global_identifiers_link: Plus d'informations sur les champs suivants
+        brand_title: Marque du produit
+        sku_title: Référence produit spécifique au marchand
+        global_identifiers_title: Identifiants globaux
+        google_tracking_info: Si Google Tag Manager et Google Analytics sont configurés, uniquement Google Tag Manager sera utilisé
     form:
         not_indexable: Ne pas rendre indexable le contenu
         metadata_title: Métadonnée titre
@@ -15,3 +23,13 @@ dedi_sylius_seo_plugin:
         og_metadata_url: Métadonnée OpenGraph URL du contenu
         og_metadata_image: Métadonnée OpenGraph image
         og_metadata_type: Métadonnée OpenGraph type
+        google_analytics_code: Code Google Analytics
+        google_tag_manager_id: Id Google Tag Manager
+
+        brand: Marque
+        sku: sku
+        gtin8: gtin8
+        gtin13: gtin13
+        gtin14: gtin14
+        mpn: mpn
+        isbn: isbn
