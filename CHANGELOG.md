@@ -1,3 +1,25 @@
+# [0.4.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.3.1...v0.4.0) (2020-11-05)
+
+
+### Bug Fixes
+
+* **product:** Creation 500 ([b954256](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/b95425601f982753f916fb91110a66bdcde4e975))
+
+
+### Features
+
+* **google-analytics:** Ajout de la configuration de Google Analytics ([8350d5f](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/8350d5f70e949e6e0641e77ebe09fb51e0236ef4))
+* Rename RichSnippetSubjectInterface method ([87a40e6](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/87a40e6ebad8555aa3b57cc5f97ee8670abcc8d4))
+* **product:** Behat tests ([7dab2d8](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/7dab2d8154831fdb0a9f120ebc91b1f29b3a0ef6))
+* Add RichSnippet Product ([48e5c6c](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/48e5c6c335cd1469fbf01f16c242f5e0bb7a6284))
+* Add RichSnippets section in symfony debug bar ([d472b1d](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/d472b1d5249c7bcfa3624abf676ea6259656f45f))
+* **product:** Remove aggregate offer in favor of offer list ([da01b20](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/da01b20bca2026aaf735721e89c4ce67feb48552))
+* **rich-snippets:** Ajout d'une condition pour restreindre les factories de RichSnippets à certains sujets ([39a2e21](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/39a2e21e69fe1ea8ae2c826db48ad24f79b06599))
+* **rich-snippets:** Suppression du controller de génération de rich snippets ([2f2d4e9](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/2f2d4e947b1f1fcb81358f035ec590561a361677))
+* add spec tests ([9011ef4](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/9011ef408df0c62089432e8c0e900cbe0f360f90))
+* refactor namespaces ([b0bdcc9](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/b0bdcc95441ae76bdbd1e3bcd706138c0377aae0))
+* RichSnippet produit choix de l'offre ([f4d337d](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/f4d337db2ec8835f45c916894cb62c39df073432))
+
 ## [0.3.1](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.3.0...v0.3.1) (2020-09-24)
 
 
