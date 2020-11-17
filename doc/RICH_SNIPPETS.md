@@ -24,7 +24,7 @@ In order to be easily extensible, several `Chain of Responsibility` design patte
 
 ## Creating a new Subject type
 
-In order to create a new subject, you need to create a new service implementing the interface `SubjectFetcherInterface` and is tagged `̀dedi_sylius_seo_plugin.rich_snippets.subject_fetcher.
+In order to create a new subject, you need to create a new service implementing the interface `SubjectFetcherInterface` and it must be tagged `dedi_sylius_seo_plugin.rich_snippets.subject_fetcher`.
 
 Example:
 
@@ -47,11 +47,6 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
     private TranslatorInterface $translator;
 
     // ...
-
-    public function can(string $type, ?int $id): bool
-    {
-        return self::TYPE === $type && null === $id;
-    }
 
     public function fetch(string $type, ?int $id = null): ?RichSnippetSubjectInterface
     {
@@ -111,15 +106,7 @@ final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
     {
-        return $this->build($subject, new BreadcrumbRichSnippet(), true);
-    }
-
-    private function build(
-        RichSnippetSubjectInterface $subject,
-        BreadcrumbRichSnippet $richSnippet,
-        bool $isLeaf = false
-    ): BreadcrumbRichSnippet {
-        // ...
+        //
     }
 
     protected function getHandledSubjectTypes(): array
