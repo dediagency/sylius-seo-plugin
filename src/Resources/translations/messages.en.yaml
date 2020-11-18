@@ -3,8 +3,8 @@ dedi_sylius_seo_plugin:
         seo: SEO
         open_graph_info: More information about OpenGraph
         advanced_options: Advanced options
-        info_title: How work my content's referencement ?
-        info_description: Some info is automatically generated. Click on "Advanced options" to override what is computed.
+        info_title: How does my content's referencement work ?
+        info_description: Some informations are automatically generated. Click on "Advanced options" to override what is computed.
         product_info_title: Optimizations for RichSnippet product
         product_info_description: The following fields allow to optimize the referencing of the products. It is preferable to fill in at least one field per section.
         product_info_link: More information
