@@ -12,7 +12,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class TaxonUrlGenerator implements SubjectUrlGeneratorInterface
 {
-    private RouterInterface $router;
+    protected RouterInterface $router;
 
     public function __construct(RouterInterface $router)
     {
