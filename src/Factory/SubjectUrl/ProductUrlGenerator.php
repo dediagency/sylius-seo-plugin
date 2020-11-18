@@ -12,7 +12,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ProductUrlGenerator implements SubjectUrlGeneratorInterface
 {
-    private RouterInterface $router;
+    protected RouterInterface $router;
 
     public function __construct(RouterInterface $router)
     {

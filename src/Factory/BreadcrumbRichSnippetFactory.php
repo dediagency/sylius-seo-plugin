@@ -14,8 +14,8 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\HomepageRichSnippetSubject;
 
 final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {
-    private RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory;
-    private HomepageSubjectFetcher $homepageSubjectFetcher;
+    protected RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory;
+    protected HomepageSubjectFetcher $homepageSubjectFetcher;
 
     public function __construct(
         RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory,
