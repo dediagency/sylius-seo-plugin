@@ -22,16 +22,13 @@ imports:
     - { resource: "@DediSyliusSEOPlugin/Resources/config/config.yaml" }
 ```
 
-# Usage
+## SEO Usage for Product and Channel entities
 
-To add SEO content administration for a Sylius resource, please follow this cookbook.
+The plugin has pre-configuration for Product and Channel entities.
 
-### 1 - Implement ReferenceableInterface into your Entity
-
-For example with Sylius Product Entity.
+You have to add `ReferenceableInterface` into Product and Channel classes
 
 ```php
-
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
@@ -47,45 +44,26 @@ class Product implements ReferenceableInterface
 }
 ```
 
-ReferenceableTrait add all required methods. All methods available here : [src/Domain/SEO/Adapter/ReferenceableTrait.php](src/Domain/SEO/Adapter/ReferenceableTrait.php)
-
-### 2 - Extend your form type extension with AbstractReferenceableTypeExtension
-
-For example with FormTypeExtension of Sylius Product Entity.
-
 ```php
-use Dedi\SyliusSEOPlugin\Form\Extension\DefaultReferenceableTypeExtension;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductType;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 
-class ProductTypeExtension extends DefaultReferenceableTypeExtension
+class Channel implements ReferenceableInterface
 {
-    public static function getExtendedTypes(): iterable
+    use ReferenceableTrait;
+
+    protected function createReferenceableContent(): ReferenceableInterface
     {
-        return [ProductType::class];
+        return new SEOContent();
     }
 }
 ```
 
-### 3 - Edit admin template to add SEO content form
-
-For example with Sylius Product administration
+Add twig event
 
 ```twig
-{# template/bundles/SyliusAdminBundle/Product/Tab/_detail.html.twig #}
-
-...
-<div class="ui hidden divider"></div>
-
-<div class="ui segment">
-    {{ form_row(form.referenceableContent) }}
-</div>
-```
-
-### 4 - Call SEO header events
-
-For example into layout template with Product's referenceable content
-
-```twig
+{# layout.html.twig #}
 <!DOCTYPE html>
 
 <html>
@@ -94,24 +72,37 @@ For example into layout template with Product's referenceable content
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     {% block title %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product }) }}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
     {% endblock %}
 
     {% block metatags %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: product }) }}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: product ?? sylius.channel }) }}
     {% endblock %}
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 ```
 
-### 5 Add the Rich Snippets configuration
+And that's all !
 
-Make your `Product` and `Taxon` clases implement the `RichSnippetSubjectInterface` interface.
+## Rich Snippet usage for Product and Taxon entities
+
+Plugin has pre-configuration rich snippet context for Product and Taxon entities.
+
+Rich snippet available are :
+- Breadcrumb for Product and Taxon entities
+- Product for Product entity
+
+Make your `Product` and `Taxon` classes implement the `RichSnippetSubjectInterface` interface.
 
 ```php
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
+
 class Product extends BaseProduct implements RichSnippetSubjectInterface
 {
+    use RichSnippetProductSubjectTrait;
+
     // ...
     public function getRichSnippetSubjectParent()
     {
@@ -126,6 +117,8 @@ class Product extends BaseProduct implements RichSnippetSubjectInterface
 ```
 
 ```php
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+
 class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 {
     // ...
@@ -141,11 +134,10 @@ class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 }
 ```
 
-### 5 Call Rich Snippets header events
-
-This can be added your main layout
+Call Rich Snippets header events, this can be added to your main layout
 
 ```twig
+{# layout.html.twig #}
 <!DOCTYPE html>
 
 <html>
@@ -161,7 +153,9 @@ This can be added your main layout
 </head>
 ```
 
-### 6 Add Google Analytics Console Configuration
+### Add Google Analytics Console Configuration
+
+You have to add `SeoAwareChannelInterface` for Channel Entity
 
 ```php
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelInterface;
@@ -175,10 +169,14 @@ class Channel extends BaseChannel implements SeoAwareChannelInterface
 }
 ```
 
-### Bonus - Learn how to create new RichSnippet / RichSnippetSubject
+### Create migration
 
+Create migration with `bin/console doctrine:migration:diff`
+
+### Bonus
+
+- [Learn how to add SEO bloc for custom entity](doc/SEO_CUSTOM.md);
 - [Learn how to create new RichSnippets](doc/RICH_SNIPPETS.md)
-
 
 ### Bonus - Set default values for SEO informations
 
