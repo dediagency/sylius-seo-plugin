@@ -1,3 +1,15 @@
+# [0.5.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.4.0...v0.5.0) (2020-11-19)
+
+
+### Bug Fixes
+
+* **translations:** fix english translations ([4e7b65e](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/4e7b65e591929444e94d2d568c47625540d6fef7))
+
+
+### Features
+
+* Préparation release 1.0 | :sparkles: ([32314a9](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/32314a93812e78a6c9875a70193db48db8b446f4))
+
 # [0.4.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.3.1...v0.4.0) (2020-11-05)
 
 
