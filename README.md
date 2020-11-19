@@ -17,6 +17,7 @@
 </p>
 
 <p>
+
 At Dedi, we do not just create websites. We are building together a real digital strategy to combine your business requirements with our technical skills. We've been working with open source for a long time and decided to start giving back to the community by contributing and sharing some plugin of our own. 
 
 We’ll be happy to meet you, feel free to contact us. Learn more about us on our <a href="https://www.dedi-agency.com" target="_blank">website</a>.
