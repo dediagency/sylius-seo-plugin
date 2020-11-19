@@ -1,3 +1,15 @@
+# [1.0.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.5.0...v1.0.0) (2020-11-19)
+
+
+### Features
+
+* Release 1.0.0 | :bookmark: ([16bf13a](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/16bf13a4fc44454b0b6790e1016c78956d229dae))
+
+
+### BREAKING CHANGES
+
+* Release 1.0.0
+
 # [0.5.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.4.0...v0.5.0) (2020-11-19)
 
 
