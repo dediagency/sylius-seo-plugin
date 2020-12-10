@@ -1,3 +1,10 @@
+## [1.0.1](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v1.0.0...v1.0.1) (2020-12-10)
+
+
+### Bug Fixes
+
+* Correction de la génération de l'url dans les metadata | :bug: ([e4eb5a3](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/e4eb5a3c1afbb6fc8be27c449a80d64c47eab5a2))
+
 # [1.0.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.5.0...v1.0.0) (2020-11-19)
 
 
