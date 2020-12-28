@@ -19,7 +19,7 @@ class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
         $this->parent = $parent;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return null;
     }
@@ -29,12 +29,12 @@ class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
         return $this->type;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getRichSnippetSubjectParent()
+    public function getRichSnippetSubjectParent(): ?RichSnippetSubjectInterface
     {
         return $this->parent;
     }
