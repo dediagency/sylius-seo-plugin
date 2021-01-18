@@ -2,6 +2,17 @@ default:
     suites:
         rich_snippets:
             contexts:
-                - 'dedi_sylius_seo_plugin.context.ui.shop.seo'
+                - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.product_taxon
+                - sylius.behat.context.setup.taxonomy
+                - sylius.behat.context.ui.shop.contact
+                - sylius.behat.context.ui.shop.product
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.taxon
+                - sylius.behat.context.transform.channel
+                - dedi_sylius_seo_plugin.context.ui.shop.seo
+                - sylius.behat.context.setup.admin_security
             filters:
                 tags: '@seo'

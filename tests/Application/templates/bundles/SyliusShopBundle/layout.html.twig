@@ -20,6 +20,10 @@
         {{ sylius_template_event('sylius.shop.layout.stylesheets') }}
     {% endblock %}
 
+    {% block links %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.links') }}
+    {% endblock %}
+
     {{ sylius_template_event('sylius.shop.layout.head') }}
 </head>
 

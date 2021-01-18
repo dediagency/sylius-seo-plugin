@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop;
 
-class HomePage extends AbstractRichSnippetAwarePage
+class HomePage extends AbstractSeoPage
 {
     public function getRouteName(): string
     {

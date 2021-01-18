@@ -6,100 +6,26 @@ namespace Tests\Dedi\SyliusSEOPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
-use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Core\Model\ChannelPricingInterface;
-use Sylius\Component\Core\Model\ProductImageInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Core\Repository\ProductRepositoryInterface;
-use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\RichSnippetAwarePageInterface;
+use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
+use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\PageCollection;
+use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\SeoPage;
 use Webmozart\Assert\Assert;
 
 class SeoContext implements Context
 {
-    public const HOMEPAGE = 'home';
-    public const CONTACT_PAGE = 'contact';
-    public const TAXON_PAGE = 'taxon';
-    public const PRODUCT_PAGE = 'product';
-
     public const RICHSNIPPET_BREADCRUMB = 'BreadcrumbList';
     public const RICHSNIPPET_PRODUCT = 'Product';
 
-    /** @var RichSnippetAwarePageInterface[] */
-    private array $pages;
-
-    private RichSnippetAwarePageInterface $currentPage;
-
-    private ProductRepositoryInterface $productRepository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
+    private PageCollection $pageCollection;
+    private CurrentPageResolverInterface $currentPageResolver;
 
     public function __construct(
-        RichSnippetAwarePageInterface $homePage,
-        RichSnippetAwarePageInterface $contactPage,
-        RichSnippetAwarePageInterface $taxonPage,
-        RichSnippetAwarePageInterface $productPage,
-        ProductRepositoryInterface $productRepository,
-        EntityManagerInterface $entityManager
+        PageCollection $pageCollection,
+        CurrentPageResolverInterface $currentPageResolver
     ) {
-        $this->pages = [
-            self::HOMEPAGE => $homePage,
-            self::CONTACT_PAGE => $contactPage,
-            self::TAXON_PAGE => $taxonPage,
-            self::PRODUCT_PAGE => $productPage,
-        ];
+        $this->pageCollection = $pageCollection;
 
-        $this->productRepository = $productRepository;
-        $this->entityManager = $entityManager;
-    }
-
-    /**
-     * @BeforeScenario
-     * Clean product 727F_patched_cropped_jeans fixture to delete random values
-     */
-    public function setupFeature()
-    {
-        $product = $this->productRepository->findOneByCode('727F_patched_cropped_jeans');
-        $product->setShortDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-        $product->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-
-        /** @var ProductImageInterface $image */
-        $image = $product->getImages()->first();
-        $image->setPath('727F_patched_cropped_jeans.jpeg');
-
-        /** @var ProductVariantInterface $variant */
-        foreach ($product->getVariants() as $index => $variant) {
-            /** @var ChannelPricingInterface $channelPricing */
-            foreach ($variant->getChannelPricings() as $channelPricing) {
-                $channelPricing->setPrice(1000 * ($index + 1));
-            }
-        }
-
-        foreach ($product->getReviews() as $review) {
-            $this->entityManager->remove($review);
-            $this->entityManager->flush();
-        }
-
-        $this->entityManager->persist($product);
-        $this->entityManager->persist($image);
-        $this->entityManager->flush();
-    }
-
-    /**
-     * @When a Googlebot visits the :page page
-     * @When a Googlebot visits the :page page with the following parameters:
-     */
-    public function googlebotVisitsThePage(string $page, ?TableNode $table = null): void
-    {
-        $this->currentPage = $this->getPage($page);
-
-        $params = [];
-        if ($table) {
-            $params = $table->getHash()[0];
-        }
-
-        $this->currentPage->open($params);
+        $this->currentPageResolver = $currentPageResolver;
     }
 
     /**
@@ -107,7 +33,7 @@ class SeoContext implements Context
      */
     public function itShouldAccessTheBreadcrumb(TableNode $table): void
     {
-        $richSnippets = $this->currentPage->getRichSnippetData();
+        $richSnippets = $this->getCurrentPage()->getRichSnippetData();
 
         Assert::keyExists(
             $richSnippets,
@@ -150,7 +76,7 @@ class SeoContext implements Context
      */
     public function itShouldAccessTheProduct(string $name, string $description, string $image, string $currency, TableNode $table): void
     {
-        $richSnippets = $this->currentPage->getRichSnippetData();
+        $richSnippets = $this->getCurrentPage()->getRichSnippetData();
 
         Assert::keyExists(
             $richSnippets,
@@ -189,7 +115,7 @@ class SeoContext implements Context
      */
     public function itShouldHaveTheOgTitleAndTheOgUrl(TableNode $table)
     {
-        $data = $this->currentPage->getOgData();
+        $data = $this->getCurrentPage()->getOgData();
 
         foreach ($table->getHash() as $ogDatum) {
             Assert::keyExists(
@@ -212,16 +138,29 @@ class SeoContext implements Context
     }
 
     /**
-     * @param string $code
-     * @return RichSnippetAwarePageInterface
-     * @throws \Exception
+     * @Then I should be able to read a canonical URL tag with value :link
      */
-    private function getPage(string $code): RichSnippetAwarePageInterface
+    public function iShouldBeAbleToReadACanonicalUrlTagWithValue($link)
     {
-        if (!array_key_exists($code, $this->pages)) {
-            throw new \Exception(sprintf('No page found for code "%s"', $code));
-        }
+        $currentPage = $this->getCurrentPage();
+        Assert::true($currentPage->hasLinkRelCanonical());
+        Assert::eq($currentPage->getLinkRelCanonical(), $link);
+    }
 
-        return $this->pages[$code];
+    /**
+     * @When I visit the homepage
+     */
+    public function iVisitTheHomepage()
+    {
+        $this->pageCollection->getPage('home')->open();
+    }
+
+    private function getCurrentPage(): SeoPage
+    {
+        /** @var SeoPage $currentPage */
+        $currentPage = $this->currentPageResolver->getCurrentPageWithForm($this->pageCollection->getAll());
+        Assert::isInstanceOf($currentPage, SeoPage::class);
+
+        return $currentPage;
     }
 }

@@ -5,18 +5,25 @@
         <defaults public="true" />
         <!-- Contexts -->
         <service id="dedi_sylius_seo_plugin.context.ui.shop.seo" class="Tests\Dedi\SyliusSEOPlugin\Behat\Context\Ui\Shop\SeoContext">
-            <argument key="$homePage" type="service" id="dedi_sylius_seo_plugin.page.shop.homepage" />
-            <argument key="$contactPage" type="service" id="dedi_sylius_seo_plugin.page.shop.contact_page" />
-            <argument key="$taxonPage" type="service" id="dedi_sylius_seo_plugin.page.shop.taxon_page" />
-            <argument key="$productPage" type="service" id="dedi_sylius_seo_plugin.page.shop.product_page" />
-            <argument key="$productRepository" type="service" id="sylius.repository.product" />
-            <argument key="$entityManager" type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="dedi_sylius_seo_plugin.behat.page.shop.collection"/>
+            <argument type="service" id="sylius.behat.current_page_resolver"/>
         </service>
 
         <!-- Pages -->
-        <service id="dedi_sylius_seo_plugin.page.shop.contact_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\ContactPage" parent="sylius.behat.symfony_page" public="false" />
-        <service id="dedi_sylius_seo_plugin.page.shop.homepage" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\HomePage" parent="sylius.behat.symfony_page" public="false" />
-        <service id="dedi_sylius_seo_plugin.page.shop.product_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\ProductPage" parent="sylius.behat.symfony_page" public="false" />
-        <service id="dedi_sylius_seo_plugin.page.shop.taxon_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\TaxonPage" parent="sylius.behat.symfony_page" public="false" />
+        <service id="dedi_sylius_seo_plugin.behat.page.shop.contact_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\ContactPage" parent="sylius.behat.symfony_page" public="false">
+            <tag name="dedi_sylius_seo_plugin.behat.page.shop.collection" key="contact"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.behat.page.shop.homepage" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\HomePage" parent="sylius.behat.symfony_page" public="false">
+            <tag name="dedi_sylius_seo_plugin.behat.page.shop.collection" key="home"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.behat.page.shop.product_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\ProductPage" parent="sylius.behat.symfony_page" public="false">
+            <tag name="dedi_sylius_seo_plugin.behat.page.shop.collection" key="product"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.behat.page.shop.taxon_page" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\TaxonPage" parent="sylius.behat.symfony_page" public="false">
+            <tag name="dedi_sylius_seo_plugin.behat.page.shop.collection" key="taxon"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.behat.page.shop.collection" class="Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\PageCollection">
+            <argument type="tagged_iterator" tag="dedi_sylius_seo_plugin.behat.page.shop.collection" index-by="key"/>
+        </service>
     </services>
 </container>

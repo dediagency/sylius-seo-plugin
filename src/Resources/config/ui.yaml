@@ -9,6 +9,9 @@ sylius_ui:
         dedi_sylius_seo_plugin.rich_snippets:
             blocks:
                 dedi_seo_metatags: DediSyliusSEOPlugin:Shop/Header:_richSnippets.html.twig
+        dedi_sylius_seo_plugin.links:
+            blocks:
+                dedi_seo_links: DediSyliusSEOPlugin:Shop/Header:_links.html.twig
 
         # Layout
         sylius.shop.layout.head:

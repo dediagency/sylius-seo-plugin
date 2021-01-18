@@ -1,0 +1,3 @@
+[submodule "satisfactory"]
+	path = satisfactory
+	url = ../../../interne/satisfactory.git

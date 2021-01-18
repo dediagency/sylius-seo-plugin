@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop;
 
-class ProductPage extends AbstractRichSnippetAwarePage
+class ProductPage extends AbstractSeoPage
 {
     public function getCurrentUrl(): string
     {

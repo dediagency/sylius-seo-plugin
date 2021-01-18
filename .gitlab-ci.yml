@@ -1,0 +1,9 @@
+variables:
+  NODE_VERSION: "10"
+  PHP_VERSION: "7.4"
+  CI_BEHAT_TAG: "@seo"
+
+include:
+  - project: 'dedi-agency/interne/satisfactory'
+    ref: 'feat/sylius-plugin'
+    file: '/sylius-plugin/.gitlab-ci.yml'

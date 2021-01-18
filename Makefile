@@ -1,0 +1,1 @@
+include satisfactory/sylius-plugin/Makefile

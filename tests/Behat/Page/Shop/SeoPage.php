@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop;
 
-interface RichSnippetAwarePageInterface
+use FriendsOfBehat\PageObjectExtension\Page\PageInterface;
+
+interface SeoPage extends PageInterface
 {
     /**
      * @return array where the key is the name of the rich snippet
@@ -12,4 +14,8 @@ interface RichSnippetAwarePageInterface
     public function getRichSnippetData(): array;
 
     public function getOgData(): array;
+
+    public function hasLinkRelCanonical(): bool;
+
+    public function getLinkRelCanonical(): string;
 }

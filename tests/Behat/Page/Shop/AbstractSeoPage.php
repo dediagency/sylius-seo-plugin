@@ -6,7 +6,7 @@ namespace Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
-abstract class AbstractRichSnippetAwarePage extends SymfonyPage implements RichSnippetAwarePageInterface
+abstract class AbstractSeoPage extends SymfonyPage implements SeoPage
 {
     public function getRichSnippetData(): array
     {
@@ -35,5 +35,15 @@ abstract class AbstractRichSnippetAwarePage extends SymfonyPage implements RichS
         }
 
         return $data;
+    }
+
+    public function hasLinkRelCanonical(): bool
+    {
+        return null !== $this->getDocument()->find('css', 'link[rel="canonical"]');
+    }
+
+    public function getLinkRelCanonical(): string
+    {
+        return $this->getDocument()->find('css', 'link[rel="canonical"]')->getAttribute('href');
     }
 }
