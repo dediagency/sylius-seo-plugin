@@ -6,7 +6,6 @@ Feature: Check Product page Rich Snippets definition
 
   Background:
     Given the store operates on a single channel in the "United States" named "Fashion Web Store"
-    And I am logged in as an administrator
     And the store has "Category" taxonomy
     And the "Category" taxon has children taxon "Jeans" and "Dresses"
     And the "Jeans" taxon has children taxon "Men" and "Women"
@@ -15,7 +14,7 @@ Feature: Check Product page Rich Snippets definition
     And the short description of product "727F patched cropped jeans" is "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 #    And the "727F patched cropped jeans" product has an image "http://localhost:8080/media/cache/resolve/sylius_shop_product_large_thumbnail/727F_patched_cropped_jeans.jpeg" with "main" type
 
-  @rich_snippets @rich_snippets_breadcrumb
+  @rich_snippets
   Scenario: Accessing the Breadcrumb Rich Snippets
     When I view product "727F patched cropped jeans"
     Then it should access the following breadcrumb:
@@ -46,3 +45,8 @@ Feature: Check Product page Rich Snippets definition
       | url         | http://localhost:8080/en_US/products/727f-patched-cropped-jeans                                                             |
       | description | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. |
 #      | image       | http://localhost:8080/media/cache/resolve/sylius_shop_product_thumbnail/images/727F_patched_cropped_jeans.jpeg              |
+
+  @seo_links
+  Scenario: Accessing the canonical URL in a product page
+    When I view product "727F patched cropped jeans"
+    Then I should be able to read a canonical URL tag with value "http://localhost:8080/en_US/products/727f-patched-cropped-jeans"

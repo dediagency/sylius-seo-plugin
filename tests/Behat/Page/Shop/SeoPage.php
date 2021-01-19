@@ -18,4 +18,8 @@ interface SeoPage extends PageInterface
     public function hasLinkRelCanonical(): bool;
 
     public function getLinkRelCanonical(): string;
+
+    public function hasLinkAlternateForLocale(string $localeCode): bool;
+
+    public function getLinkRelAlternateForLocale(string $localeCode): string;
 }

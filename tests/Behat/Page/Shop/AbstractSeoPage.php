@@ -46,4 +46,14 @@ abstract class AbstractSeoPage extends SymfonyPage implements SeoPage
     {
         return $this->getDocument()->find('css', 'link[rel="canonical"]')->getAttribute('href');
     }
+
+    public function hasLinkAlternateForLocale(string $localeCode): bool
+    {
+        return null !== $this->getDocument()->find('css', sprintf('link[rel="alternate"][hreflang="%s"]', strtolower($localeCode)));
+    }
+
+    public function getLinkRelAlternateForLocale(string $localeCode): string
+    {
+        return $this->getDocument()->find('css', sprintf('link[rel="alternate"][hreflang="%s"]', strtolower($localeCode)))->getAttribute('href');
+    }
 }

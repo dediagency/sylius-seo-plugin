@@ -148,6 +148,16 @@ class SeoContext implements Context
     }
 
     /**
+     * @Then I should be able to read an alternate URL tag with value :url and hreflang attribute value :hreflang
+     */
+    public function iShouldBeAbleToReadAnAlternateUrlTagWithValueAndHreflangAttributeValue(string $url, string $hreflang)
+    {
+        $currentPage = $this->getCurrentPage();
+        Assert::true($currentPage->hasLinkAlternateForLocale($hreflang));
+        Assert::eq($currentPage->getLinkRelAlternateForLocale($hreflang), $url);
+    }
+
+    /**
      * @When I visit the homepage
      */
     public function iVisitTheHomepage()

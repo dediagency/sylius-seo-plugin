@@ -7,7 +7,7 @@ Feature: Check Contact page Rich Snippets definition
   Background:
     Given the store operates on a single channel in the "United States" named "Fashion Web Store"
 
-  @rich_snippets @rich_snippets_breadcrumb
+  @rich_snippets
   Scenario: Accessing the Breadcrumb Rich Snippets
     When I want to request contact
     Then it should access the following breadcrumb:
@@ -22,3 +22,8 @@ Feature: Check Contact page Rich Snippets definition
     | name  | data                                 |
     | title | Fashion Web Store                    |
     | url   | http://localhost:8080/en_US/contact/ |
+
+  @seo_links
+  Scenario: Accessing the canonical URL in the contact page
+    When I want to request contact
+    Then I should be able to read a canonical URL tag with value "http://localhost:8080/en_US/contact/"
