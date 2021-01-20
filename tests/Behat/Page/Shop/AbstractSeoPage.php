@@ -56,4 +56,9 @@ abstract class AbstractSeoPage extends SymfonyPage implements SeoPage
     {
         return $this->getDocument()->find('css', sprintf('link[rel="alternate"][hreflang="%s"]', strtolower($localeCode)))->getAttribute('href');
     }
+
+    public function hasNoIndexNoFollowTag(): bool
+    {
+        return null !== $this->getDocument()->find('css', 'meta[name="robots"][content="noindex, nofollow"]');
+    }
 }

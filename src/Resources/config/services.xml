@@ -104,6 +104,33 @@
             <tag name="twig.extension"/>
         </service>
 
+        <service id="dedi_sylius_seo_plugin.links.twig.no_index_no_follow_extension" class="Dedi\SyliusSEOPlugin\Twig\NoIndexNoFollowExtension">
+            <argument type="service" id="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter_registry" />
+            <argument type="service" id="request_stack" />
+            <tag name="twig.extension"/>
+        </service>
+
+        <!-- NoIndexNoFollow filter registry -->
+        <service id="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter_registry" class="Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\FilterRegistry">
+            <argument type="tagged_iterator" tag="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter" index-by="key"/>
+        </service>
+
+        <!-- Filters list -->
+        <service id="dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_taxon_filter" class="Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\Specification\IsTaxonFilter"/>
+        <service id="dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_sorting_filter" class="Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\Specification\IsSortedFilter"/>
+        <service id="dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_paginated_filter" class="Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\Specification\IsPaginatedFilter"/>
+
+        <service id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted" class="Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\Logic\OrSpecification">
+            <argument type="service" id="dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_paginated_filter"/>
+            <argument type="service" id="dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_sorting_filter"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter" class="Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\Logic\AndSpecification" public="false">
+            <argument type="service" id="dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_taxon_filter"/>
+            <argument type="service" id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted"/>
+            <tag name="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter"/>
+        </service>
+
         <!-- Data Collector -->
         <service id="dedi_sylius_seo_plugin.data_collector.rich_snippets" class="Dedi\SyliusSEOPlugin\DataCollector\RichSnippetsDataCollector">
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>

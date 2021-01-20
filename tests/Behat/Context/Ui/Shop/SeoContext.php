@@ -165,6 +165,24 @@ class SeoContext implements Context
         $this->pageCollection->getPage('home')->open();
     }
 
+    /**
+     * @Then I should be able to read a no index no follow meta tag
+     */
+    public function iShouldBeAbleToReadANoIndexNoFollowMetaTag()
+    {
+        $currentPage = $this->getCurrentPage();
+        Assert::true($currentPage->hasNoIndexNoFollowTag());
+    }
+
+    /**
+     * @Then I should not be able to read a no index no follow meta tag
+     */
+    public function iShouldNotBeAbleToReadANoIndexNoFollowMetaTag()
+    {
+        $currentPage = $this->getCurrentPage();
+        Assert::false($currentPage->hasNoIndexNoFollowTag());
+    }
+
     private function getCurrentPage(): SeoPage
     {
         /** @var SeoPage $currentPage */

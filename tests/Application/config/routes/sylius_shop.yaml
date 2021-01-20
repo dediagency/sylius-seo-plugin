@@ -12,3 +12,17 @@ sylius_shop_default_locale:
     methods: [GET]
     defaults:
         _controller: sylius.controller.shop.locale_switch:switchAction
+
+sylius_shop_product_index:
+    path: /{_locale}/taxons/{slug}
+    methods: [GET]
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+        slug: .+
+    defaults:
+        _controller: sylius.controller.product:indexAction
+        _sylius:
+            template: "@SyliusShop/Product/index.html.twig"
+            grid: sylius_shop_product
+        _seo:
+            no_index_no_follow_filter: dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter
