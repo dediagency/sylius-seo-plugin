@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Behat\Context\Ui\Shop;
 
-use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
+use Behat\MinkExtension\Context\MinkContext;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\PageCollection;
 use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\SeoPage;
 use Webmozart\Assert\Assert;
 
-class SeoContext implements Context
+class SeoContext extends MinkContext
 {
     public const RICHSNIPPET_BREADCRUMB = 'BreadcrumbList';
     public const RICHSNIPPET_PRODUCT = 'Product';
@@ -50,7 +50,7 @@ class SeoContext implements Context
             ];
 
             if (array_key_exists('url', $item) && !empty($item['url'])) {
-                $itemData['item'] = $item['url'];
+                $itemData['item'] = $this->locatePath($item['url']);
             }
 
             $expectedItemListElement[] = $itemData;
@@ -94,7 +94,7 @@ class SeoContext implements Context
                 'offers' => array_map(function ($offer) use ($currency) {
                     return [
                         '@type' => 'Offer',
-                        'url' => $this->currentPage->getCurrentUrl(),
+                        'url' => $this->getCurrentPage()->getCurrentUrl(),
                         'priceCurrency' => $currency,
                         'price' => $offer['price'],
                         'availability' => $offer['isInStock'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
@@ -124,6 +124,10 @@ class SeoContext implements Context
                 sprintf('This page doesn\'t have an og:%s meta tag', $ogDatum['name'])
             );
 
+            if ('url' === $ogDatum['name']) {
+                $ogDatum['data'] = $this->locatePath($ogDatum['data']);
+            }
+
             if (preg_match('/\%([a-z]+)\%/', $ogDatum['data'], $matches)) {
                 $type = $matches[1];
                 Assert::$type($ogDatum['data']);
@@ -144,7 +148,7 @@ class SeoContext implements Context
     {
         $currentPage = $this->getCurrentPage();
         Assert::true($currentPage->hasLinkRelCanonical());
-        Assert::eq($currentPage->getLinkRelCanonical(), $link);
+        Assert::eq($currentPage->getLinkRelCanonical(), $this->locatePath($link));
     }
 
     /**
@@ -154,7 +158,7 @@ class SeoContext implements Context
     {
         $currentPage = $this->getCurrentPage();
         Assert::true($currentPage->hasLinkAlternateForLocale($hreflang));
-        Assert::eq($currentPage->getLinkRelAlternateForLocale($hreflang), $url);
+        Assert::eq($currentPage->getLinkRelAlternateForLocale($hreflang), $this->locatePath($url));
     }
 
     /**

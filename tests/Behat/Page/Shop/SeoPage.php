@@ -24,4 +24,6 @@ interface SeoPage extends PageInterface
     public function getLinkRelAlternateForLocale(string $localeCode): string;
 
     public function hasNoIndexNoFollowTag(): bool;
+
+    public function getCurrentUrl(): string;
 }

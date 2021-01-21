@@ -61,4 +61,9 @@ abstract class AbstractSeoPage extends SymfonyPage implements SeoPage
     {
         return null !== $this->getDocument()->find('css', 'meta[name="robots"][content="noindex, nofollow"]');
     }
+
+    public function getCurrentUrl(): string
+    {
+        return $this->getSession()->getCurrentUrl();
+    }
 }

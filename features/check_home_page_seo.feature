@@ -21,21 +21,21 @@ Feature: Check Homepage Rich Snippets definition
     Then it should have the following og data:
       | name  | data                         |
       | title | Fashion Web Store            |
-      | url   | http://localhost:8080/en_US/ |
+      | url   | /en_US/ |
 
   @seo_links
   Scenario: Accessing the canonical URL
     When I visit the homepage
-    Then I should be able to read a canonical URL tag with value "http://localhost:8080/en_US/"
+    Then I should be able to read a canonical URL tag with value "/en_US/"
 
   @seo_links
   Scenario: Accessing the alernate URLs
     When I visit the homepage
-    Then I should be able to read an alternate URL tag with value "http://localhost:8080/fr_FR/" and hreflang attribute value "fr_fr"
-    And I should be able to read an alternate URL tag with value "http://localhost:8080/pl_PL/" and hreflang attribute value "pl_pl"
+    Then I should be able to read an alternate URL tag with value "/fr_FR/" and hreflang attribute value "fr_fr"
+    And I should be able to read an alternate URL tag with value "/pl_PL/" and hreflang attribute value "pl_pl"
 
   @seo_links
   Scenario: Accessing the alernate URLs after switching locale
     When I switch to the "Polish (Poland)" locale
-    Then I should be able to read an alternate URL tag with value "http://localhost:8080/fr_FR/" and hreflang attribute value "fr_fr"
-    And I should be able to read an alternate URL tag with value "http://localhost:8080/en_US/" and hreflang attribute value "en_us"
+    Then I should be able to read an alternate URL tag with value "/fr_FR/" and hreflang attribute value "fr_fr"
+    And I should be able to read an alternate URL tag with value "/en_US/" and hreflang attribute value "en_us"

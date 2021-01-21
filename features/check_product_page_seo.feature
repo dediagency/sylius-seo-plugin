@@ -12,23 +12,23 @@ Feature: Check Product page Rich Snippets definition
     And the store has a product "727F patched cropped jeans"
     And the product "727F patched cropped jeans" has a main taxon "Women"
     And the short description of product "727F patched cropped jeans" is "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-#    And the "727F patched cropped jeans" product has an image "http://localhost:8080/media/cache/resolve/sylius_shop_product_large_thumbnail/727F_patched_cropped_jeans.jpeg" with "main" type
+#    And the "727F patched cropped jeans" product has an image "/media/cache/resolve/sylius_shop_product_large_thumbnail/727F_patched_cropped_jeans.jpeg" with "main" type
 
   @rich_snippets
   Scenario: Accessing the Breadcrumb Rich Snippets
     When I view product "727F patched cropped jeans"
     Then it should access the following breadcrumb:
       | name                       | url                                               |
-      | Home                       | http://localhost:8080/en_US/                      |
-      | Category                   | http://localhost:8080/en_US/taxons/category       |
-      | Jeans                      | http://localhost:8080/en_US/taxons/jeans |
-      | Women                      | http://localhost:8080/en_US/taxons/women    |
+      | Home                       | /en_US/                      |
+      | Category                   | /en_US/taxons/category       |
+      | Jeans                      | /en_US/taxons/jeans |
+      | Women                      | /en_US/taxons/women    |
       | 727F patched cropped jeans |                                                   |
 
 #  @rich_snippets @rich_snippets_product
 #  Scenario: Accessing the Breadcrumb Rich Snippets
 #    When I view product "727F patched cropped jeans"
-#    Then it should access the product named "727F patched cropped jeans" with the description "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", the image "http://localhost:8080/media/cache/resolve/sylius_shop_product_large_thumbnail/727F_patched_cropped_jeans.jpeg", the currency "USD" and the following offers:
+#    Then it should access the product named "727F patched cropped jeans" with the description "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", the image "/media/cache/resolve/sylius_shop_product_large_thumbnail/727F_patched_cropped_jeans.jpeg", the currency "USD" and the following offers:
 #      | price | isInStock |
 #      | 10.0 |          1 |
 #      | 20.0 |          1 |
@@ -42,11 +42,11 @@ Feature: Check Product page Rich Snippets definition
     Then it should have the following og data:
       | name        | data                                                                                                                        |
       | title       | Women \| 727F patched cropped jeans                                                                                         |
-      | url         | http://localhost:8080/en_US/products/727f-patched-cropped-jeans                                                             |
+      | url         | /en_US/products/727f-patched-cropped-jeans                                                             |
       | description | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. |
-#      | image       | http://localhost:8080/media/cache/resolve/sylius_shop_product_thumbnail/images/727F_patched_cropped_jeans.jpeg              |
+#      | image       | /media/cache/resolve/sylius_shop_product_thumbnail/images/727F_patched_cropped_jeans.jpeg              |
 
   @seo_links
   Scenario: Accessing the canonical URL in a product page
     When I view product "727F patched cropped jeans"
-    Then I should be able to read a canonical URL tag with value "http://localhost:8080/en_US/products/727f-patched-cropped-jeans"
+    Then I should be able to read a canonical URL tag with value "/en_US/products/727f-patched-cropped-jeans"

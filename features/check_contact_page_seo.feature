@@ -12,7 +12,7 @@ Feature: Check Contact page Rich Snippets definition
     When I want to request contact
     Then it should access the following breadcrumb:
       | name       | url                          |
-      | Home       | http://localhost:8080/en_US/ |
+      | Home       | /en_US/ |
       | Contact us |                              |
 
   @og_data
@@ -21,9 +21,9 @@ Feature: Check Contact page Rich Snippets definition
     Then it should have the following og data:
     | name  | data                                 |
     | title | Fashion Web Store                    |
-    | url   | http://localhost:8080/en_US/contact/ |
+    | url   | /en_US/contact/ |
 
   @seo_links
   Scenario: Accessing the canonical URL in the contact page
     When I want to request contact
-    Then I should be able to read a canonical URL tag with value "http://localhost:8080/en_US/contact/"
+    Then I should be able to read a canonical URL tag with value "/en_US/contact/"
