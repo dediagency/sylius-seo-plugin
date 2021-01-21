@@ -1,6 +1,6 @@
 # Installation
 
-Run `composer require dedi/sylius-seo-plugin`
+Run `composer require dedi/sylius-seo-plugin --no-scripts`
 
 Change your `config/bundles.php` file to add the line for the plugin :
 
@@ -32,8 +32,9 @@ You have to add `ReferenceableInterface` into Product and Channel classes
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Sylius\Component\Core\Model\Product as BaseProduct;
 
-class Product implements ReferenceableInterface
+class Product extends BaseProduct implements ReferenceableInterface
 {
     use ReferenceableTrait;
 
@@ -48,8 +49,9 @@ class Product implements ReferenceableInterface
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Sylius\Component\Core\Model\Channel as BaseChannel;
 
-class Channel implements ReferenceableInterface
+class Channel extends BaseChannel implements ReferenceableInterface
 {
     use ReferenceableTrait;
 
@@ -59,31 +61,6 @@ class Channel implements ReferenceableInterface
     }
 }
 ```
-
-Add twig event
-
-```twig
-{# layout.html.twig #}
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    {% block title %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
-    {% endblock %}
-
-    {% block metatags %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: product ?? sylius.channel }) }}
-    {% endblock %}
-
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-```
-
-And that's all !
 
 ## Rich Snippet usage for Product and Taxon entities
 
@@ -134,25 +111,6 @@ class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 }
 ```
 
-Call Rich Snippets header events, this can be added to your main layout
-
-```twig
-{# layout.html.twig #}
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    {% block metatags %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
-    {% endblock %}
-
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-</head>
-```
-
 ### Add Google Analytics Console Configuration
 
 You have to add `SeoAwareChannelInterface` for Channel Entity
@@ -169,9 +127,50 @@ class Channel extends BaseChannel implements SeoAwareChannelInterface
 }
 ```
 
+## Add twig events
+
+The @SyliusShop/layout.html.twig should be overridden in order to add `dedi_sylius_seo_plugin` events in the `<head>` section of your page
+
+Those events will load `<title>`, Open Graph metadata and Rich Snippets in you pages based on the current resource
+
+>Note : it is important to override the default layout.html.twig and not just extend it.
+>
+> In the default layout, the line `<title>{% block title %}Sylius{% endblock %}</title>` will result in non valid HTML when redeclaring the `block title`
+
+```twig
+{# templates/bundles/SyliusShopBundle/layout.html.twig #}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    {% block title %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
+    {% endblock %}
+
+    {% block metatags %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: product ?? sylius.channel }) }}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
+    {% endblock %}
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    
+    ...
+    {# rest of vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/layout.html.twig #}
+    ... 
+</head>
+```
+
 ### Create migration
 
-Create migration with `bin/console doctrine:migration:diff`
+Create migration, review and execute them 
+
+```
+bin/console doctrine:migration:diff
+bin/console doctrine:migration:migrate
+```
 
 ### Bonus
 
