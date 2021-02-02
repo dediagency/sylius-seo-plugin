@@ -5,5 +5,5 @@ variables:
 
 include:
   - project: 'dedi-agency/interne/satisfactory'
-    ref: 'feat/sylius-plugin'
+    ref: v0.4.0
     file: '/sylius-plugin/.gitlab-ci.yml'
