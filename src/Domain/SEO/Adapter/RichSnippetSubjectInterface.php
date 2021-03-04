@@ -13,13 +13,7 @@ interface RichSnippetSubjectInterface
 
     public function getRichSnippetSubjectType(): string;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): ?string;
 
-    /**
-     * @return self|null
-     */
-    public function getRichSnippetSubjectParent();
+    public function getRichSnippetSubjectParent(): ?self;
 }

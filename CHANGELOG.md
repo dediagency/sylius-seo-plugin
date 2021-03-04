@@ -1,3 +1,29 @@
+## [1.0.2](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v1.0.1...v1.0.2) (2021-01-05)
+
+
+### Bug Fixes
+
+* Correction de signature | :bug: ([81be9be](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/81be9be6a6d45b06ea52727f77556551f26298e9))
+
+## [1.0.1](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v1.0.0...v1.0.1) (2020-12-10)
+
+
+### Bug Fixes
+
+* Correction de la génération de l'url dans les metadata | :bug: ([e4eb5a3](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/e4eb5a3c1afbb6fc8be27c449a80d64c47eab5a2))
+
+# [1.0.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.5.0...v1.0.0) (2020-11-19)
+
+
+### Features
+
+* Release 1.0.0 | :bookmark: ([16bf13a](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/commit/16bf13a4fc44454b0b6790e1016c78956d229dae))
+
+
+### BREAKING CHANGES
+
+* Release 1.0.0
+
 # [0.5.0](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v0.4.0...v0.5.0) (2020-11-19)
 
 

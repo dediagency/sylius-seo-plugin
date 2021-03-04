@@ -32,6 +32,8 @@
         <meta property="og:image" content="{{ dedi_sylius_seo_get_image_url(seo.openGraphMetadataImage) }}" />
     {% endif %}
 
-    <meta property="og:type" content="{{ seo.openGraphMetadataType|default('website') }}" />
-    <meta property="og:url" content="{{ seo.openGraphMetadataUrl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
+    {% if app.request.attributes.get('_route') is not empty %}
+        <meta property="og:type" content="{{ seo.openGraphMetadataType|default('website') }}" />
+        <meta property="og:url" content="{{ seo.openGraphMetadataUrl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
+    {% endif %}
 {% endif %}

@@ -15,7 +15,7 @@ class HomepageRichSnippetSubject implements RichSnippetSubjectInterface
         $this->name = $name;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return null;
     }
@@ -25,12 +25,12 @@ class HomepageRichSnippetSubject implements RichSnippetSubjectInterface
         return 'homepage';
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getRichSnippetSubjectParent()
+    public function getRichSnippetSubjectParent(): ?RichSnippetSubjectInterface
     {
         return null;
     }

@@ -8,6 +8,7 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
@@ -66,7 +67,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return new SEOContent();
     }
 
-    public function getRichSnippetSubjectParent()
+    public function getRichSnippetSubjectParent(): ?RichSnippetSubjectInterface
     {
         return $this->getMainTaxon();
     }
