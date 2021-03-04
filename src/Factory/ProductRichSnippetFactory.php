@@ -70,7 +70,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             'description' => $subject->getShortDescription(),
         ]);
 
-        if ($subject->getSEOBrand()) {
+        if ('' !== (string) $subject->getSEOBrand()) {
             $richSnippet->addData([
                 'brand' => [
                     'type' => 'Thing',
@@ -79,36 +79,36 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             ]);
         }
 
-        if ($subject->getSEOGtin8()) {
+        if ('' !== (string) $subject->getSEOGtin8()) {
             $richSnippet->addData([
                 'gtin8' => $subject->getSEOGtin8(),
             ]);
         }
-        if ($subject->getSEOGtin13()) {
+        if ('' !== (string) $subject->getSEOGtin13()) {
             $richSnippet->addData([
                 'gtin13' => $subject->getSEOGtin13(),
             ]);
         }
 
-        if ($subject->getSEOGtin14()) {
+        if ('' !== (string) $subject->getSEOGtin14()) {
             $richSnippet->addData([
                 'gtin14' => $subject->getSEOGtin14(),
             ]);
         }
 
-        if ($subject->getSEOMpn()) {
+        if ('' !== (string) $subject->getSEOMpn()) {
             $richSnippet->addData([
                 'mpn' => $subject->getSEOMpn(),
             ]);
         }
 
-        if ($subject->getSEOIsbn()) {
+        if ('' !== (string) $subject->getSEOIsbn()) {
             $richSnippet->addData([
                 'isbn' => $subject->getSEOIsbn(),
             ]);
         }
 
-        if ($subject->getSEOSku()) {
+        if ('' !== (string) $subject->getSEOSku()) {
             $richSnippet->addData([
                 'sku' => $subject->getSEOSku(),
             ]);
@@ -116,7 +116,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
         if ($subject->getImages()->count() > 0) {
             $richSnippet->addData([
-                'image' => array_map(function (ImageInterface $image) {
+                'image' => array_map(function (ImageInterface $image): string {
                     return $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail');
                 }, $subject->getImages()->toArray()),
             ]);
@@ -138,19 +138,16 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         return $richSnippet;
     }
 
-    /**
-     * @param ProductInterface|RichSnippetSubjectInterface $subject
-     *
-     * @return mixed
-     */
     protected function getOffers(ProductInterface $subject): array
     {
         /** @var ChannelInterface $channel */
+        /** @var ProductInterface|RichSnippetProductSubjectInterface $subject */
+
         $channel = $this->channelContext->getChannel();
         $url = $this->productUrlGenerator->generateUrl($subject);
         $currencyCode = $this->currencyContext->getCurrencyCode();
 
-        return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
+        return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode): array {
             $price = $this->priceHelper->getPrice(
                 $variant,
                 ['channel' => $channel]
@@ -207,7 +204,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             'reviewBody' => $bestReview->getComment(),
         ];
 
-        if (($author = $bestReview->getAuthor()) && ($author->getFirstName() || $author->getLastName())) {
+        if ((null !== ($author = $bestReview->getAuthor()) ) && ('' !== (string)$author->getFirstName() || '' !== (string) $author->getLastName())) {
             $reviewData['author'] = [
                 '@type' => 'Person',
                 'name' => trim(sprintf( // either firstName, lastName or both

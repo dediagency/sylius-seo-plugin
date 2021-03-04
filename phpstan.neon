@@ -1,5 +1,10 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: false
+    level: 4
+    paths:
+        - src
+        - tests/Application/src/
 
     excludes_analyse:
         # Makes PHPStan crash
@@ -10,4 +15,4 @@ parameters:
         - 'tests/Application/src/**.php'
 
     ignoreErrors:
-        - '/Parameter #1 $configuration of method Symfony\Component\DependencyInjection\Extension\Extension::processConfiguration() expects Symfony\Component\Config\Definition\ConfigurationInterface, Symfony\Component\Config\Definition\ConfigurationInterface|null given./'
+        - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'

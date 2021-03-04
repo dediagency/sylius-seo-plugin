@@ -49,7 +49,7 @@ class SeoContext extends MinkContext
                 'name' => $item['name'],
             ];
 
-            if (array_key_exists('url', $item) && !empty($item['url'])) {
+            if (array_key_exists('url', $item) && '' !== $item['url']) {
                 $itemData['item'] = $this->locatePath($item['url']);
             }
 
@@ -91,7 +91,7 @@ class SeoContext extends MinkContext
                 'name' => $name,
                 'description' => $description,
                 'image' => [$image],
-                'offers' => array_map(function ($offer) use ($currency) {
+                'offers' => array_map(function ($offer) use ($currency): array {
                     return [
                         '@type' => 'Offer',
                         'url' => $this->getCurrentPage()->getCurrentUrl(),

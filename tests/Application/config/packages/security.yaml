@@ -1,9 +1,13 @@
 parameters:
-    sylius.security.api_regex: "^/api/v1"
-    sylius.security.shop_regex: "^/(?!%sylius_admin.path_name%|api/.*|api$|media/.*)[^/]++"
-    sylius.security.new_api_route: "/api/v2"
-    sylius.security.new_api_user_account_route: "%sylius.security.new_api_shop_route%/account"
-    sylius.security.new_api_user_account_regex: "^%sylius.security.new_api_user_account_route%"
+    sylius.security.api_regex: "^/api"
+    sylius.security.admin_regex: "^/%sylius_admin.path_name%"
+    sylius.security.shop_regex: "^/(?!%sylius_admin.path_name%|new-api|api/.*|api$|media/.*)[^/]++"
+    sylius.security.new_api_route: "/new-api"
+    sylius.security.new_api_regex: "^%sylius.security.new_api_route%"
+    sylius.security.new_api_admin_route: "%sylius.security.new_api_route%/admin"
+    sylius.security.new_api_admin_regex: "^%sylius.security.new_api_admin_route%"
+    sylius.security.new_api_shop_route: "%sylius.security.new_api_route%/shop"
+    sylius.security.new_api_shop_regex: "^%sylius.security.new_api_shop_route%"
 
 security:
     providers:
@@ -15,7 +19,9 @@ security:
             id: sylius.admin_user_provider.email_or_name_based
         sylius_api_shop_user_provider:
             id: sylius.shop_user_provider.email_or_name_based
-
+        sylius_api_chain_provider:
+             chain:
+                providers: [sylius_api_shop_user_provider, sylius_api_admin_user_provider]
     encoders:
         Sylius\Component\User\Model\UserInterface: sha512
     firewalls:
@@ -45,6 +51,14 @@ security:
                 path: sylius_admin_logout
                 target: sylius_admin_login
             anonymous: true
+        new_api:
+            pattern: "%sylius.security.new_api_regex%/*"
+            provider: sylius_api_chain_provider
+            stateless: true
+            anonymous: lazy
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
 
         oauth_token:
             pattern: "%sylius.security.api_regex%/oauth/v2/token"

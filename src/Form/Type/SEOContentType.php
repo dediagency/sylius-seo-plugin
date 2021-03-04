@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class SEOContentType extends AbstractResourceType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('translations', ResourceTranslationsType::class, [
@@ -21,7 +21,7 @@ class SEOContentType extends AbstractResourceType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'dedi_sylius_seo_plugin_content_seo';
     }

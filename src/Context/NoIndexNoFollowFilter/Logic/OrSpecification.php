@@ -18,12 +18,12 @@ final class OrSpecification implements NoIndexNoFollowFilterInterface
 
     public function isSatisfiedBy(Request $request): bool
     {
-        return array_reduce($this->specifications, function ($carry, NoIndexNoFollowFilterInterface $specification) use ($request) {
+        return array_reduce($this->specifications, static function (?bool $carry, NoIndexNoFollowFilterInterface $specification) use ($request): bool {
             if (null === $carry) {
                 return $specification->isSatisfiedBy($request);
             }
 
-            return $carry || $specification->isSatisfiedBy($request);
+            return true === $carry || $specification->isSatisfiedBy($request);
         });
     }
 }

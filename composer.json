@@ -11,7 +11,8 @@
     "require-dev": {
         "behat/behat": "^3.6",
         "behat/mink-selenium2-driver": "^1.4",
-        "fetzi/phpspec-watcher": "^2.0",
+        "dmore/behat-chrome-extension": "^1.3",
+        "dmore/chrome-mink-driver": "^2.7",
         "friends-of-behat/mink": "^1.8",
         "friends-of-behat/mink-browserkit-driver": "^1.4",
         "friends-of-behat/mink-debug-extension": "^2.0.0",
@@ -21,9 +22,13 @@
         "friends-of-behat/symfony-extension": "^2.1",
         "friends-of-behat/variadic-extension": "^1.3",
         "friendsofsymfony/oauth-server-bundle": "^1.6 || >2.0.0-alpha.0 ^2.0@dev",
+        "lakion/mink-debug-extension": "^1.2.3",
+        "lchrusciel/api-test-case": "^3.0",
         "phpspec/phpspec": "^7.0",
         "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "0.12.74",
         "phpstan/phpstan-doctrine": "^0.12",
+        "phpstan/phpstan-strict-rules": "^0.12.0",
         "phpstan/phpstan-webmozart-assert": "^0.12",
         "phpunit/phpunit": "^9.5",
         "sensiolabs/security-checker": "^6.0",
@@ -34,7 +39,8 @@
         "symfony/dotenv": "^4.4 || ^5.2",
         "symfony/intl": "^4.4 || ^5.2",
         "symfony/web-profiler-bundle": "^4.4 || ^5.2",
-        "symfony/web-server-bundle": "^4.4 || ^5.2"
+        "symfony/web-server-bundle": "^4.4 || ^5.2",
+        "vimeo/psalm": "4.4.1"
     },
     "prefer-stable": true,
     "autoload": {
@@ -44,6 +50,9 @@
         }
     },
     "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
         "sort-packages": true
     },
     "scripts": {

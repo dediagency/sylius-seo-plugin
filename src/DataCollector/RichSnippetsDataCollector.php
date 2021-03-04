@@ -19,18 +19,18 @@ class RichSnippetsDataCollector extends DataCollector
         $this->richSnippetContext = $richSnippetContext;
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = NULL)
+    public function collect(Request $request, Response $response, \Throwable $exception = NULL): void
     {
         $this->data['rich_snippets'] = $this->richSnippetContext->getAvailableRichSnippets();
         $this->data['html'] = $response->getContent();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'dedi_sylius_seo_plugin.rich_snippets';
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }

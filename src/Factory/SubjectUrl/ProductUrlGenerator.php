@@ -19,13 +19,17 @@ class ProductUrlGenerator implements SubjectUrlGeneratorInterface
         $this->router = $router;
     }
 
-    public function can(RichSnippetSubjectInterface $subject): bool
+    public function can($subject): bool
     {
         return $subject instanceof ProductInterface;
     }
 
-    public function generateUrl(RichSnippetSubjectInterface $subject): string
+    public function generateUrl($subject): string
     {
+        if (!$this->can($subject)) {
+            throw new \LogicException('This case only works with a subject which implement ProductInterface');
+        }
+
         return $this->router->generate('sylius_shop_product_show', ['slug' => $subject->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

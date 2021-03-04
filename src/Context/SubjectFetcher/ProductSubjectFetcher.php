@@ -38,10 +38,13 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
-        return $this->repository->findOneByChannelAndSlug(
+        /** @var RichSnippetSubjectInterface $product */
+        $product = $this->repository->findOneByChannelAndSlug(
             $this->channelContext->getChannel(),
             $this->localeContext->getLocaleCode(),
             $request->attributes->get('slug')
         );
+        
+        return $product;
     }
 }
