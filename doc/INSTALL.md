@@ -22,6 +22,27 @@ imports:
     - { resource: "@DediSyliusSEOPlugin/Resources/config/config.yaml" }
 ```
 
+## Website SEO optimizations
+
+Call the SEO links event in your main layout header. This will automatically add a `<link rel="canonical>` HTML tag to you website's pages.
+
+```twig
+{# layout.html.twig #}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    {% block metatags %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
+    {% endblock %}
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+</head>
+```
+
 ## SEO Usage for Product and Channel entities
 
 The plugin has pre-configuration for Product and Channel entities.

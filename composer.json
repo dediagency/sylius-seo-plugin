@@ -61,15 +61,6 @@
         ],
         "post-create-project-cmd": [
             "php bin/create_node_symlink.php"
-        ],
-        "test:ecs": [
-            "vendor/bin/ecs check src"
-        ],
-        "test:phpstan": [
-            "vendor/bin/phpstan analyse src/ -c phpstan.neon --level=4"
-        ],
-        "test:phpspec": [
-            "vendor/bin/phpspec run --format=pretty --no-code-generation"
         ]
     },
     "autoload-dev": {

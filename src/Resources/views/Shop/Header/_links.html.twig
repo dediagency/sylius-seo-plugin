@@ -1,0 +1,17 @@
+<link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"/>
+
+{% set currentLocale = sylius.localeCode|default('') %}
+
+{% set channel = sylius.channel %}
+
+{% for locale in channel.locales %}
+    {% if locale.code != currentLocale %}
+        <link rel="alternate" hreflang="{{ locale.code|lower }}" href="{{ url('sylius_shop_homepage', {'_locale':locale.code}) }}"/>
+    {% endif %}
+{% endfor %}
+
+{% set noindex = dedi_sylius_seo_is_no_index_no_follow() %}
+
+{% if noindex %}
+    <meta name="robots" content="noindex, nofollow">
+{% endif %}
