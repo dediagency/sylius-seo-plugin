@@ -19,12 +19,12 @@ class HomepageUrlGenerator implements SubjectUrlGeneratorInterface
         $this->router = $router;
     }
 
-    public function can(RichSnippetSubjectInterface $subject): bool
+    public function can($subject): bool
     {
         return $subject instanceof HomepageRichSnippetSubject;
     }
 
-    public function generateUrl(RichSnippetSubjectInterface $subject): string
+    public function generateUrl($subject): string
     {
         return $this->router->generate('sylius_shop_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
     }

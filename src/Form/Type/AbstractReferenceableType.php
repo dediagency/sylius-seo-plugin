@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 abstract class AbstractReferenceableType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('referenceableContent', SEOContentType::class, [

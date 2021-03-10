@@ -10,7 +10,7 @@ abstract class AbstractRichSnippetFactory implements RichSnippetFactoryInterface
 {
     final public function can(RichSnippetSubjectInterface $subject): bool
     {
-        return in_array($subject->getRichSnippetSubjectType(), $this->getHandledSubjectTypes());
+        return in_array($subject->getRichSnippetSubjectType(), $this->getHandledSubjectTypes(), true);
     }
 
     /**

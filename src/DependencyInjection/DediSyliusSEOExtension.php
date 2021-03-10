@@ -23,7 +23,7 @@ final class DediSyliusSEOExtension extends Extension implements PrependExtension
         $loader->load('services.xml');
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('twig', [
             'form_themes' => [
