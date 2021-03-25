@@ -21,11 +21,11 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.ui.seo',
                 'constraints' => [new Valid()],
             ])
-            ->add('brand', TextType::class, [
+            ->add('SEOBrand', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.brand',
                 'required' => false,
             ])
-            ->add('gtin8', TextType::class, [
+            ->add('SEOGtin8', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.gtin8',
                 'required' => false,
                 'constraints' => [
@@ -37,7 +37,7 @@ class ProductTypeExtension extends AbstractTypeExtension
                 ],
                 'validation_groups' => ['Default', 'sylius'],
             ])
-            ->add('gtin13', TextType::class, [
+            ->add('SEOGtin13', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.gtin13',
                 'required' => false,
                 'constraints' => [
@@ -49,7 +49,7 @@ class ProductTypeExtension extends AbstractTypeExtension
                 ],
                 'validation_groups' => ['Default', 'sylius'],
             ])
-            ->add('gtin14', TextType::class, [
+            ->add('SEOGtin14', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.gtin14',
                 'required' => false,
                 'constraints' => [
@@ -61,15 +61,15 @@ class ProductTypeExtension extends AbstractTypeExtension
                 ],
                 'validation_groups' => ['Default', 'sylius'],
             ])
-            ->add('mpn', TextType::class, [
+            ->add('SEOMpn', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.mpn',
                 'required' => false,
             ])
-            ->add('isbn', TextType::class, [
+            ->add('SEOIsbn', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.isbn',
                 'required' => false,
             ])
-            ->add('sku', TextType::class, [
+            ->add('SEOSku', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.sku',
                 'required' => false,
             ])

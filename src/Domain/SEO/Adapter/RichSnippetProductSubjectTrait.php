@@ -9,112 +9,112 @@ use Doctrine\ORM\Mapping as ORM;
 trait RichSnippetProductSubjectTrait
 {
     /**
-     * @ORM\Column(type="string", name="brand", nullable=true)
+     * @ORM\Column(type="string", name="seo_brand", nullable=true)
      */
-    protected ?string $brand = null;
+    protected ?string $SEOBrand = null;
 
     /**
-     * @ORM\Column(type="string", length=8, name="gtin8", nullable=true)
+     * @ORM\Column(type="string", length=8, name="seo_gtin8", nullable=true)
      */
-    protected ?string $gtin8 = null;
+    protected ?string $SEOGtin8 = null;
 
     /**
-     * @ORM\Column(type="string", length=13, name="gtin13", nullable=true)
+     * @ORM\Column(type="string", length=13, name="seo_gtin13", nullable=true)
      */
-    protected ?string $gtin13 = null;
+    protected ?string $SEOGtin13 = null;
 
     /**
-     * @ORM\Column(type="string", length=14, name="gtin14", nullable=true)
+     * @ORM\Column(type="string", length=14, name="seo_gtin14", nullable=true)
      */
-    protected ?string $gtin14 = null;
+    protected ?string $SEOGtin14 = null;
 
     /**
-     * @ORM\Column(type="string", name="mpn", nullable=true)
+     * @ORM\Column(type="string", name="seo_mpn", nullable=true)
      */
-    protected ?string $mpn = null;
+    protected ?string $SEOMpn = null;
 
     /**
-     * @ORM\Column(type="string", name="isbn", nullable=true)
+     * @ORM\Column(type="string", name="seo_isbn", nullable=true)
      */
-    protected ?string $isbn = null;
+    protected ?string $SEOIsbn = null;
 
     /**
-     * @ORM\Column(type="string", name="sku", nullable=true)
+     * @ORM\Column(type="string", name="seo_sku", nullable=true)
      */
-    protected ?string $sku = null;
+    protected ?string $SEOSku = null;
 
     /**
-     * @ORM\Column(type="boolean", name="offer_aggregated", nullable=false, options={"default" : 0})
+     * @ORM\Column(type="boolean", name="seo_offer_aggregated", nullable=false, options={"default" : 0})
      */
-    protected bool $offerAggregated = false;
+    protected bool $SEOOfferAggregated = false;
 
-    public function getBrand(): ?string
+    public function getSEOBrand(): ?string
     {
-        return $this->brand;
+        return $this->SEOBrand;
     }
 
-    public function setBrand(?string $brand): void
+    public function setSEOBrand(?string $SEOBrand): void
     {
-        $this->brand = $brand;
+        $this->SEOBrand = $SEOBrand;
     }
 
-    public function getGtin8(): ?string
+    public function getSEOGtin8(): ?string
     {
-        return $this->gtin8;
+        return $this->SEOGtin8;
     }
 
-    public function setGtin8(?string $gtin8): void
+    public function setSEOGtin8(?string $SEOGtin8): void
     {
-        $this->gtin8 = $gtin8;
+        $this->SEOGtin8 = $SEOGtin8;
     }
 
-    public function getGtin13(): ?string
+    public function getSEOGtin13(): ?string
     {
-        return $this->gtin13;
+        return $this->SEOGtin13;
     }
 
-    public function setGtin13(?string $gtin13): void
+    public function setSEOGtin13(?string $SEOGtin13): void
     {
-        $this->gtin13 = $gtin13;
+        $this->SEOGtin13 = $SEOGtin13;
     }
 
-    public function getGtin14(): ?string
+    public function getSEOGtin14(): ?string
     {
-        return $this->gtin14;
+        return $this->SEOGtin14;
     }
 
-    public function setGtin14(?string $gtin14): void
+    public function setSEOGtin14(?string $SEOGtin14): void
     {
-        $this->gtin14 = $gtin14;
+        $this->SEOGtin14 = $SEOGtin14;
     }
 
-    public function getMpn(): ?string
+    public function getSEOMpn(): ?string
     {
-        return $this->mpn;
+        return $this->SEOMpn;
     }
 
-    public function setMpn(?string $mpn): void
+    public function setSEOMpn(?string $SEOMpn): void
     {
-        $this->mpn = $mpn;
+        $this->SEOMpn = $SEOMpn;
     }
 
-    public function getIsbn(): ?string
+    public function getSEOIsbn(): ?string
     {
-        return $this->isbn;
+        return $this->SEOIsbn;
     }
 
-    public function setIsbn(?string $isbn): void
+    public function setSEOIsbn(?string $SEOIsbn): void
     {
-        $this->isbn = $isbn;
+        $this->SEOIsbn = $SEOIsbn;
     }
 
-    public function getSku(): ?string
+    public function getSEOSku(): ?string
     {
-        return $this->sku;
+        return $this->SEOSku;
     }
 
-    public function setSku(?string $sku): void
+    public function setSEOSku(?string $SEOSku): void
     {
-        $this->sku = $sku;
+        $this->SEOSku = $SEOSku;
     }
 }
