@@ -70,47 +70,47 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             'description' => $subject->getShortDescription(),
         ]);
 
-        if ($subject->getBrand()) {
+        if ($subject->getSEOBrand()) {
             $richSnippet->addData([
                 'brand' => [
                     'type' => 'Thing',
-                    'name' => $subject->getBrand(),
+                    'name' => $subject->getSEOBrand(),
                 ],
             ]);
         }
 
-        if ($subject->getGtin8()) {
+        if ($subject->getSEOGtin8()) {
             $richSnippet->addData([
-                'gtin8' => $subject->getGtin8(),
+                'gtin8' => $subject->getSEOGtin8(),
             ]);
         }
-        if ($subject->getGtin13()) {
+        if ($subject->getSEOGtin13()) {
             $richSnippet->addData([
-                'gtin13' => $subject->getGtin13(),
-            ]);
-        }
-
-        if ($subject->getGtin14()) {
-            $richSnippet->addData([
-                'gtin14' => $subject->getGtin14(),
+                'gtin13' => $subject->getSEOGtin13(),
             ]);
         }
 
-        if ($subject->getMpn()) {
+        if ($subject->getSEOGtin14()) {
             $richSnippet->addData([
-                'mpn' => $subject->getMpn(),
+                'gtin14' => $subject->getSEOGtin14(),
             ]);
         }
 
-        if ($subject->getIsbn()) {
+        if ($subject->getSEOMpn()) {
             $richSnippet->addData([
-                'isbn' => $subject->getIsbn(),
+                'mpn' => $subject->getSEOMpn(),
             ]);
         }
 
-        if ($subject->getSku()) {
+        if ($subject->getSEOIsbn()) {
             $richSnippet->addData([
-                'sku' => $subject->getSku(),
+                'isbn' => $subject->getSEOIsbn(),
+            ]);
+        }
+
+        if ($subject->getSEOSku()) {
+            $richSnippet->addData([
+                'sku' => $subject->getSEOSku(),
             ]);
         }
 

@@ -6,17 +6,17 @@ namespace Dedi\SyliusSEOPlugin\Domain\SEO\Adapter;
 
 interface RichSnippetProductSubjectInterface extends RichSnippetSubjectInterface
 {
-    public function getBrand(): ?string;
+    public function getSEOBrand(): ?string;
 
-    public function getGtin8(): ?string;
+    public function getSEOGtin8(): ?string;
 
-    public function getGtin13(): ?string;
+    public function getSEOGtin13(): ?string;
 
-    public function getGtin14(): ?string;
+    public function getSEOGtin14(): ?string;
 
-    public function getMpn(): ?string;
+    public function getSEOMpn(): ?string;
 
-    public function getIsbn(): ?string;
+    public function getSEOIsbn(): ?string;
 
-    public function getSku(): ?string;
+    public function getSEOSku(): ?string;
 }
