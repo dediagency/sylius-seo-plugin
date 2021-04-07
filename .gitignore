@@ -18,3 +18,5 @@ node_modules
 .releaserc.yml
 docker-compose.yaml
 Makefile
+.gitmodules
+satisfactory
