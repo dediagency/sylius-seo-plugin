@@ -10,7 +10,7 @@ abstract class AbstractSeoPage extends SymfonyPage implements SeoPage
 {
     public function getRichSnippetData(): array
     {
-        $elements = $this->getDocument()->findAll('css', 'head script[type="application/ld+json"]');
+        $elements = $this->getDocument()->findAll('css', 'script[type="application/ld+json"]');
 
         $richSnippets = [];
         foreach ($elements as $element) {
@@ -27,7 +27,7 @@ abstract class AbstractSeoPage extends SymfonyPage implements SeoPage
 
     public function getOgData(): array
     {
-        $elements = $this->getDocument()->findAll('css', 'head meta[property^="og:"]');
+        $elements = $this->getDocument()->findAll('css', 'meta[property^="og:"]');
 
         $data = [];
         foreach ($elements as $element) {
