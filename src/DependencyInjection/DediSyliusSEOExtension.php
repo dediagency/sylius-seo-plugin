@@ -27,7 +27,7 @@ final class DediSyliusSEOExtension extends Extension implements PrependExtension
     {
         $container->prependExtensionConfig('twig', [
             'form_themes' => [
-                '@DediSyliusSEOPlugin/Resources/views/Admin/SEO/form_block_type.html.twig',
+                '@DediSyliusSEOPlugin/Admin/SEO/form_block_type.html.twig',
             ],
         ]);
     }

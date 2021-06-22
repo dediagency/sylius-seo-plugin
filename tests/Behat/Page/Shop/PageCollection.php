@@ -24,7 +24,7 @@ class PageCollection
         return $this->pages[$name];
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         return $this->pages;
     }
