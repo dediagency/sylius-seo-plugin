@@ -3,7 +3,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin"
+    "url": "git+https://github.com/dediagency/sylius-seo-plugin"
   },
   "author": "Dedi",
   "license": "MIT"
