@@ -19,7 +19,7 @@ class RichSnippetsDataCollector extends DataCollector
         $this->richSnippetContext = $richSnippetContext;
     }
 
-    public function collect(Request $request, Response $response)
+    public function collect(Request $request, Response $response, \Throwable $exception = NULL)
     {
         $this->data['rich_snippets'] = $this->richSnippetContext->getAvailableRichSnippets();
         $this->data['html'] = $response->getContent();

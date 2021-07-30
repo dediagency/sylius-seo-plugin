@@ -102,7 +102,7 @@ class Product extends BaseProduct implements RichSnippetSubjectInterface
     use RichSnippetProductSubjectTrait;
 
     // ...
-    public function getRichSnippetSubjectParent()
+    public function getRichSnippetSubjectParent(): ?RichSnippetSubjectInterface
     {
         return $this->getMainTaxon();
     }
@@ -120,7 +120,7 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 {
     // ...
-    public function getRichSnippetSubjectParent()
+    public function getRichSnippetSubjectParent(): ?RichSnippetSubjectInterface
     {
         return $this->getParent();
     }

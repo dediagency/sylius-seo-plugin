@@ -15,5 +15,5 @@ interface RichSnippetSubjectInterface
 
     public function getName(): ?string;
 
-    public function getRichSnippetSubjectParent(): ?self;
+    public function getRichSnippetSubjectParent(): ?RichSnippetSubjectInterface;
 }
