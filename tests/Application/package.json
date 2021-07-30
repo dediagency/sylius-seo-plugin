@@ -5,6 +5,7 @@
     "jquery": "^3.2.0",
     "jquery.dirtyforms": "^2.0.0",
     "lightbox2": "^2.9.0",
+    "node-sass": "^4.13.0",
     "semantic-ui-css": "^2.2.0",
     "slick-carousel": "^1.8.1"
   },

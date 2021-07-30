@@ -56,7 +56,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
             null === $this->getReferenceableContent()->getOpenGraphMetadataImage() &&
             null != $this->getImages()->first()
         ) {
-            return '/images/' . $this->getImages()->first()->getPath();
+            return $this->getImages()->first()->getPath();
         }
 
         return $this->getBaseOpenGraphMetadataImage();
