@@ -1,0 +1,35 @@
+dedi_sylius_seo_plugin:
+    ui:
+        seo: SEO
+        open_graph_info: Meer informatie over OpenGraph
+        advanced_options: Geavanceerde opties
+        info_title: Hoe werkt de referentie van mijn inhoud?
+        info_description: Sommige informatie is automatisch gegenereerd. Klik op "Geavanceerde opties" om deze informatie aan te passen.
+        product_info_title: Optimalisaties voor product Rich Snippet
+        product_info_description: Met de volgende velden kan je de referentie van een product optimaliseren. Bij voorkeur vul je minstens één veld per sectie in.
+        product_info_link: Meer informatie
+        global_identifiers_link: Meer informatie over de volgende velden
+        brand_title: Merk van het product
+        sku_title: Verkoper-specifieke ID van het product (SKU)
+        global_identifiers_title: Globale ID's
+        google_tracking_info: Indien zowel Google Analytics als Google Tag Manager ingesteld zijn, zal Google Tag Manager gebruikt worden.
+    form:
+        not_indexable: Niet indexeerbaar
+        metadata_title: Metadata titel
+        metadata_description: Metadata beschrijving
+
+        og_metadata_title: OpenGraph metadata titel
+        og_metadata_description: OpenGraph metadata beschrijving
+        og_metadata_url: OpenGraph metadata url
+        og_metadata_image: OpenGraph metadata afbeelding
+        og_metadata_type: OpenGraph metadata type
+        google_analytics_code: Google Analytics Code
+        google_tag_manager_id: Google Tag Manager Id
+
+        brand: Merk
+        sku: sku
+        gtin8: gtin8
+        gtin13: gtin13
+        gtin14: gtin14
+        mpn: mpn
+        isbn: isbn
