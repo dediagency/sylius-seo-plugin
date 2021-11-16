@@ -13,10 +13,10 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
 {
     public const TYPE = 'contact';
 
-    private HomepageSubjectFetcher $homepageSubjectFetcher;
+    private SubjectFetcherInterface $homepageSubjectFetcher;
     private TranslatorInterface $translator;
 
-    public function __construct(HomepageSubjectFetcher $homepageSubjectFetcher, TranslatorInterface $translator)
+    public function __construct(SubjectFetcherInterface $homepageSubjectFetcher, TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;
