@@ -25,7 +25,7 @@ interface SubjectFetcherInterface
      *
      * @return RichSnippetSubjectInterface|null
      */
-    public function fetch(?int $id): ?RichSnippetSubjectInterface;
+    public function fetch(?int $id = null): ?RichSnippetSubjectInterface;
 
     /**
      * Define if the fetcher can fetch a Subject for a given request.
