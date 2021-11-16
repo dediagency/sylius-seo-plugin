@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Factory;
 
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
+use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\SubjectFetcherInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactoryInterface;
@@ -15,11 +15,11 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\HomepageRichSnippetSubject;
 final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {
     protected RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory;
-    protected HomepageSubjectFetcher $homepageSubjectFetcher;
+    protected SubjectFetcherInterface  $homepageSubjectFetcher;
 
     public function __construct(
         RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory,
-        HomepageSubjectFetcher $homepageSubjectFetcher
+        SubjectFetcherInterface $homepageSubjectFetcher
     ) {
         $this->richSnippetSubjectUrlFactory = $richSnippetSubjectUrlFactory;
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;

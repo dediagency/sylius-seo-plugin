@@ -26,9 +26,9 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
         $this->repository = $repository;
     }
 
-    public function fetch(?int $id): ?RichSnippetSubjectInterface
+    public function fetch(?int $id = null): ?RichSnippetSubjectInterface
     {
-        return $this->repository->find($id);
+        return null === $id ? null : $this->repository->find($id);
     }
 
     public function canFromRequest(Request $request): bool
