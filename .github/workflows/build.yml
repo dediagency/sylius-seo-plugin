@@ -21,11 +21,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4]
-        symfony: [ ^4.4 ]
-        sylius: [ ~1.8.0 ]
-        node: [10.x]
-        mysql: [5.7, 8.0]
+          php: ["8.0", "7.4"]
+          symfony: ["^4.4", "5.2.*", "5.3.*", "5.4.*"]
+          sylius: ["^1.10"]
+          node: ["10.x"]
+          mysql: ["8.0"]
+
 
     env:
       APP_ENV: test
@@ -154,11 +155,11 @@ jobs:
 
       -
         name: Run PHPStan
-        run: vendor/bin/phpstan analyse -c phpstan.neon
+        run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
 
-      #-
-      #  name: Run Psalm
-      #  run: vendor/bin/psalm
+      -
+        name: Run Psalm
+        run: vendor/bin/psalm
 
       -
         name: Run PHPSpec
