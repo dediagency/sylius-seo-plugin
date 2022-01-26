@@ -64,13 +64,6 @@ security:
             pattern: "%sylius.security.api_regex%/oauth/v2/token"
             security: false
 
-        api:
-            pattern: "%sylius.security.api_regex%/.*"
-            provider: sylius_admin_user_provider
-            fos_oauth: true
-            stateless: true
-            anonymous: true
-
         shop:
             switch_user: { role: ROLE_ALLOWED_TO_SWITCH }
             context: shop
