@@ -7,9 +7,9 @@ namespace Dedi\SyliusSEOPlugin\Factory;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\SubjectUrl\SubjectUrlGeneratorInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\ProductRichSnippet;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
-use Dedi\SyliusSEOPlugin\Factory\SubjectUrl\ProductUrlGenerator;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use NumberFormatter;
 use Sylius\Bundle\CoreBundle\Templating\Helper\PriceHelper;
@@ -41,7 +41,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
     protected ChannelContextInterface $channelContext;
     protected LocaleContextInterface $localeContext;
     protected CurrencyContextInterface $currencyContext;
-    protected ProductUrlGenerator $productUrlGenerator;
+    protected SubjectUrlGeneratorInterface $productUrlGenerator;
     protected AvailabilityCheckerInterface $availabilityChecker;
 
     public function __construct(
