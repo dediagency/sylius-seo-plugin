@@ -64,7 +64,13 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
     {
-        /** @var ProductInterface|RichSnippetProductSubjectInterface $subject */
+        if (!$subject instanceof ProductInterface) {
+            throw new \InvalidArgumentException(sprintf('Expected subject of type Sylius\Component\Core\Model\ProductInterface, %s given', get_class($subject)));
+        }
+        if (!$subject instanceof RichSnippetProductSubjectInterface) {
+            throw new \InvalidArgumentException(sprintf('Expected subject of type Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface, %s given', get_class($subject)));
+        }
+
         $richSnippet = new ProductRichSnippet([
             'name' => $subject->getName(),
             'description' => $subject->getShortDescription(),
@@ -117,7 +123,13 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         if ($subject->getImages()->count() > 0) {
             $richSnippet->addData([
                 'image' => array_map(function (ImageInterface $image): string {
-                    return $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail');
+                    $path = $image->getPath();
+
+                    if (null === $path) {
+                        return '';
+                    }
+
+                    return $this->cacheManager->generateUrl($path, 'sylius_shop_product_large_thumbnail');
                 }, $subject->getImages()->toArray()),
             ]);
         }
@@ -141,8 +153,6 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
     protected function getOffers(ProductInterface $subject): array
     {
         /** @var ChannelInterface $channel */
-        /** @var ProductInterface|RichSnippetProductSubjectInterface $subject */
-
         $channel = $this->channelContext->getChannel();
         $url = $this->productUrlGenerator->generateUrl($subject);
         $currencyCode = $this->currencyContext->getCurrencyCode();

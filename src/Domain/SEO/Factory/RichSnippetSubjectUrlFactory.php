@@ -14,7 +14,7 @@ final class RichSnippetSubjectUrlFactory implements RichSnippetSubjectUrlFactory
 
     public function __construct(iterable $urlGenerators)
     {
-        $this->urlGenerators = iterator_to_array($urlGenerators);
+        $this->urlGenerators = $urlGenerators instanceof \Traversable ? iterator_to_array($urlGenerators) : $urlGenerators;
     }
 
     /**
@@ -32,6 +32,6 @@ final class RichSnippetSubjectUrlFactory implements RichSnippetSubjectUrlFactory
             }
         }
 
-        throw new \LogicException('Can\'t generate route for Subject with type %s', get_class($subject));
+        throw new \LogicException(sprintf('Can\'t generate route for Subject with type %s', get_class($subject)));
     }
 }

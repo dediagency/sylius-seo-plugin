@@ -16,3 +16,8 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
+        -
+          message: '#Method [a-zA-Z0-9\\_\|]+::[a-zA-Z0-9\\_]+\(\) has parameter [\$a-z]+ with no typehint specified\.#'
+          paths:
+            - src/Domain/SEO/Factory/SubjectUrl/SubjectUrlGeneratorInterface.php
+            - src/Factory/SubjectUrl/*

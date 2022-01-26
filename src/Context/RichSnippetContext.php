@@ -58,6 +58,10 @@ final class RichSnippetContext
      */
     private function guessSubject(): ?RichSnippetSubjectInterface
     {
+        if (null === $this->request) {
+            return null;
+        }
+
         foreach ($this->subjectFetchers as $subjectFetcher) {
             if ($subjectFetcher->canFromRequest($this->request)) {
                 return $subjectFetcher->fetchFromRequest($this->request);

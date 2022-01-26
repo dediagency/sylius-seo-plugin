@@ -24,6 +24,6 @@ final class AndSpecification implements NoIndexNoFollowFilterInterface
             }
 
             return true === $carry && $specification->isSatisfiedBy($request);
-        });
+        }) ?? false;
     }
 }
