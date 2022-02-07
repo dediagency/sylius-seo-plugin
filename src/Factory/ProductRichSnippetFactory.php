@@ -50,7 +50,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         ChannelContextInterface $channelContext,
         LocaleContextInterface $localeContext,
         CurrencyContextInterface $currencyContext,
-        ProductUrlGenerator $productUrlGenerator,
+        SubjectUrlGeneratorInterface $productUrlGenerator,
         AvailabilityCheckerInterface $availabilityChecker
     ) {
         $this->cacheManager = $cacheManager;
