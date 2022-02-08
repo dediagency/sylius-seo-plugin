@@ -174,7 +174,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
                 'name' => 'Ficus',
                 'description' => 'Such a nice plant :)',
                 'brand' => [
-                    'type' => 'Thing',
+                    '@type' => 'Brand',
                     'name' => 'Dedi',
                 ],
                 'gtin8' => 'my gtin8',
