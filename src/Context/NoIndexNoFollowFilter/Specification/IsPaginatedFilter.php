@@ -11,6 +11,6 @@ class IsPaginatedFilter implements NoIndexNoFollowFilterInterface
 {
     public function isSatisfiedBy(Request $request): bool
     {
-        return !empty($request->query->get('page', false));
+        return false !== (bool) $request->query->get('page', false);
     }
 }

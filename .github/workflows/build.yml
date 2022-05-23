@@ -21,8 +21,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4]
-        node: [10.x]
+        php: [8.0, 8.1]
+        node: [14.x]
         mysql: [5.7, 8.0]
 
     env:
@@ -39,7 +39,7 @@ jobs:
         with:
           php-version: "${{ matrix.php }}"
           extensions: intl
-          tools: symfony
+          tools: composer:1, symfony
           coverage: none
 
       -
@@ -82,7 +82,7 @@ jobs:
 
       -
         name: Cache Composer
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json **/composer.lock') }}

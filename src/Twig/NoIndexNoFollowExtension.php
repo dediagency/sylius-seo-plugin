@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\Twig;
 
 use Dedi\SyliusSEOPlugin\Context\NoIndexNoFollowFilter\FilterRegistry;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
@@ -13,6 +14,7 @@ use Twig\TwigFunction;
 class NoIndexNoFollowExtension extends AbstractExtension
 {
     private RequestStack $requestStack;
+
     private FilterRegistry $filterRegistry;
 
     public function __construct(
@@ -33,7 +35,7 @@ class NoIndexNoFollowExtension extends AbstractExtension
 
         $filterName = $this->resolveFilterName($request);
 
-        if (empty($filterName)) {
+        if ('' === $filterName) {
             return false;
         }
 
@@ -53,9 +55,9 @@ class NoIndexNoFollowExtension extends AbstractExtension
     {
         $seoRouteConfig = $request->attributes->get('_seo', []);
 
-        $filterName = empty($seoRouteConfig) || !array_key_exists('no_index_no_follow_filter', $seoRouteConfig) ? '' : $seoRouteConfig['no_index_no_follow_filter'];
+        $filterName = count($seoRouteConfig) === 0 || !array_key_exists('no_index_no_follow_filter', $seoRouteConfig) ? '' : $seoRouteConfig['no_index_no_follow_filter'];
         if (!is_string($filterName)) {
-            throw new \InvalidArgumentException('Invalid config value provided : _seo.no_index_filter should be of type string');
+            throw new InvalidArgumentException('Invalid config value provided : _seo.no_index_filter should be of type string');
         }
 
         return $filterName;

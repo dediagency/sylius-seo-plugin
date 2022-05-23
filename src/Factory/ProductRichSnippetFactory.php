@@ -23,25 +23,40 @@ use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Inventory\Model\StockableInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Review\Model\ReviewInterface;
+use Webmozart\Assert\Assert;
 
 class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 {
     public const PRODUCT_AVAILABILITY_DISCONTINUED = 'https://schema.org/Discontinued';
+
     public const PRODUCT_AVAILABILITY_IN_STOCK = 'https://schema.org/InStock';
+
     public const PRODUCT_AVAILABILITY_IN_STORE_ONLY = 'https://schema.org/InStoreOnly';
+
     public const PRODUCT_AVAILABILITY_LIMITED_AVAILABILITY = 'https://schema.org/LimitedAvailability';
+
     public const PRODUCT_AVAILABILITY_ONLINE_ONLY = 'https://schema.org/OnlineOnly';
+
     public const PRODUCT_AVAILABILITY_OUT_OF_STOCK = 'https://schema.org/OutOfStock';
+
     public const PRODUCT_AVAILABILITY_PRE_ORDER = 'https://schema.org/PreOrder';
+
     public const PRODUCT_AVAILABILITY_PRE_SALE = 'https://schema.org/PreSale';
+
     public const PRODUCT_AVAILABILITY_SOLD_OUT = 'https://schema.org/SoldOut';
 
     protected CacheManager $cacheManager;
+
     protected PriceHelper $priceHelper;
+
     protected ChannelContextInterface $channelContext;
+
     protected LocaleContextInterface $localeContext;
+
     protected CurrencyContextInterface $currencyContext;
+
     protected ProductUrlGenerator $productUrlGenerator;
+
     protected AvailabilityCheckerInterface $availabilityChecker;
 
     public function __construct(
@@ -64,13 +79,15 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
     {
-        /** @var ProductInterface|RichSnippetProductSubjectInterface $subject */
+        Assert::isInstanceOf($subject, ProductInterface::class);
+        Assert::isInstanceOf($subject, RichSnippetProductSubjectInterface::class);
+
         $richSnippet = new ProductRichSnippet([
             'name' => $subject->getName(),
             'description' => $subject->getShortDescription(),
         ]);
 
-        if ($subject->getSEOBrand()) {
+        if (null !== $subject->getSEOBrand()) {
             $richSnippet->addData([
                 'brand' => [
                     'type' => 'Thing',
@@ -79,36 +96,36 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             ]);
         }
 
-        if ($subject->getSEOGtin8()) {
+        if (null !== $subject->getSEOGtin8()) {
             $richSnippet->addData([
                 'gtin8' => $subject->getSEOGtin8(),
             ]);
         }
-        if ($subject->getSEOGtin13()) {
+        if (null !== $subject->getSEOGtin13()) {
             $richSnippet->addData([
                 'gtin13' => $subject->getSEOGtin13(),
             ]);
         }
 
-        if ($subject->getSEOGtin14()) {
+        if (null !== $subject->getSEOGtin14()) {
             $richSnippet->addData([
                 'gtin14' => $subject->getSEOGtin14(),
             ]);
         }
 
-        if ($subject->getSEOMpn()) {
+        if (null !== $subject->getSEOMpn()) {
             $richSnippet->addData([
                 'mpn' => $subject->getSEOMpn(),
             ]);
         }
 
-        if ($subject->getSEOIsbn()) {
+        if (null !== $subject->getSEOIsbn()) {
             $richSnippet->addData([
                 'isbn' => $subject->getSEOIsbn(),
             ]);
         }
 
-        if ($subject->getSEOSku()) {
+        if (null !== $subject->getSEOSku()) {
             $richSnippet->addData([
                 'sku' => $subject->getSEOSku(),
             ]);
@@ -116,9 +133,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
         if ($subject->getImages()->count() > 0) {
             $richSnippet->addData([
-                'image' => array_map(function (ImageInterface $image) {
-                    return $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail');
-                }, $subject->getImages()->toArray()),
+                'image' => array_map(fn (ImageInterface $image) => $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail'), $subject->getImages()->toArray()),
             ]);
         }
 
@@ -138,13 +153,10 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         return $richSnippet;
     }
 
-    /**
-     * @param ProductInterface|RichSnippetSubjectInterface $subject
-     *
-     * @return mixed
-     */
-    protected function getOffers(ProductInterface $subject): array
+    protected function getOffers(RichSnippetSubjectInterface $subject): array
     {
+        Assert::isInstanceOf($subject, ProductInterface::class);
+
         /** @var ChannelInterface $channel */
         $channel = $this->channelContext->getChannel();
         $url = $this->productUrlGenerator->generateUrl($subject);
@@ -177,7 +189,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
     protected function formatCurrencyForRichSnippets(int $amount, string $currency): string
     {
-        $formatter = new NumberFormatter($this->localeContext->getLocaleCode() ?? 'en', NumberFormatter::CURRENCY);
+        $formatter = new NumberFormatter($this->localeContext->getLocaleCode(), NumberFormatter::CURRENCY);
 
         // let's remove any monetary symbol and spaces
         $formatter->setSymbol(NumberFormatter::MONETARY_SEPARATOR_SYMBOL, '.');
@@ -207,7 +219,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             'reviewBody' => $bestReview->getComment(),
         ];
 
-        if (($author = $bestReview->getAuthor()) && ($author->getFirstName() || $author->getLastName())) {
+        if ((null !== $author = $bestReview->getAuthor()) && (null !== $author->getFirstName() || null !== $author->getLastName())) {
             $reviewData['author'] = [
                 '@type' => 'Person',
                 'name' => trim(sprintf( // either firstName, lastName or both

@@ -14,6 +14,7 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
     public const TYPE = 'contact';
 
     private SubjectFetcherInterface $homepageSubjectFetcher;
+
     private TranslatorInterface $translator;
 
     public function __construct(SubjectFetcherInterface $homepageSubjectFetcher, TranslatorInterface $translator)

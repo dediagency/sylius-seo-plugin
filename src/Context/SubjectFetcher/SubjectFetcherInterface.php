@@ -20,30 +20,18 @@ interface SubjectFetcherInterface
 {
     /**
      * Fetch the Subject for a given id.
-     *
-     * @param int|null $id
-     *
-     * @return RichSnippetSubjectInterface|null
      */
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface;
 
     /**
      * Define if the fetcher can fetch a Subject for a given request.
      * You may want to test the current route here.
-     *
-     * @param Request $request
-     *
-     * @return bool
      */
     public function canFromRequest(Request $request): bool;
 
     /**
      * Fetch the Subject for a given request.
      * You may want to use the slug / id in the stored in the request parameters.
-     *
-     * @param Request $request
-     *
-     * @return RichSnippetSubjectInterface|null
      */
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface;
 }

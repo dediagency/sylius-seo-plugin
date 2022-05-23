@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 final class DediSyliusSEOExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function load(array $config, ContainerBuilder $container): void
     {

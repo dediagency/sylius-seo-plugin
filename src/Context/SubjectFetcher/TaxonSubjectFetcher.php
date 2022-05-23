@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TaxonSubjectFetcher implements SubjectFetcherInterface
 {
     private LocaleContextInterface $localeContext;
+
     private TaxonRepositoryInterface $repository;
 
     public function __construct(
@@ -34,9 +35,12 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
-        return $this->repository->findOneBySlug(
+        /** @var RichSnippetSubjectInterface|null $subject */
+        $subject = $this->repository->findOneBySlug(
             $request->attributes->get('slug'),
             $this->localeContext->getLocaleCode()
         );
+
+        return $subject;
     }
 }

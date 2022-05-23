@@ -16,9 +16,6 @@ node_modules
 
 .gitlab-ci.yml
 .releaserc.yml
-docker-compose.yml
-Makefile
-satisfactory
 
 ###> dedi ###
 .idea

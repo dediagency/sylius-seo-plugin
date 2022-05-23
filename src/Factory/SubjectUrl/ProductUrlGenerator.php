@@ -9,6 +9,7 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\SubjectUrl\SubjectUrlGeneratorInterf
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Webmozart\Assert\Assert;
 
 class ProductUrlGenerator implements SubjectUrlGeneratorInterface
 {
@@ -26,6 +27,8 @@ class ProductUrlGenerator implements SubjectUrlGeneratorInterface
 
     public function generateUrl(RichSnippetSubjectInterface $subject): string
     {
+        Assert::isInstanceOf($subject, ProductInterface::class);
+
         return $this->router->generate('sylius_shop_product_show', ['slug' => $subject->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

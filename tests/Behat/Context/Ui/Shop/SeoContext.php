@@ -14,9 +14,11 @@ use Webmozart\Assert\Assert;
 class SeoContext extends MinkContext
 {
     public const RICHSNIPPET_BREADCRUMB = 'BreadcrumbList';
+
     public const RICHSNIPPET_PRODUCT = 'Product';
 
     private PageCollection $pageCollection;
+
     private CurrentPageResolverInterface $currentPageResolver;
 
     public function __construct(

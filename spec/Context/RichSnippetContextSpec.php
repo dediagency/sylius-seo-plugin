@@ -24,7 +24,7 @@ class RichSnippetContextSpec extends ObjectBehavior
         RichSnippetFactoryInterface $snippetFactoryC,
         RichSnippetFactoryInterface $snippetFactoryD
     ) {
-        $requestStack->getMasterRequest()->willReturn($request);
+        $requestStack->getMainRequest()->willReturn($request);
 
         $this->beConstructedWith(
             $requestStack,

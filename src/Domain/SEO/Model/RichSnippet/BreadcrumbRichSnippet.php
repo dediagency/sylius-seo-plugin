@@ -18,7 +18,7 @@ class BreadcrumbRichSnippet implements RichSnippetInterface
             'name' => $name,
         ];
 
-        if ($item) {
+        if (null !== $item) {
             $element['item'] = $item;
         }
 
