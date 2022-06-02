@@ -2,11 +2,11 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Factory;
 
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Factory\ProductRichSnippetFactory;
 use Dedi\SyliusSEOPlugin\Factory\SubjectUrl\ProductUrlGenerator;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -21,7 +21,6 @@ use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Review\Model\ReviewerInterface;
 use Sylius\Component\Review\Model\ReviewInterface;
-use function Clue\StreamFilter\fun;
 
 class ProductRichSnippetFactorySpec extends ObjectBehavior
 {
@@ -74,7 +73,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
         ProductUrlGenerator $productUrlGenerator,
         AvailabilityCheckerInterface $availabilityChecker
     ) {
-        $subject = \Mockery::mock(ProductInterface::class, RichSnippetSubjectInterface::class);
+        $subject = \Mockery::mock(ProductInterface::class, RichSnippetProductSubjectInterface::class);
 
         $imageA = \Mockery::mock(ImageInterface::class);
         $imageA->shouldReceive([

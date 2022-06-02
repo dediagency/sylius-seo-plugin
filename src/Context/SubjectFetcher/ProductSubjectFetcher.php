@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductSubjectFetcher implements SubjectFetcherInterface
 {
     private ChannelContextInterface $channelContext;
+
     private LocaleContextInterface $localeContext;
+
     private ProductRepositoryInterface $repository;
 
     public function __construct(
@@ -38,10 +40,13 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
-        return $this->repository->findOneByChannelAndSlug(
+        /** @var RichSnippetSubjectInterface|null $subject */
+        $subject = $this->repository->findOneByChannelAndSlug(
             $this->channelContext->getChannel(),
             $this->localeContext->getLocaleCode(),
             $request->attributes->get('slug')
         );
+
+        return $subject;
     }
 }

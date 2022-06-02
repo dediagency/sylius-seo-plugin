@@ -9,7 +9,9 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
 {
     private string $name;
+
     private string $type;
+
     private RichSnippetSubjectInterface $parent;
 
     public function __construct(string $name, string $type, RichSnippetSubjectInterface $parent)

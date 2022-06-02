@@ -9,6 +9,7 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use Throwable;
 
 class RichSnippetsDataCollector extends DataCollector
 {
@@ -19,7 +20,7 @@ class RichSnippetsDataCollector extends DataCollector
         $this->richSnippetContext = $richSnippetContext;
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = NULL)
+    public function collect(Request $request, Response $response, Throwable $exception = null)
     {
         $this->data['rich_snippets'] = $this->richSnippetContext->getAvailableRichSnippets();
         $this->data['html'] = $response->getContent();

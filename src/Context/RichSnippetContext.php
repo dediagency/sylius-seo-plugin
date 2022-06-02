@@ -13,8 +13,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class RichSnippetContext
 {
     private ?Request $request;
+
     /** @var SubjectFetcherInterface[] */
     private array $subjectFetchers;
+
     /** @var RichSnippetFactoryInterface[] */
     private array $richSnippetFactories;
 
@@ -23,20 +25,18 @@ final class RichSnippetContext
         iterable $subjectFetchers,
         iterable $richSnippetFactories
     ) {
-        $this->request = $requestStack->getMasterRequest();
+        $this->request = $requestStack->getMainRequest();
         $this->subjectFetchers = iterator_to_array($subjectFetchers);
         $this->richSnippetFactories = iterator_to_array($richSnippetFactories);
     }
 
     /**
      * Iterates over RichSnippetFactoryInterface[] in order to get every Rich Snippets Urls available for a given subject.
-     *
-     * @return array
      */
     public function getAvailableRichSnippets(): array
     {
         $subject = $this->guessSubject();
-        if (!$subject) {
+        if (null === $subject) {
             return [];
         }
 
@@ -53,8 +53,6 @@ final class RichSnippetContext
 
     /**
      * Iterates over SubjectFetcherInterface[] in order to find a subject for the current request.
-     *
-     * @return RichSnippetSubjectInterface|null
      */
     private function guessSubject(): ?RichSnippetSubjectInterface
     {
