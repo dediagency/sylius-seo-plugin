@@ -90,7 +90,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         if (null !== $subject->getSEOBrand()) {
             $richSnippet->addData([
                 'brand' => [
-                    'type' => 'Thing',
+                    'type' => 'Brand',
                     'name' => $subject->getSEOBrand(),
                 ],
             ]);
