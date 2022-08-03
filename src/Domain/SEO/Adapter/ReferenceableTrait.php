@@ -58,5 +58,15 @@ trait ReferenceableTrait
         return $this->getReferenceableContent()->getOpenGraphMetadataImage();
     }
 
+    public function getOpenGraphMetadataPrice(): ?string
+    {
+        return $this->getReferenceableContent()->getOpenGraphMetadataPrice();
+    }
+
+    public function getOpenGraphMetadataCurrency(): ?string
+    {
+        return $this->getOpenGraphMetadataCurrency();
+    }
+
     abstract protected function createReferenceableContent(): ReferenceableInterface;
 }
