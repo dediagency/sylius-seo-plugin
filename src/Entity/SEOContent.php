@@ -129,6 +129,28 @@ class SEOContent implements SEOContentInterface
         return $translation;
     }
 
+    public function getOpenGraphMetadataPrice(): ?string
+    {
+        return $this->getTranslation()->getOpenGraphMetadataPrice();
+    }
+
+    public function setOpenGraphMetadataPrice(?string $price): self
+    {
+        $this->getTranslation()->setOpenGraphMetadataPrice($price);
+        return $this;
+    }
+
+    public function getOpenGraphMetadataCurrency(): ?string
+    {
+        return $this->getTranslation()->getOpenGraphMetadataCurrency();
+    }
+
+    public function setOpenGraphMetadataCurrency(?string $currency): self
+    {
+        $this->getTranslation()->setOpenGraphMetadataCurrency($currency);
+        return $this;
+    }
+
     protected function createTranslation(): SEOContentTranslation
     {
         return new SEOContentTranslation();

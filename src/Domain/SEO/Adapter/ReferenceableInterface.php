@@ -21,4 +21,8 @@ interface ReferenceableInterface
     public function getOpenGraphMetadataType(): ?string;
 
     public function getOpenGraphMetadataImage(): ?string;
+
+    public function getOpenGraphMetadataPrice(): ?string;
+
+    public function getOpenGraphMetadataCurrency(): ?string;
 }

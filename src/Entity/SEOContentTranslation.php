@@ -26,6 +26,10 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
 
     protected ?string $openGraphMetadataType = null;
 
+    protected ?string $openGraphMetadataPrice = null;
+
+    protected ?string $openGraphMetadataCurrency = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,5 +129,37 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
         $this->openGraphMetadataType = $openGraphMetadataType;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOpenGraphMetadataPrice(): ?string
+    {
+        return $this->openGraphMetadataPrice;
+    }
+
+    /**
+     * @param string|null $openGraphMetadataPrice
+     */
+    public function setOpenGraphMetadataPrice(?string $openGraphMetadataPrice): void
+    {
+        $this->openGraphMetadataPrice = $openGraphMetadataPrice;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOpenGraphMetadataCurrency(): ?string
+    {
+        return $this->openGraphMetadataCurrency;
+    }
+
+    /**
+     * @param string|null $openGraphMetadataCurrency
+     */
+    public function setOpenGraphMetadataCurrency(?string $openGraphMetadataCurrency): void
+    {
+        $this->openGraphMetadataCurrency = $openGraphMetadataCurrency;
     }
 }
