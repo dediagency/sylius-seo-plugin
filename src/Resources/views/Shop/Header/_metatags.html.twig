@@ -33,16 +33,7 @@
     {% endif %}
 
     {% if app.request.attributes.get('_route') is not empty %}
-        {% set openGraphMetadataType = seo.openGraphMetadataType|default('website') %}
-        <meta property="og:type" content="{{ openGraphMetadataType }}" />
+        <meta property="og:type" content="{{ seo.openGraphMetadataType|default('website') }}" />
         <meta property="og:url" content="{{ seo.openGraphMetadataUrl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
-    {% if openGraphMetadataType === 'product' %}
-        {% if (baseSeo.openGraphMetadataPrice or baseSeo.metadataPrice) %}
-        <meta property="og:product:price:amount" content="{{ baseSeo.openGraphMetadataPrice|default(seo.metadataPrice) }}" />
-        {% endif %}
-        {% if (baseSeo.openGraphMetadataCurrency or baseSeo.metadataCurrency) %}
-        <meta property="og:product:price:currency" content="{{ baseSeo.openGraphMetadataCurrency|default(seo.metadataCurrency) }}" />
-        {% endif %}
-    {% endif %}
     {% endif %}
 {% endif %}

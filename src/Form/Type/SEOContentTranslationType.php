@@ -49,7 +49,6 @@ class SEOContentTranslationType extends AbstractResourceType
                 'choices' => [
                     'website' => 'website',
                     'page' => 'article',
-                    'product' => 'product'
                 ],
             ])
         ;
