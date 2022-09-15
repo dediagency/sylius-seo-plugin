@@ -1,4 +1,7 @@
-<link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}"/>
+{% set currentRoute = app.request.attributes.get('_route') %}
+{% if currentRoute is not null %}
+    <link rel="canonical" href="{{ url(currentRoute, app.request.attributes.get('_route_params')) }}"/>
+{% endif %}
 
 {% set currentLocale = sylius.localeCode|default('') %}
 
