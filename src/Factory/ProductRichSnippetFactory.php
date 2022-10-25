@@ -192,7 +192,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         $formatter = new NumberFormatter($this->localeContext->getLocaleCode(), NumberFormatter::CURRENCY);
 
         // let's remove any monetary symbol and spaces
-        $formatter->setSymbol(NumberFormatter::MONETARY_SEPARATOR_SYMBOL, '.');
+        $formatter->setSymbol(NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
         $formatter->setPattern('#0.0#');
 
         $result = $formatter->formatCurrency(abs($amount / 100), $currency);
