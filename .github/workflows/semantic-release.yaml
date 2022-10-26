@@ -2,7 +2,7 @@ name: Semantic Release
 
 on:
     push:
-        branches: [ master ]
+        branches: [ master, 1.x ]
 
 jobs:
     release:
@@ -10,12 +10,19 @@ jobs:
         steps:
           - name: Checkout
             uses: actions/checkout@v2
+            with:
+              node-version: '14'
           - name: Semantic Release
             uses: cycjimmy/semantic-release-action@v2
             with:
-                # You can specify specifying version range for the extra plugins if you prefer.
                 extra_plugins: |
                     @semantic-release/changelog
                     @semantic-release/git
+                semantic_version: 18
+                branches: |
+                  [
+                    'master', 
+                    '1.x'
+                  ]
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
