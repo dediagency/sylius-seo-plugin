@@ -23,7 +23,7 @@ class SeoContext extends MinkContext
 
     public function __construct(
         PageCollection $pageCollection,
-        CurrentPageResolverInterface $currentPageResolver
+        CurrentPageResolverInterface $currentPageResolver,
     ) {
         $this->pageCollection = $pageCollection;
 
@@ -40,7 +40,7 @@ class SeoContext extends MinkContext
         Assert::keyExists(
             $richSnippets,
             self::RICHSNIPPET_BREADCRUMB,
-            'This page doesn\'t have the Breadcrumb Rich Snippet'
+            'This page doesn\'t have the Breadcrumb Rich Snippet',
         );
 
         $expectedItemListElement = [];
@@ -69,7 +69,7 @@ class SeoContext extends MinkContext
         Assert::same(
             $richSnippets[self::RICHSNIPPET_BREADCRUMB],
             $expected,
-            'Expected breadcrumb Rich Snippet and resolved breadcrumb Rich Snippet do not match'
+            'Expected breadcrumb Rich Snippet and resolved breadcrumb Rich Snippet do not match',
         );
     }
 
@@ -83,7 +83,7 @@ class SeoContext extends MinkContext
         Assert::keyExists(
             $richSnippets,
             self::RICHSNIPPET_PRODUCT,
-            'This page doesn\'t have the Product Rich Snippet'
+            'This page doesn\'t have the Product Rich Snippet',
         );
 
         $expected = [
@@ -108,7 +108,7 @@ class SeoContext extends MinkContext
         Assert::same(
             $richSnippets[self::RICHSNIPPET_PRODUCT],
             $expected,
-            'Expected product Rich Snippet and resolved product Rich Snippet do not match'
+            'Expected product Rich Snippet and resolved product Rich Snippet do not match',
         );
     }
 
@@ -123,7 +123,7 @@ class SeoContext extends MinkContext
             Assert::keyExists(
                 $data,
                 sprintf('og:%s', $ogDatum['name']),
-                sprintf('This page doesn\'t have an og:%s meta tag', $ogDatum['name'])
+                sprintf('This page doesn\'t have an og:%s meta tag', $ogDatum['name']),
             );
 
             if ('url' === $ogDatum['name']) {
@@ -137,7 +137,7 @@ class SeoContext extends MinkContext
                 Assert::same(
                     $data[sprintf('og:%s', $ogDatum['name'])],
                     $ogDatum['data'],
-                    sprintf('Invalid og:%s, expected "%s", got "%s"', $ogDatum['name'], $ogDatum['data'], $data[sprintf('og:%s', $ogDatum['name'])])
+                    sprintf('Invalid og:%s, expected "%s", got "%s"', $ogDatum['name'], $ogDatum['data'], $data[sprintf('og:%s', $ogDatum['name'])]),
                 );
             }
         }

@@ -19,7 +19,7 @@ class NoIndexNoFollowExtension extends AbstractExtension
 
     public function __construct(
         FilterRegistry $filterRegistry,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->requestStack = $requestStack;
         $this->filterRegistry = $filterRegistry;

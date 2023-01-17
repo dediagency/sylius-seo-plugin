@@ -9,6 +9,8 @@ use Sylius\Bundle\ProductBundle\Form\Type\ProductType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\AtLeastOneOf;
+use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Valid;
 
@@ -29,10 +31,14 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin8',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'allowEmptyString' => true,
-                        'min' => 8,
-                        'max' => 8,
+                    new AtLeastOneOf([
+                        'constraints' => [
+                            new Length([
+                                'min' => 8,
+                                'max' => 8,
+                            ]),
+                            new Blank(),
+                        ],
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
@@ -41,10 +47,14 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin13',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'allowEmptyString' => true,
-                        'min' => 13,
-                        'max' => 13,
+                    new AtLeastOneOf([
+                        'constraints' => [
+                            new Length([
+                                'min' => 13,
+                                'max' => 13,
+                            ]),
+                            new Blank(),
+                        ],
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
@@ -53,10 +63,14 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin14',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'allowEmptyString' => true,
-                        'min' => 14,
-                        'max' => 14,
+                    new AtLeastOneOf([
+                        'constraints' => [
+                            new Length([
+                                'min' => 14,
+                                'max' => 14,
+                            ]),
+                            new Blank(),
+                        ],
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
