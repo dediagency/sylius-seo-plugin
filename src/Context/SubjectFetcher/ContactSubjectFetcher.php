@@ -28,7 +28,7 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
         return new GenericPageRichSnippetSubject(
             $this->translator->trans('sylius.ui.contact_us'),
             self::TYPE,
-            $this->homepageSubjectFetcher->fetch()
+            $this->homepageSubjectFetcher->fetch(),
         );
     }
 

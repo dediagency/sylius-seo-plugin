@@ -21,7 +21,7 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
     public function __construct(
         ChannelContextInterface $channelContext,
         LocaleContextInterface $localeContext,
-        ProductRepositoryInterface $repository
+        ProductRepositoryInterface $repository,
     ) {
         $this->channelContext = $channelContext;
         $this->localeContext = $localeContext;
@@ -30,7 +30,14 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface
     {
-        return null === $id ? null : $this->repository->find($id);
+        if (null === $id) {
+            return null;
+        }
+
+        /** @var ?RichSnippetSubjectInterface $richSnippetSubject */
+        $richSnippetSubject = $this->repository->find($id);
+
+        return $richSnippetSubject;
     }
 
     public function canFromRequest(Request $request): bool
@@ -44,7 +51,7 @@ class ProductSubjectFetcher implements SubjectFetcherInterface
         $subject = $this->repository->findOneByChannelAndSlug(
             $this->channelContext->getChannel(),
             $this->localeContext->getLocaleCode(),
-            $request->attributes->get('slug')
+            $request->attributes->get('slug'),
         );
 
         return $subject;

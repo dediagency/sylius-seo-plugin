@@ -16,7 +16,7 @@ jobs:
   tests:
     runs-on: ubuntu-18.04
 
-    name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
+    name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}"
 
     strategy:
       fail-fast: false
@@ -24,6 +24,12 @@ jobs:
         php: [8.0, 8.1]
         node: [14.x]
         mysql: [5.7, 8.0]
+        symfony: ["^5.4", "^6.0", "^6.1"]
+        sylius: ["~1.12.0"]
+
+        exclude:
+            - symfony: "^6.1"
+              php: 8.0
 
     env:
       APP_ENV: test
@@ -39,8 +45,21 @@ jobs:
         with:
           php-version: "${{ matrix.php }}"
           extensions: intl
-          tools: composer:1, symfony
+          tools: composer:2, symfony
           coverage: none
+
+      -
+          name: Restrict Symfony version
+          if: matrix.symfony != ''
+          run: |
+              composer global config --no-plugins allow-plugins.symfony/flex true
+              composer global require --no-progress --no-scripts --no-plugins "symfony/flex:1.18.5"
+              composer config extra.symfony.require "${{ matrix.symfony }}"
+
+      -
+          name: Restrict Sylius version
+          if: matrix.sylius != ''
+          run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
 
       -
         name: Setup Node
@@ -106,6 +125,11 @@ jobs:
           key: ${{ runner.os }}-node-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json **/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node }}-yarn-
+
+      -
+          name: Copy package.json.dist to package.json
+          if: matrix.sylius != ''
+          run: (cd tests/Application && cp package.json.\${{ matrix.sylius }}.dist package.json)
 
       -
         name: Install JS dependencies

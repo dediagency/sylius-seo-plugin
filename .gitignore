@@ -1,24 +1,28 @@
 /vendor/
 /node_modules/
 /composer.lock
-/.idea
 
 /etc/build/*
 !/etc/build/.gitignore
 
 /tests/Application/yarn.lock
 
+/.phpunit.result.cache
 /behat.yml
 /phpspec.yml
+/phpunit.xml
 
-.install
-node_modules
+# Symfony CLI https://symfony.com/doc/current/setup/symfony_server.html#different-php-settings-per-project
+/.php-version
+/php.ini
 
-.gitlab-ci.yml
-.releaserc.yml
+# IntelliJ IDEA
+.idea
 
 ###> dedi ###
-.idea
+.install
+node_modules
+.env
 .gitmodules
 satisfactory
 Makefile

@@ -66,7 +66,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         LocaleContextInterface $localeContext,
         CurrencyContextInterface $currencyContext,
         ProductUrlGenerator $productUrlGenerator,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ) {
         $this->cacheManager = $cacheManager;
         $this->priceHelper = $priceHelper;
@@ -165,7 +165,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
             $price = $this->priceHelper->getPrice(
                 $variant,
-                ['channel' => $channel]
+                ['channel' => $channel],
             );
 
             return [
@@ -226,7 +226,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
                 'name' => trim(sprintf( // either firstName, lastName or both
                     '%s %s',
                     $author->getFirstName(),
-                    $author->getLastName()
+                    $author->getLastName(),
                 )),
             ];
         }

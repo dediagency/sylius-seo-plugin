@@ -20,7 +20,7 @@ final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 
     public function __construct(
         RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory,
-        SubjectFetcherInterface $homepageSubjectFetcher
+        SubjectFetcherInterface $homepageSubjectFetcher,
     ) {
         $this->richSnippetSubjectUrlFactory = $richSnippetSubjectUrlFactory;
         $this->homepageSubjectFetcher = $homepageSubjectFetcher;
@@ -34,7 +34,7 @@ final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
     private function build(
         RichSnippetSubjectInterface $subject,
         BreadcrumbRichSnippet $richSnippet,
-        bool $isLeaf = false
+        bool $isLeaf = false,
     ): BreadcrumbRichSnippet {
         if (null !== $parent = $subject->getRichSnippetSubjectParent()) {
             $this->build($parent, $richSnippet);
@@ -44,7 +44,7 @@ final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 
         $richSnippet->addElement(
             $subject->getName(),
-            $isLeaf ? null : $this->richSnippetSubjectUrlFactory->buildUrl($subject)
+            $isLeaf ? null : $this->richSnippetSubjectUrlFactory->buildUrl($subject),
         );
 
         return $richSnippet;

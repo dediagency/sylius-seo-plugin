@@ -4,7 +4,6 @@ module.exports = {
         node: true,
     },
     rules: {
-        'indent': ["error", 4],
         'object-shorthand': ['error', 'always', {
             avoidQuotes: true,
             avoidExplicitReturnArrows: true,

@@ -18,7 +18,8 @@ class SEOContentType extends AbstractResourceType
                 'label' => 'dedi_sylius_seo_plugin.ui.contents',
                 'entry_type' => SEOContentTranslationType::class,
                 'constraints' => [new Valid()],
-            ]);
+            ])
+        ;
     }
 
     public function getBlockPrefix()

@@ -17,7 +17,7 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
 
     public function __construct(
         LocaleContextInterface $localeContext,
-        TaxonRepositoryInterface $repository
+        TaxonRepositoryInterface $repository,
     ) {
         $this->repository = $repository;
         $this->localeContext = $localeContext;
@@ -25,7 +25,14 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface
     {
-        return null === $id ? null : $this->repository->find($id);
+        if (null === $id) {
+            return null;
+        }
+
+        /** @var ?RichSnippetSubjectInterface $richSnippetSubject */
+        $richSnippetSubject = $this->repository->find($id);
+
+        return $richSnippetSubject;
     }
 
     public function canFromRequest(Request $request): bool
@@ -38,7 +45,7 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
         /** @var RichSnippetSubjectInterface|null $subject */
         $subject = $this->repository->findOneBySlug(
             $request->attributes->get('slug'),
-            $this->localeContext->getLocaleCode()
+            $this->localeContext->getLocaleCode(),
         );
 
         return $subject;
