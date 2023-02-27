@@ -68,6 +68,7 @@ class ProductTypeExtension extends AbstractTypeExtension
                     ])
                 ],
                 'validation_groups' => ['Default', 'sylius'],
+            ])
             ->add('SEOMpn', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.mpn',
                 'required' => false,
