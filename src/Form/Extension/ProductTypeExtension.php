@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Constraints\AtLeastOneOf;
+use Symfony\Component\Validator\Constraints\Blank;
 
 class ProductTypeExtension extends AbstractTypeExtension
 {
@@ -29,11 +31,13 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin8',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'allowEmptyString' => true,
-                        'min' => 8,
-                        'max' => 8,
-                    ]),
+                    new AtLeastOneOf([
+                        new Blank(),
+                        new Length([
+                            'min' => 8,
+                            'max' => 8,
+                        ]),
+                    ])
                 ],
                 'validation_groups' => ['Default', 'sylius'],
             ])
@@ -41,10 +45,12 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin13',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'allowEmptyString' => true,
-                        'min' => 13,
-                        'max' => 13,
+                    new AtLeastOneOf([
+                        new Blank(),
+                        new Length([
+                            'min' => 13,
+                            'max' => 13,
+                        ]),
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
@@ -53,14 +59,15 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin14',
                 'required' => false,
                 'constraints' => [
-                    new Length([
-                        'allowEmptyString' => true,
-                        'min' => 14,
-                        'max' => 14,
-                    ]),
+                    new AtLeastOneOf([
+                        new Blank(),
+                        new Length([
+                            'min' => 14,
+                            'max' => 14,
+                        ]),
+                    ])
                 ],
                 'validation_groups' => ['Default', 'sylius'],
-            ])
             ->add('SEOMpn', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.mpn',
                 'required' => false,
