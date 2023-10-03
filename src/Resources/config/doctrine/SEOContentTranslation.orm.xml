@@ -12,8 +12,8 @@
             </options>
         </field>
 
-        <field name="metadataTitle" column="seo_metadata_title" nullable="true"/>
-        <field name="metadataDescription" column="seo_metadata_description" nullable="true"/>
+        <field name="metadataTitle" column="seo_metadata_title" type="text" nullable="true"/>
+        <field name="metadataDescription" column="seo_metadata_description" type="text" nullable="true"/>
 
         <field name="openGraphMetadataTitle" column="seo_og_metadata_title" nullable="true"/>
         <field name="openGraphMetadataDescription" column="seo_og_metadata_description" nullable="true"/>
