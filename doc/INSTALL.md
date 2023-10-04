@@ -38,6 +38,10 @@ Call the SEO links event in your main layout header. This will automatically add
     {% block metatags %}
         {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
     {% endblock %}
+    
+    {% block links %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.links') }}
+    {% endblock %}
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
