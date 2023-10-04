@@ -94,10 +94,10 @@ Rich snippet available are :
 Make your `Product` and `Taxon` classes implement the `RichSnippetSubjectInterface` interface.
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
 
-class Product extends BaseProduct implements RichSnippetSubjectInterface
+class Product extends BaseProduct implements RichSnippetProductSubjectInterface
 {
     use RichSnippetProductSubjectTrait;
 
