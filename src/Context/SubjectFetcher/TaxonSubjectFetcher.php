@@ -8,6 +8,7 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Webmozart\Assert\Assert;
 
 class TaxonSubjectFetcher implements SubjectFetcherInterface
 {
@@ -42,9 +43,15 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
+        $slug = $request->attributes->get('slug');
+        if (null === $slug) {
+            return null;
+        }
+        Assert::string($slug);
+
         /** @var RichSnippetSubjectInterface|null $subject */
         $subject = $this->repository->findOneBySlug(
-            $request->attributes->get('slug'),
+            $slug,
             $this->localeContext->getLocaleCode(),
         );
 

@@ -6,13 +6,18 @@ namespace Dedi\SyliusSEOPlugin\Domain\SEO\Adapter;
 
 trait ReferenceableTrait
 {
-    protected ?ReferenceableInterface $referenceableContent = null;
+    protected ?string $referenceableLocale = null;
 
-    public function getReferenceableContent(): ReferenceableInterface
+    protected ?string $referenceableFallbackLocale = null;
+
+    protected ?MetadataTagInterface $referenceableContent = null;
+
+    public function getReferenceableContent(): MetadataTagInterface
     {
         if (null === $this->referenceableContent) {
-            $referenceableContent = $this->createReferenceableContent();
-            $this->referenceableContent = $referenceableContent;
+            $this->referenceableContent = $this->createReferenceableContent();
+            $this->referenceableContent->setCurrentLocale($this->referenceableLocale);
+            $this->referenceableContent->setFallbackLocale($this->referenceableFallbackLocale);
         }
 
         return $this->referenceableContent;
@@ -58,5 +63,19 @@ trait ReferenceableTrait
         return $this->getReferenceableContent()->getOpenGraphMetadataImage();
     }
 
-    abstract protected function createReferenceableContent(): ReferenceableInterface;
+    public function setReferenceableLocale(string $locale): static
+    {
+        $this->referenceableLocale = $locale;
+
+        return $this;
+    }
+
+    public function setReferenceableFallbackLocale(string $locale): static
+    {
+        $this->referenceableFallbackLocale = $locale;
+
+        return $this;
+    }
+
+    abstract protected function createReferenceableContent(): MetadataTagInterface;
 }

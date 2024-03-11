@@ -53,7 +53,7 @@ class NoIndexNoFollowExtension extends AbstractExtension
 
     private function resolveFilterName(Request $request): string
     {
-        $seoRouteConfig = $request->attributes->get('_seo', []);
+        $seoRouteConfig = (array) $request->attributes->get('_seo', []);
 
         $filterName = count($seoRouteConfig) === 0 || !array_key_exists('no_index_no_follow_filter', $seoRouteConfig) ? '' : $seoRouteConfig['no_index_no_follow_filter'];
         if (!is_string($filterName)) {

@@ -2,7 +2,9 @@
     <h3 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.seo'|trans }}</h3>
 
     <div class="ui segment attached">
-        {{ form_row(form.referenceableContent) }}
+        {% if form.referenceableContent is defined %}
+            {{ form_row(form.referenceableContent) }}
+        {% endif %}
 
         <div class="ui hidden divider"></div>
 

@@ -22,6 +22,7 @@ use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Inventory\Model\StockableInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Sylius\Component\Product\Model\ProductVariantInterface as BaseProductVariantInterface;
 use Sylius\Component\Review\Model\ReviewInterface;
 use Webmozart\Assert\Assert;
 
@@ -133,7 +134,16 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
         if ($subject->getImages()->count() > 0) {
             $richSnippet->addData([
-                'image' => array_map(fn (ImageInterface $image) => $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail'), $subject->getImages()->toArray()),
+                'image' => array_filter(array_map(
+                    function (ImageInterface $image): ?string {
+                        if (null === $image->getPath()) {
+                            return null;
+                        }
+
+                        return $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail');
+                    },
+                    $subject->getImages()->toArray(),
+                )),
             ]);
         }
 
@@ -162,7 +172,8 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         $url = $this->productUrlGenerator->generateUrl($subject);
         $currencyCode = $this->currencyContext->getCurrencyCode();
 
-        return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
+        return array_map(function (BaseProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
+            Assert::isInstanceOf($variant, ProductVariantInterface::class);
             $price = $this->priceHelper->getPrice(
                 $variant,
                 ['channel' => $channel],

@@ -1,11 +1,8 @@
-{% set locale = sylius.localeCode|default(sylius_base_locale) %}
 {% if resource is defined and resource.referenceableContent is defined and resource.referenceableContent is not null %}
-    {% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
     {% set seo = resource %}
 {% endif %}
 
 {% if sylius.channel.referenceableContent is defined and sylius.channel.referenceableContent is not null %}
-    {% set donothing = sylius.channel.referenceableContent.setCurrentLocale(locale) %}
     {% set baseSeo = sylius.channel %}
 {% endif %}
 

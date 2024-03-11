@@ -15,7 +15,7 @@ final class ProductRichSnippet implements RichSnippetInterface
         $this->data = $data;
     }
 
-    public function addData(array $data): self
+    public function addData(array $data): static
     {
         $this->data = array_merge($this->data, $data);
 

@@ -22,8 +22,8 @@ final class RichSnippetContext
 
     public function __construct(
         RequestStack $requestStack,
-        iterable $subjectFetchers,
-        iterable $richSnippetFactories,
+        \Traversable $subjectFetchers,
+        \Traversable $richSnippetFactories,
     ) {
         $this->request = $requestStack->getMainRequest();
         $this->subjectFetchers = iterator_to_array($subjectFetchers);

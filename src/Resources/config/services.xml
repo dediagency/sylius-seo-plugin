@@ -88,12 +88,20 @@
             <tag name="form.type_extension"/>
         </service>
 
+        <service id="dedi.sylius_seo_plugin.form.extension.taxon_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\TaxonTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
         <!-- Menu Builder -->
         <service id="dedi.sylius_seo_plugin.admin.menu_builder.product" class="Dedi\SyliusSEOPlugin\Menu\Admin\ProductMenuBuilder">
             <tag name="kernel.event_listener" event="sylius.menu.admin.product.form" method="addSeoMenuItem" />
         </service>
 
         <!-- Twig Extension -->
+        <service id="dedi_sylius_seo_plugin.rich_snippets.twig.title_extension" class="Dedi\SyliusSEOPlugin\Twig\TitleExtension">
+            <argument type="service" id="sylius.context.channel.composite"/>
+            <tag name="twig.extension"/>
+        </service>
         <service id="dedi_sylius_seo_plugin.rich_snippets.twig.rich_snippets_extension" class="Dedi\SyliusSEOPlugin\Twig\RichSnippetsExtension">
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
             <tag name="twig.extension"/>
@@ -136,5 +144,15 @@
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
             <tag name="data_collector" template="@DediSyliusSEOPlugin/DataCollector/rich_snippets.html.twig" id="dedi_sylius_seo_plugin.rich_snippets"/>
         </service>
+
+        <!-- Doctrine listener -->
+        <service id="dedi_sylius_seo_plugin.listener.doctrine" class="Dedi\SyliusSEOPlugin\Listener\ORMReferenceableListener">
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="sylius.translation_locale_provider.immutable" />
+            <argument type="service" id="Sylius\Component\Core\Checker\CLIContextCheckerInterface" />
+            <tag name="doctrine.event_subscriber" connection="default" priority="99" />
+        </service>
+        <service id="Dedi\SyliusSEOPlugin\Listener\ORMReferenceableListener" alias="dedi_sylius_seo_plugin.listener.doctrine" />
+
     </services>
 </container>

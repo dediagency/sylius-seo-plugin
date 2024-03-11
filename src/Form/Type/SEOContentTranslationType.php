@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SEOContentTranslationType extends AbstractResourceType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('notIndexable', CheckboxType::class, [

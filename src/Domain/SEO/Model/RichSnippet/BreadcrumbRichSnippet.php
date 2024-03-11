@@ -10,16 +10,16 @@ class BreadcrumbRichSnippet implements RichSnippetInterface
 {
     private array $elements = [];
 
-    public function addElement(string $name, ?string $item = null): self
+    public function addData(array $data): static
     {
         $element = [
             '@type' => 'ListItem',
             'position' => count($this->elements) + 1,
-            'name' => $name,
+            'name' => $data['name'],
         ];
 
-        if (null !== $item) {
-            $element['item'] = $item;
+        if (null !== $data['item']) {
+            $element['item'] = $data['item'];
         }
 
         $this->elements[] = $element;

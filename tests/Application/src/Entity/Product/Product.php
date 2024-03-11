@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product;
 
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\MetadataTagInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
@@ -15,6 +16,7 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="sylius_product")
  */
 class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
@@ -24,7 +26,6 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         getMetadataDescription as getBaseMetadataDescription;
         getOpenGraphMetadataImage as getBaseOpenGraphMetadataImage;
     }
-
     use RichSnippetProductSubjectTrait;
 
     public function getMetadataTitle(): ?string
@@ -62,7 +63,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return $this->getBaseOpenGraphMetadataImage();
     }
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): MetadataTagInterface
     {
         return new SEOContent();
     }

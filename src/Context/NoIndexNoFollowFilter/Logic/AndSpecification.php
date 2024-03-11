@@ -18,7 +18,7 @@ final class AndSpecification implements NoIndexNoFollowFilterInterface
 
     public function isSatisfiedBy(Request $request): bool
     {
-        return array_reduce($this->specifications, function ($carry, NoIndexNoFollowFilterInterface $specification) use ($request) {
+        return (bool) array_reduce($this->specifications, function ($carry, NoIndexNoFollowFilterInterface $specification) use ($request) {
             if (null === $carry) {
                 return $specification->isSatisfiedBy($request);
             }

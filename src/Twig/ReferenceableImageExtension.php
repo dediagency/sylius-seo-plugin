@@ -28,7 +28,7 @@ class ReferenceableImageExtension extends AbstractExtension
 
     public function getImageUrl(?string $imagePath, string $filterName = 'sylius_shop_product_thumbnail'): ?string
     {
-        if (null === $imagePath || !preg_match(self::IMAGE_PATTERN, $imagePath)) {
+        if (null === $imagePath || false === (bool) preg_match(self::IMAGE_PATTERN, $imagePath)) {
             return $imagePath;
         }
 

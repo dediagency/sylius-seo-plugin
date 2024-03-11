@@ -167,9 +167,12 @@ Those events will load `<title>`, Open Graph metadata and Rich Snippets in you p
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    {% block title %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
-    {% endblock %}
+    {% set app_title_block_output %}
+        {% block title %}
+            {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
+        {% endblock %}
+    {% endset %}
+    <title>{{ app_title_block_output|spaceless|striptags|raw }}</title>
 
     {% block metatags %}
         {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: product ?? sylius.channel }) }}

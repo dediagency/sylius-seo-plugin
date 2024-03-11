@@ -4,21 +4,11 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Domain\SEO\Adapter;
 
-interface ReferenceableInterface
+interface ReferenceableInterface extends MetadataTagInterface
 {
-    public function isNotIndexable(): bool;
+    public function getReferenceableContent(): MetadataTagInterface;
 
-    public function getMetadataTitle(): ?string;
+    public function setReferenceableLocale(string $locale): static;
 
-    public function getMetadataDescription(): ?string;
-
-    public function getOpenGraphMetadataTitle(): ?string;
-
-    public function getOpenGraphMetadataDescription(): ?string;
-
-    public function getOpenGraphMetadataUrl(): ?string;
-
-    public function getOpenGraphMetadataType(): ?string;
-
-    public function getOpenGraphMetadataImage(): ?string;
+    public function setReferenceableFallbackLocale(string $locale): static;
 }

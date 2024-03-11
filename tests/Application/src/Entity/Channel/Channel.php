@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Channel;
 
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\MetadataTagInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelInterface;
@@ -14,6 +15,7 @@ use Sylius\Component\Core\Model\Channel as BaseChannel;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="sylius_channel")
  */
 class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareChannelInterface
@@ -22,7 +24,6 @@ class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareCha
         getMetadataTitle as getBaseMetadataTitle;
         getMetadataDescription as getBaseMetadataDescription;
     }
-
     use SeoAwareChannelTrait;
 
     public function getMetadataTitle(): ?string
@@ -43,7 +44,7 @@ class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareCha
         return $this->getBaseMetadataDescription();
     }
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): MetadataTagInterface
     {
         return new SEOContent();
     }

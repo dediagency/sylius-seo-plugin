@@ -25,10 +25,16 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface
     {
+        $subject = $this->homepageSubjectFetcher->fetch();
+
+        if (null === $subject) {
+            return null;
+        }
+
         return new GenericPageRichSnippetSubject(
             $this->translator->trans('sylius.ui.contact_us'),
             self::TYPE,
-            $this->homepageSubjectFetcher->fetch(),
+            $subject,
         );
     }
 
