@@ -2,11 +2,11 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Factory;
 
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactoryInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\HomepageRichSnippetSubject;
-use Dedi\SyliusSEOPlugin\Factory\BreadcrumbRichSnippetFactory;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;
+use Dedi\SyliusSEOPlugin\RichSnippet\Factory\BreadcrumbRichSnippetFactory;
+use Dedi\SyliusSEOPlugin\RichSnippet\Factory\RichSnippetSubjectUrlFactoryInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\HomepageRichSnippetSubject;
 use PhpSpec\ObjectBehavior;
 
 class BreadcrumbRichSnippetFactorySpec extends ObjectBehavior

@@ -2,11 +2,11 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Context;
 
-use Dedi\SyliusSEOPlugin\Context\RichSnippetContext;
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\SubjectFetcherInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetFactoryInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContext;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\SubjectFetcherInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Factory\RichSnippetFactoryInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\RichSnippetInterface;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -53,9 +53,9 @@ class RichSnippetContextSpec extends ObjectBehavior
         SubjectFetcherInterface $subjectFetcherB,
         SubjectFetcherInterface $subjectFetcherC
     ) {
-        $subjectFetcherA->canFromRequest($request)->willReturn(false);
-        $subjectFetcherB->canFromRequest($request)->willReturn(false);
-        $subjectFetcherC->canFromRequest($request)->willReturn(false);
+        $subjectFetcherA->supports($request)->willReturn(false);
+        $subjectFetcherB->supports($request)->willReturn(false);
+        $subjectFetcherC->supports($request)->willReturn(false);
 
         $this->getAvailableRichSnippets()->shouldReturn([]);
     }
@@ -73,9 +73,9 @@ class RichSnippetContextSpec extends ObjectBehavior
         RichSnippetInterface $richSnippetB,
         RichSnippetInterface $richSnippetD
     ) {
-        $subjectFetcherA->canFromRequest($request)->willReturn(false);
-        $subjectFetcherB->canFromRequest($request)->willReturn(true);
-        $subjectFetcherC->canFromRequest($request)->shouldNotBeCalled();
+        $subjectFetcherA->supports($request)->willReturn(false);
+        $subjectFetcherB->supports($request)->willReturn(true);
+        $subjectFetcherC->supports($request)->shouldNotBeCalled();
 
         $subjectFetcherB->fetchFromRequest($request)->willReturn($subject);
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Taxon;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\MetadataTagInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 
@@ -17,7 +17,7 @@ use Sylius\Component\Core\Model\Taxon as BaseTaxon;
  *
  * @ORM\Table(name="sylius_taxon")
  */
-class Taxon extends BaseTaxon implements ReferenceableInterface, RichSnippetSubjectInterface
+class Taxon extends BaseTaxon implements ReferenceableAwareInterface, RichSnippetSubjectInterface
 {
     use ReferenceableTrait;
 
@@ -31,7 +31,7 @@ class Taxon extends BaseTaxon implements ReferenceableInterface, RichSnippetSubj
         return $this->getParent();
     }
 
-    protected function createReferenceableContent(): MetadataTagInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }

@@ -2,8 +2,8 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\GenericPageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;
+use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\GenericPageRichSnippetSubject;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;

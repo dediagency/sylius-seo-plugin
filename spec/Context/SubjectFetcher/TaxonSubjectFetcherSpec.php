@@ -2,8 +2,8 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\TaxonSubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\TaxonSubjectFetcher;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\MetadataTagInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectTrait;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 
@@ -19,7 +19,7 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
  *
  * @ORM\Table(name="sylius_product")
  */
-class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
+class Product extends BaseProduct implements ReferenceableAwareInterface, RichSnippetProductSubjectInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
@@ -63,7 +63,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return $this->getBaseOpenGraphMetadataImage();
     }
 
-    protected function createReferenceableContent(): MetadataTagInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }

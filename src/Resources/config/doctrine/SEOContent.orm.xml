@@ -5,5 +5,12 @@
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
         </id>
+        <field name="openGraphMetadataType" column="og_metadata_type" nullable="true"/>
+
+        <one-to-many field="robots" target-entity="Dedi\SyliusSEOPlugin\Entity\SEOContentRobotInterface" mapped-by="seoContent" index-by="locale">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many>
     </mapped-superclass>
 </doctrine-mapping>

@@ -2,9 +2,9 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Factory\SubjectUrl;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\HomepageRichSnippetSubject;
-use Dedi\SyliusSEOPlugin\Factory\SubjectUrl\HomepageUrlGenerator;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\HomepageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator\HomepageUrlGenerator;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\DataCollector;
 
-use Dedi\SyliusSEOPlugin\Context\RichSnippetContext;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContext;
+use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\RichSnippetInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;

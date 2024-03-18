@@ -50,16 +50,13 @@ The plugin has pre-configuration for Product and Channel entities.
 You have to add `ReferenceableInterface` into Product and Channel classes
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;
-use Sylius\Component\Core\Model\Product as BaseProduct;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;use Sylius\Component\Core\Model\Product as BaseProduct;
 
-class Product extends BaseProduct implements ReferenceableInterface
+class Product extends BaseProduct implements ReferenceableAwareInterface
 {
     use ReferenceableTrait;
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): ReferenceableAwareInterface
     {
         return new SEOContent();
     }
@@ -67,16 +64,13 @@ class Product extends BaseProduct implements ReferenceableInterface
 ```
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;
-use Sylius\Component\Core\Model\Channel as BaseChannel;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;use Sylius\Component\Core\Model\Channel as BaseChannel;
 
-class Channel extends BaseChannel implements ReferenceableInterface
+class Channel extends BaseChannel implements ReferenceableAwareInterface
 {
     use ReferenceableTrait;
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): ReferenceableAwareInterface
     {
         return new SEOContent();
     }
@@ -94,8 +88,7 @@ Rich snippet available are :
 Make your `Product` and `Taxon` classes implement the `RichSnippetSubjectInterface` interface.
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectTrait;use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 
 class Product extends BaseProduct implements RichSnippetSubjectInterface
 {
@@ -115,7 +108,7 @@ class Product extends BaseProduct implements RichSnippetSubjectInterface
 ```
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 
 class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 {
@@ -137,8 +130,7 @@ class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 You have to add `SeoAwareChannelInterface` for Channel Entity
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelTrait;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelTrait;
 
 class Channel extends BaseChannel implements SeoAwareChannelInterface
 {
@@ -167,15 +159,10 @@ Those events will load `<title>`, Open Graph metadata and Rich Snippets in you p
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    {% set app_title_block_output %}
-        {% block title %}
-            {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
-        {% endblock %}
-    {% endset %}
-    <title>{{ app_title_block_output|spaceless|striptags|raw }}</title>
+    <title>{{ dedi_sylius_seo_get_title() }}</title>
 
     {% block metatags %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: product ?? sylius.channel }) }}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags') }}
         {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
     {% endblock %}
 
@@ -206,11 +193,9 @@ bin/console doctrine:migration:migrate
 To set default values for all SEO metadata, override `ReferenceableTrait` methods like this :
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 
-class Product implements ReferenceableInterface
+class Product implements ReferenceableAwareInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
@@ -235,7 +220,7 @@ class Product implements ReferenceableInterface
         return $this->getBaseMetadataDescription();
     }
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): ReferenceableAwareInterface
     {
         return new SEOContent();
     }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Channel;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\MetadataTagInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\SeoAwareChannelTrait;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Channel as BaseChannel;
 
@@ -18,7 +18,7 @@ use Sylius\Component\Core\Model\Channel as BaseChannel;
  *
  * @ORM\Table(name="sylius_channel")
  */
-class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareChannelInterface
+class Channel extends BaseChannel implements ReferenceableAwareInterface, SeoAwareChannelInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
@@ -44,7 +44,7 @@ class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareCha
         return $this->getBaseMetadataDescription();
     }
 
-    protected function createReferenceableContent(): MetadataTagInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }

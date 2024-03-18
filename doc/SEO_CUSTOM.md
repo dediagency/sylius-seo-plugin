@@ -6,15 +6,13 @@ To add SEO content administration for a Sylius resource, please follow this cook
 ### 1 - Implement ReferenceableInterface into your Entity
 
 ```php
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 
-class CustomEntity implements ReferenceableInterface
+class CustomEntity implements ReferenceableAwareInterface
 {
     use ReferenceableTrait;
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): ReferenceableAwareInterface
     {
         return new SEOContent();
     }

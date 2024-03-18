@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 
 class SEOContent implements SEOContentInterface
 {
     protected ?int $id = null;
+
+    protected ?string $openGraphMetadataType = null;
+
+    /** @var Collection<int, SEOContentRobotInterface> */
+    protected Collection $robots;
 
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -18,6 +25,7 @@ class SEOContent implements SEOContentInterface
     public function __construct()
     {
         $this->initializeTranslationsCollection();
+        $this->robots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -27,7 +35,16 @@ class SEOContent implements SEOContentInterface
 
     public function isNotIndexable(): bool
     {
-        return $this->getTranslation()->isNotIndexable();
+        /** @var SEOContentRobotInterface|false $robot */
+        $robot = $this->getRobots()->filter(function (SEOContentRobotInterface $robot) {
+            return $robot->getLocale() === $this->currentLocale;
+        })->first();
+
+        if (false !== $robot) {
+            return $robot->isNotIndexable();
+        }
+
+        return false;
     }
 
     public function setNotIndexable(bool $notIndexable): self
@@ -99,12 +116,12 @@ class SEOContent implements SEOContentInterface
 
     public function getOpenGraphMetadataType(): ?string
     {
-        return $this->getTranslation()->getOpenGraphMetadataType();
+        return $this->openGraphMetadataType;
     }
 
-    public function setOpenGraphMetadataType(?string $type): self
+    public function setOpenGraphMetadataType(?string $openGraphMetadataType): self
     {
-        $this->getTranslation()->setOpenGraphMetadataType($type);
+        $this->openGraphMetadataType = $openGraphMetadataType;
 
         return $this;
     }
@@ -132,5 +149,44 @@ class SEOContent implements SEOContentInterface
     protected function createTranslation(): SEOContentTranslation
     {
         return new SEOContentTranslation();
+    }
+
+    public function getRobot(): ?SEOContentRobotInterface
+    {
+        /** @var SEOContentRobotInterface|false $robot */
+        $robot = $this->getRobots()->filter(function (SEOContentRobotInterface $robot) {
+            return $robot->getLocale() === $this->currentLocale;
+        })->first();
+
+        if (false !== $robot) {
+            return $robot;
+        }
+
+        return null;
+    }
+
+    public function getRobots(): Collection
+    {
+        return $this->robots;
+    }
+
+    public function addRobot(SEOContentRobotInterface $robot): static
+    {
+        if (!$this->robots->contains($robot)) {
+            $robot->setSeoContent($this);
+            $this->robots->add($robot);
+        }
+
+        return $this;
+    }
+
+    public function removeRobot(SEOContentRobotInterface $robot): static
+    {
+        if ($this->robots->contains($robot)) {
+            $robot->setSeoContent(null);
+            $this->robots->removeElement($robot);
+        }
+
+        return $this;
     }
 }

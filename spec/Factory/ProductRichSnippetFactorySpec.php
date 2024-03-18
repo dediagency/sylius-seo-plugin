@@ -2,10 +2,10 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Factory;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Factory\ProductRichSnippetFactory;
-use Dedi\SyliusSEOPlugin\Factory\SubjectUrl\ProductUrlGenerator;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Factory\ProductRichSnippetFactory;
+use Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator\ProductUrlGenerator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PhpSpec\ObjectBehavior;

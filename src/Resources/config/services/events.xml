@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.subscriber.dynamic_relation_with_content_seo" class="Dedi\SyliusSEOPlugin\SEO\Listener\DynamicRelationWithReferenceableContentSubscriber">
+            <tag name="doctrine.event_subscriber"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.listener.doctrine" class="Dedi\SyliusSEOPlugin\SEO\Listener\ORMReferenceableListener">
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="sylius.translation_locale_provider.immutable" />
+            <argument type="service" id="Sylius\Component\Core\Checker\CLIContextCheckerInterface" />
+            <tag name="doctrine.event_subscriber" connection="default" priority="99" />
+        </service>
+        <service id="Dedi\SyliusSEOPlugin\SEO\Listener\ORMReferenceableListener" alias="dedi_sylius_seo_plugin.listener.doctrine" />
+        <service id="dedi.sylius_seo_plugin.admin.menu_builder.product" class="Dedi\SyliusSEOPlugin\SEO\Listener\Admin\ProductMenuBuilder">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.product.form" method="addSeoMenuItem" />
+        </service>
+    </services>
+</container>

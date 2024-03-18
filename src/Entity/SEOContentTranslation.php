@@ -10,6 +10,7 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
 {
     protected ?int $id = null;
 
+    /** @deprecated Use SEOContentRobot::$notIndexable instead */
     protected bool $notIndexable = false;
 
     protected ?string $metadataTitle = null;
@@ -24,6 +25,7 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
 
     protected ?string $openGraphMetadataImage = null;
 
+    /** @deprecated Use SEOContent::$openGraphMetadataType instead */
     protected ?string $openGraphMetadataType = null;
 
     public function getId(): ?int

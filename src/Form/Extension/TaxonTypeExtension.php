@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Form\Extension;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\Form\Type\SEOContentType;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
 use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class TaxonTypeExtension extends AbstractTypeExtension
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $form = $event->getForm();
 
-            if ($event->getData() instanceof ReferenceableInterface) {
+            if ($event->getData() instanceof ReferenceableAwareInterface) {
                 $form
                     ->add('referenceableContent', SEOContentType::class, [
                         'label' => 'dedi_sylius_seo_plugin.ui.seo',

@@ -1,36 +1,23 @@
-{% if resource is defined and resource.referenceableContent is defined and resource.referenceableContent is not null %}
-    {% set seo = resource %}
-{% endif %}
+{% set metadata = dedi_sylius_seo_get_metadata() %}
 
-{% if sylius.channel.referenceableContent is defined and sylius.channel.referenceableContent is not null %}
-    {% set baseSeo = sylius.channel %}
-{% endif %}
+{% if metadata is not null %}
+    <meta name="robots" content="{% if metadata.indexable %}index{% else %}noindex{% endif %}">
 
-{% if seo is defined %}
-    {% if seo.notIndexable %}
-        <meta name="robots" content="noindex">
+    {% if metadata.ogTitle or metadata.title %}
+        <meta property="og:title" content="{{ metadata.ogTitle|default(metadata.title) }}" />
     {% endif %}
 
-    {% if seo.openGraphMetadataTitle or seo.metadataTitle %}
-        <meta property="og:title" content="{{ seo.openGraphMetadataTitle|default(seo.metadataTitle) }}" />
-    {% elseif baseSeo is defined and (baseSeo.openGraphMetadataTitle or baseSeo.metadataTitle) %}
-        <meta property="og:title" content="{{ baseSeo.openGraphMetadataTitle|default(seo.metadataTitle) }}" />
+    {% if metadata.ogDescription or metadata.description %}
+        <meta property="og:description" content="{{ metadata.ogDescription|default(metadata.description) }}" />
+        <meta name="description" content="{{ metadata.description|default(metadata.ogDescription) }}" />
     {% endif %}
 
-    {% if seo.openGraphMetadataDescription or seo.metadataDescription %}
-        <meta property="og:description" content="{{ seo.openGraphMetadataDescription|default(seo.metadataDescription) }}" />
-        <meta name="description" content="{{ seo.metadataDescription|default(seo.openGraphMetadataDescription) }}" />
-    {% elseif baseSeo is defined and (baseSeo.openGraphMetadataDescription or baseSeo.metadataDescription) %}
-        <meta property="og:description" content="{{ baseSeo.openGraphMetadataDescription|default(baseSeo.metadataDescription) }}" />
-        <meta name="description" content="{{ baseSeo.metadataDescription|default(baseSeo.openGraphMetadataDescription) }}" />
-    {% endif %}
-
-    {% if seo.openGraphMetadataImage %}
-        <meta property="og:image" content="{{ dedi_sylius_seo_get_image_url(seo.openGraphMetadataImage) }}" />
+    {% if metadata.ogImage %}
+        <meta property="og:image" content="{{ dedi_sylius_seo_get_image_url(metadata.ogImage) }}" />
     {% endif %}
 
     {% if app.request.attributes.get('_route') is not empty %}
-        <meta property="og:type" content="{{ seo.openGraphMetadataType|default('website') }}" />
-        <meta property="og:url" content="{{ seo.openGraphMetadataUrl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
+        <meta property="og:type" content="{{ metadata.ogType|default('website') }}" />
+        <meta property="og:url" content="{{ metadata.ogURl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
     {% endif %}
 {% endif %}

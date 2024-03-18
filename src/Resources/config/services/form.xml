@@ -12,6 +12,21 @@
 
             <tag name="form.type"/>
         </service>
+        <service id="dedi_sylius_seo_plugin.form.type.seo_content_robot" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentRobotType">
+            <argument key="$dataClass">%dedi_sylius_seo_plugin.model.seo_content_robot.class%</argument>
+
+            <argument key="$validationGroups" type="collection">
+                <argument>default</argument>
+                <argument>sylius</argument>
+            </argument>
+
+            <tag name="form.type"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.form.type.seo_content_robots" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentRobotsType">
+            <argument type="service" id="sylius.translation_locale_provider"/>
+            <tag name="form.type"/>
+        </service>
 
         <service id="dedi_sylius_seo_plugin.form.type.seo_content_translation" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentTranslationType">
             <argument key="$dataClass">%dedi_sylius_seo_plugin.model.seo_content_translation.class%</argument>
@@ -22,6 +37,18 @@
             </argument>
 
             <tag name="form.type"/>
+        </service>
+
+        <service id="dedi.sylius_seo_plugin.form.extension.channel_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ChannelTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
+        <service id="dedi.sylius_seo_plugin.form.extension.product_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ProductTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
+        <service id="dedi.sylius_seo_plugin.form.extension.taxon_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\TaxonTypeExtension">
+            <tag name="form.type_extension"/>
         </service>
     </services>
 </container>

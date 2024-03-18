@@ -34,8 +34,10 @@ Example:
 declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\Subject\GenericPageRichSnippetSubject;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\SubjectFetcherInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\GenericPageRichSnippetSubject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -84,12 +86,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Factory;
 
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\HomepageSubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\AbstractRichSnippetFactory;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\RichSnippetSubjectUrlFactory;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\BreadcrumbRichSnippet;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;use Dedi\SyliusSEOPlugin\RichSnippet\Factory\AbstractRichSnippetFactory;use Dedi\SyliusSEOPlugin\RichSnippet\Factory\RichSnippetSubjectUrlFactory;use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\RichSnippetInterface;
 
 final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {

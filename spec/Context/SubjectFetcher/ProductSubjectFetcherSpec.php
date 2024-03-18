@@ -2,8 +2,8 @@
 
 namespace spec\Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
 
-use Dedi\SyliusSEOPlugin\Context\SubjectFetcher\ProductSubjectFetcher;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ProductSubjectFetcher;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
