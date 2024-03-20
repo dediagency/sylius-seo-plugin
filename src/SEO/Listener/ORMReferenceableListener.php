@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\SEO\Listener;
 
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PostLoadEventArgs;
 use Doctrine\ORM\Events;
@@ -33,7 +33,7 @@ class ORMReferenceableListener implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if (!$entity instanceof ReferenceableAwareInterface) {
+        if (!$entity instanceof ReferenceableInterface) {
             return;
         }
 

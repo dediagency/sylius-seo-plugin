@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\SEO\Listener;
 
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
@@ -23,7 +23,7 @@ class DynamicRelationWithReferenceableContentSubscriber implements EventSubscrib
     {
         $metadata = $eventArgs->getClassMetadata();
         if (
-            !$metadata->getReflectionClass()->implementsInterface(ReferenceableAwareInterface::class) ||
+            !$metadata->getReflectionClass()->implementsInterface(ReferenceableInterface::class) ||
             !$metadata->getReflectionClass()->hasProperty(self::REFERENCIABLE_FIELD_NAME)
         ) {
             return;

@@ -6,7 +6,7 @@ namespace Dedi\SyliusSEOPlugin\SEO\Adapter;
 
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 
-interface ReferenceableAwareInterface extends MetadataAwareInterface
+interface ReferenceableInterface extends MetadataAwareInterface
 {
     public function getReferenceableContent(): SEOContentInterface;
 

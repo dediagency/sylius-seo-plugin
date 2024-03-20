@@ -7,7 +7,7 @@ namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Taxon;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
@@ -17,7 +17,7 @@ use Sylius\Component\Core\Model\Taxon as BaseTaxon;
  *
  * @ORM\Table(name="sylius_taxon")
  */
-class Taxon extends BaseTaxon implements ReferenceableAwareInterface, RichSnippetSubjectInterface
+class Taxon extends BaseTaxon implements ReferenceableInterface, RichSnippetSubjectInterface
 {
     use ReferenceableTrait;
 

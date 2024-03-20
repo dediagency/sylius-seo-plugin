@@ -10,8 +10,6 @@ use Sylius\Component\Resource\Model\TranslationInterface;
 
 interface SEOContentTranslationInterface extends ResourceInterface, TranslationInterface, MetadataAwareInterface
 {
-    public function setNotIndexable(bool $indexable): self;
-
     public function setMetadataTitle(?string $title): self;
 
     public function setMetadataDescription(?string $description): self;

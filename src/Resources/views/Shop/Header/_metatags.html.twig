@@ -1,23 +1,23 @@
 {% set metadata = dedi_sylius_seo_get_metadata() %}
 
 {% if metadata is not null %}
-    <meta name="robots" content="{% if metadata.indexable %}index{% else %}noindex{% endif %}">
-
+    {% if not metadata.indexable %}
+        <meta name="robots" content="noindex, nofollow">
+    {% endif %}
+    {% if metadata.description %}
+        <meta name="description" content="{{ metadata.description }}">
+    {% endif %}
     {% if metadata.ogTitle or metadata.title %}
-        <meta property="og:title" content="{{ metadata.ogTitle|default(metadata.title) }}" />
+        <meta property="og:title" content="{{ metadata.ogTitle|default(metadata.title) }}">
     {% endif %}
-
     {% if metadata.ogDescription or metadata.description %}
-        <meta property="og:description" content="{{ metadata.ogDescription|default(metadata.description) }}" />
-        <meta name="description" content="{{ metadata.description|default(metadata.ogDescription) }}" />
+        <meta property="og:description" content="{{ metadata.ogDescription|default(metadata.description) }}">
     {% endif %}
-
     {% if metadata.ogImage %}
-        <meta property="og:image" content="{{ dedi_sylius_seo_get_image_url(metadata.ogImage) }}" />
+        <meta property="og:image" content="{{ dedi_sylius_seo_get_image_url(metadata.ogImage) }}">
     {% endif %}
-
     {% if app.request.attributes.get('_route') is not empty %}
-        <meta property="og:type" content="{{ metadata.ogType|default('website') }}" />
-        <meta property="og:url" content="{{ metadata.ogURl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" />
+        <meta property="og:type" content="{{ metadata.ogType|default('website') }}">
+        <meta property="og:url" content="{{ metadata.ogURl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">
     {% endif %}
 {% endif %}

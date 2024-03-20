@@ -2,53 +2,38 @@
 
 declare(strict_types=1);
 
-namespace Dedi\SyliusSEOPlugin\SEO\Twig;
+namespace Dedi\SyliusSEOPlugin\SEO\Context;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterRegistryInterface;
+use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Webmozart\Assert\Assert;
 
-class NoIndexNoFollowExtension extends AbstractExtension
+class RequestParametersMetadataContext implements MetadataContextInterface
 {
-    private RequestStack $requestStack;
-
-    private FilterRegistryInterface $filterRegistry;
-
     public function __construct(
-        FilterRegistryInterface $filterRegistry,
-        RequestStack $requestStack,
+        private RequestStack $requestStack,
+        private FilterRegistryInterface $filterRegistry,
     ) {
-        $this->requestStack = $requestStack;
-        $this->filterRegistry = $filterRegistry;
     }
 
-    public function isNoIndexNoFollow(): bool
+    public function getMetadata(): Metadata
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if (!$request instanceof Request) {
-            return false;
-        }
+        Assert::notNull($request);
 
         $filterName = $this->resolveFilterName($request);
 
-        if ('' === $filterName) {
-            return false;
-        }
+        Assert::notEmpty($filterName);
 
         $filter = $this->filterRegistry->getFilter($filterName);
 
-        return $filter->isSatisfiedBy($request);
-    }
+        $isNotIndexable = $filter->isSatisfiedBy($request);
 
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('dedi_sylius_seo_is_no_index_no_follow', [$this, 'isNoIndexNoFollow']),
-        ];
+        return new Metadata('request', !$isNotIndexable);
     }
 
     private function resolveFilterName(Request $request): string

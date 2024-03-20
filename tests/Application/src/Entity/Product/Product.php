@@ -9,7 +9,7 @@ use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectTrait;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
@@ -19,7 +19,7 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
  *
  * @ORM\Table(name="sylius_product")
  */
-class Product extends BaseProduct implements ReferenceableAwareInterface, RichSnippetProductSubjectInterface
+class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
@@ -34,7 +34,7 @@ class Product extends BaseProduct implements ReferenceableAwareInterface, RichSn
             $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
 
             return null === $this->getMainTaxon() ? $this->getName() :
-                $this->getMainTaxon()->getName() . ' | ' . $this->getName();
+                $this->getName() . ' | ' . $this->getMainTaxon()->getName();
         }
 
         return $this->getBaseMetadataTitle();

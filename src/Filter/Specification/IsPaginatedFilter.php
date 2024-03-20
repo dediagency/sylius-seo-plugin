@@ -11,6 +11,12 @@ class IsPaginatedFilter implements FilterInterface
 {
     public function isSatisfiedBy(Request $request): bool
     {
-        return false !== (bool) $request->query->get('page', false);
+        $page = $request->query->get('page');
+
+        if (null === $page) {
+            return true;
+        }
+
+        return $page > 1;
     }
 }

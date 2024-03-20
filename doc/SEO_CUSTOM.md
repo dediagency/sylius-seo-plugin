@@ -6,13 +6,13 @@ To add SEO content administration for a Sylius resource, please follow this cook
 ### 1 - Implement ReferenceableInterface into your Entity
 
 ```php
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 
-class CustomEntity implements ReferenceableAwareInterface
+class CustomEntity implements ReferenceableInterface
 {
     use ReferenceableTrait;
 
-    protected function createReferenceableContent(): ReferenceableAwareInterface
+    protected function createReferenceableContent(): ReferenceableInterface
     {
         return new SEOContent();
     }
@@ -65,18 +65,4 @@ class CustomEntityTypeExtension extends AbstractReferenceableTypeExtension
 <div class="ui segment">
     {{ form_row(form.referenceableContent) }}
 </div>
-```
-
-### 4 - Call SEO header events
-
-For example into layout template with CutomEntity's referenceable content
-
-```twig
-{% block title %}
-    {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: customEntity }) }}
-{% endblock %}
-
-{% block metatags %}
-    {{ sylius_template_event('dedi_sylius_seo_plugin.metatags', { resource: customEntity }) }}
-{% endblock %}
 ```

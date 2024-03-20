@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\SEO\Context;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Enum\MetadataOriginEnum;
 use Dedi\SyliusSEOPlugin\SEO\Exception\ContextNotAvailableInRequestException;
 use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
-use Dedi\SyliusSEOPlugin\SEO\Transformer\SEOContentToMetadataTransformerInterface;
+use Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformerInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -22,7 +22,7 @@ class TaxonMetadataContext implements MetadataContextInterface
         private TaxonRepositoryInterface $repository,
         private LocaleContextInterface $localeContext,
         private RequestStack $requestStack,
-        private SEOContentToMetadataTransformerInterface $transformer,
+        private ReferenceableToMetadataTransformerInterface $transformer,
     ) {
     }
 
@@ -45,8 +45,8 @@ class TaxonMetadataContext implements MetadataContextInterface
             $this->localeContext->getLocaleCode(),
         );
 
-        Assert::isInstanceOf($taxon, ReferenceableAwareInterface::class);
+        Assert::isInstanceOf($taxon, ReferenceableInterface::class);
 
-        return $this->transformer->transform($taxon->getReferenceableContent(), MetadataOriginEnum::TAXON);
+        return $this->transformer->transform($taxon, MetadataOriginEnum::TAXON);
     }
 }

@@ -47,7 +47,7 @@
             <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
             <argument key="$priceHelper" type="service" id="sylius.templating.helper.price"/>
             <argument key="$channelContext" type="service" id="sylius.context.channel.cached"/>
-            <argument key="$localeContext" type="service" id="sylius.context.locale.composite"/>
+            <argument key="$localeContext" type="service" id="sylius.context.locale"/>
             <argument key="$currencyContext" type="service" id="sylius.context.shopper"/>
             <argument key="$productUrlGenerator" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator"/>
             <argument key="$availabilityChecker" type="service" id="sylius.availability_checker.default"/>

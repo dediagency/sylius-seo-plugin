@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\SEO\Context;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Enum\MetadataOriginEnum;
 use Dedi\SyliusSEOPlugin\SEO\Exception\ContextNotAvailableInRequestException;
 use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
-use Dedi\SyliusSEOPlugin\SEO\Transformer\SEOContentToMetadataTransformerInterface;
+use Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformerInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
@@ -25,7 +25,7 @@ class ProductMetadataContext implements MetadataContextInterface
         private ProductRepositoryInterface $repository,
         private LocaleContextInterface $localeContext,
         private RequestStack $requestStack,
-        private SEOContentToMetadataTransformerInterface $transformer,
+        private ReferenceableToMetadataTransformerInterface $transformer,
     ) {
     }
 
@@ -52,8 +52,8 @@ class ProductMetadataContext implements MetadataContextInterface
             $slug,
         );
 
-        Assert::isInstanceOf($product, ReferenceableAwareInterface::class);
+        Assert::isInstanceOf($product, ReferenceableInterface::class);
 
-        return $this->transformer->transform($product->getReferenceableContent(), MetadataOriginEnum::PRODUCT);
+        return $this->transformer->transform($product, MetadataOriginEnum::PRODUCT);
     }
 }

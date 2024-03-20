@@ -6,7 +6,7 @@ namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Channel;
 
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelTrait;
@@ -18,7 +18,7 @@ use Sylius\Component\Core\Model\Channel as BaseChannel;
  *
  * @ORM\Table(name="sylius_channel")
  */
-class Channel extends BaseChannel implements ReferenceableAwareInterface, SeoAwareChannelInterface
+class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareChannelInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;

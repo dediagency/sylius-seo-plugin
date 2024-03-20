@@ -35,7 +35,10 @@ Call the SEO links event in your main layout header. This will automatically add
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <title>{{ dedi_sylius_seo_get_title() }}</title>
+
     {% block metatags %}
+        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags') }}
         {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
     {% endblock %}
 
@@ -50,13 +53,13 @@ The plugin has pre-configuration for Product and Channel entities.
 You have to add `ReferenceableInterface` into Product and Channel classes
 
 ```php
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;use Sylius\Component\Core\Model\Product as BaseProduct;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;use Sylius\Component\Core\Model\Product as BaseProduct;
 
-class Product extends BaseProduct implements ReferenceableAwareInterface
+class Product extends BaseProduct implements ReferenceableInterface
 {
     use ReferenceableTrait;
 
-    protected function createReferenceableContent(): ReferenceableAwareInterface
+    protected function createReferenceableContent(): ReferenceableInterface
     {
         return new SEOContent();
     }
@@ -64,13 +67,13 @@ class Product extends BaseProduct implements ReferenceableAwareInterface
 ```
 
 ```php
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;use Sylius\Component\Core\Model\Channel as BaseChannel;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;use Sylius\Component\Core\Model\Channel as BaseChannel;
 
-class Channel extends BaseChannel implements ReferenceableAwareInterface
+class Channel extends BaseChannel implements ReferenceableInterface
 {
     use ReferenceableTrait;
 
-    protected function createReferenceableContent(): ReferenceableAwareInterface
+    protected function createReferenceableContent(): ReferenceableInterface
     {
         return new SEOContent();
     }
@@ -142,9 +145,7 @@ class Channel extends BaseChannel implements SeoAwareChannelInterface
 
 ## Add twig events
 
-The @SyliusShop/layout.html.twig should be overridden in order to add `dedi_sylius_seo_plugin` events in the `<head>` section of your page
-
-Those events will load `<title>`, Open Graph metadata and Rich Snippets in you pages based on the current resource
+The @SyliusShop/layout.html.twig should be overridden in order to add `dedi_sylius_seo_plugin` blocks and functions in the `<head>` section of your page
 
 >Note : it is important to override the default layout.html.twig and not just extend it.
 >
@@ -154,7 +155,7 @@ Those events will load `<title>`, Open Graph metadata and Rich Snippets in you p
 {# templates/bundles/SyliusShopBundle/layout.html.twig #}
 <!DOCTYPE html>
 
-<html>
+<html lang="{{ app.request.locale|slice(0, 2) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -169,8 +170,6 @@ Those events will load `<title>`, Open Graph metadata and Rich Snippets in you p
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     
     ...
-    {# rest of vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/views/layout.html.twig #}
-    ... 
 </head>
 ```
 
@@ -193,9 +192,9 @@ bin/console doctrine:migration:migrate
 To set default values for all SEO metadata, override `ReferenceableTrait` methods like this :
 
 ```php
-use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableAwareInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 
-class Product implements ReferenceableAwareInterface
+class Product implements ReferenceableInterface
 {
     use ReferenceableTrait {
         getMetadataTitle as getBaseMetadataTitle;
@@ -220,7 +219,7 @@ class Product implements ReferenceableAwareInterface
         return $this->getBaseMetadataDescription();
     }
 
-    protected function createReferenceableContent(): ReferenceableAwareInterface
+    protected function createReferenceableContent(): ReferenceableInterface
     {
         return new SEOContent();
     }

@@ -18,5 +18,7 @@ interface MetadataAwareInterface
 
     public function getOpenGraphMetadataUrl(): ?string;
 
+    public function getOpenGraphMetadataType(): ?string;
+
     public function getOpenGraphMetadataImage(): ?string;
 }
