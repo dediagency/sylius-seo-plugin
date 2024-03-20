@@ -1,7 +1,8 @@
 <?php
 
-namespace spec\Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
+namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher;
 
+use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ProductSubjectFetcher;
 use PhpSpec\ObjectBehavior;
@@ -15,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductSubjectFetcherSpec extends ObjectBehavior
 {
-    function let(ChannelContextInterface $channelContext, LocaleContextInterface $localeContext, ProductRepositoryInterface $repository)
+    function let(FilterInterface $filter, ChannelContextInterface $channelContext, LocaleContextInterface $localeContext, ProductRepositoryInterface $repository)
     {
-        $this->beConstructedWith($channelContext, $localeContext, $repository);
+        $this->beConstructedWith($channelContext, $localeContext, $repository, $filter);
     }
 
     function it_is_initializable()
@@ -32,20 +33,16 @@ class ProductSubjectFetcherSpec extends ObjectBehavior
         $this->fetch(12)->shouldReturn($product);
     }
 
-    function it_can_from_request_with_right_route(Request $request, ParameterBag $attributes)
+    function it_support_with_right_route(Request $request, FilterInterface $filter)
     {
-        $attributes->get('_route')->willReturn('sylius_shop_product_show');
-        $request->attributes = $attributes;
-
-        $this->canFromRequest($request)->shouldReturn(true);
+        $filter->isSatisfiedBy($request)->willReturn(true);
+        $this->supports($request)->shouldReturn(true);
     }
 
-    function it_can_t_from_request_with_wrong_route(Request $request, ParameterBag $attributes)
+    function it_does_not_support_with_wrong_route(Request $request, FilterInterface $filter)
     {
-        $attributes->get('_route')->willReturn('sylius_shop_contact_request');
-        $request->attributes = $attributes;
-
-        $this->canFromRequest($request)->shouldReturn(false);
+        $filter->isSatisfiedBy($request)->willReturn(false);
+        $this->supports($request)->shouldReturn(false);
     }
 
     function it_fetches_from_request(Request $request, ParameterBag $attributes, ChannelContextInterface $channelContext, LocaleContextInterface $localeContext, ProductRepositoryInterface $repository, ChannelInterface $channel)

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Dedi\SyliusSEOPlugin\Factory;
+namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Factory;
 
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;

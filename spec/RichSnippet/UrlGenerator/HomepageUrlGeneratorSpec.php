@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Dedi\SyliusSEOPlugin\Factory\SubjectUrl;
+namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator;
 
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\HomepageRichSnippetSubject;

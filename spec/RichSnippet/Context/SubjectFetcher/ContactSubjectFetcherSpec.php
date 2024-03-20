@@ -1,7 +1,8 @@
 <?php
 
-namespace spec\Dedi\SyliusSEOPlugin\Context\SubjectFetcher;
+namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher;
 
+use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ContactSubjectFetcher;
 use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\GenericPageRichSnippetSubject;
@@ -12,9 +13,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactSubjectFetcherSpec extends ObjectBehavior
 {
-    function let(HomepageSubjectFetcher $homepageSubjectFetcher, TranslatorInterface $translator)
+    function let(FilterInterface $filter, HomepageSubjectFetcher $homepageSubjectFetcher, TranslatorInterface $translator)
     {
-        $this->beConstructedWith($homepageSubjectFetcher, $translator);
+        $this->beConstructedWith($filter, $homepageSubjectFetcher, $translator);
     }
 
     function it_is_initializable()
@@ -34,20 +35,16 @@ class ContactSubjectFetcherSpec extends ObjectBehavior
         $subject->getRichSnippetSubjectParent()->shouldReturn($homepageSubject);
     }
 
-    function it_can_from_request_with_right_route(Request $request, ParameterBag $attributes)
+    function it_support_with_right_route(Request $request, FilterInterface $filter)
     {
-        $attributes->get('_route')->willReturn('sylius_shop_contact_request');
-        $request->attributes = $attributes;
-
-        $this->canFromRequest($request)->shouldReturn(true);
+        $filter->isSatisfiedBy($request)->willReturn(true);
+        $this->supports($request)->shouldReturn(true);
     }
 
-    function it_can_t_from_request_with_wrong_route(Request $request, ParameterBag $attributes)
+    function it_does_not_support_with_wrong_route(Request $request, FilterInterface $filter)
     {
-        $attributes->get('_route')->willReturn('sylius_shop_homepage');
-        $request->attributes = $attributes;
-
-        $this->canFromRequest($request)->shouldReturn(false);
+        $filter->isSatisfiedBy($request)->willReturn(false);
+        $this->supports($request)->shouldReturn(false);
     }
 
     function it_fetches_from_request(Request $request, HomepageSubjectFetcher $homepageSubjectFetcher, TranslatorInterface $translator, GenericPageRichSnippetSubject $homepageSubject)

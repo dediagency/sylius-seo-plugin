@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Dedi\SyliusSEOPlugin\Context;
+namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Context;
 
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContext;

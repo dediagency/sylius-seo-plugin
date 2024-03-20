@@ -57,6 +57,12 @@
         }
     },
     "scripts": {
+        "test:analysis": [
+            "vendor/bin/phpstan analyse src/ -c phpstan.neon"
+        ],
+        "test:phpspec": [
+            "vendor/bin/phpspec run --format=pretty --no-code-generation"
+        ],
         "post-install-cmd": [
             "php bin/create_node_symlink.php"
         ],
