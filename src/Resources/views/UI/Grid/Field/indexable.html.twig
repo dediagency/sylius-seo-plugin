@@ -1,0 +1,11 @@
+{% if data %}
+    <span class="ui red label">
+        <i class="remove icon"></i>
+        {{ 'dedi_sylius_seo_plugin.ui.not_indexable'|trans }}
+    </span>
+{% else %}
+    <span class="ui teal label">
+        <i class="checkmark icon"></i>
+        {{ 'dedi_sylius_seo_plugin.ui.indexable'|trans }}
+    </span>
+{% endif %}

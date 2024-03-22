@@ -6,9 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "sylius/sylius": "~1.11 || ~1.12",
-        "sylius/mailer-bundle":  "^1.8 || ^2.0@beta",
-        "symfony/webpack-encore-bundle": "^1.15"
+        "sylius/mailer-bundle": "^1.8 || ^2.0.0",
+        "sylius/sylius": "~1.11 || ~1.12"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -38,6 +37,7 @@
         "symfony/flex": "^2.2.2",
         "symfony/intl": "^5.4 || ^6.0",
         "symfony/web-profiler-bundle": "^5.4 || ^6.0",
+        "symfony/webpack-encore-bundle": "^1.17",
         "vimeo/psalm": "4.27.0"
     },
     "prefer-stable": true,
@@ -52,10 +52,17 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": false,
             "phpstan/extension-installer": true,
-            "symfony/flex": false
+            "symfony/flex": false,
+            "symfony/thanks": false
         }
     },
     "scripts": {
+        "test:analysis": [
+            "vendor/bin/phpstan analyse src/ -c phpstan.neon"
+        ],
+        "test:phpspec": [
+            "vendor/bin/phpspec run --format=pretty --no-code-generation"
+        ],
         "post-install-cmd": [
             "php bin/create_node_symlink.php"
         ],

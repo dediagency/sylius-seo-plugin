@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.factory.seo_content" class="Dedi\SyliusSEOPlugin\Factory\SEOContentFactory">
+            <argument type="service" id="sylius.locale_provider"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.metadata.twig.title_extension" class="Dedi\SyliusSEOPlugin\SEO\Twig\TitleExtension">
+            <argument type="service" id="dedi_sylius_seo_plugin.context.metadata"/>
+            <tag name="twig.extension"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.metadata.twig.metadata" class="Dedi\SyliusSEOPlugin\SEO\Twig\MetadataExtension">
+            <argument type="service" id="dedi_sylius_seo_plugin.context.metadata"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.metadata.twig.metadata_image_extension" class="Dedi\SyliusSEOPlugin\SEO\Twig\ReferenceableImageExtension">
+            <argument key="$filterExtension" type="service" id="liip_imagine.templating.filter_extension"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.context.metadata.context.uri" class="Dedi\SyliusSEOPlugin\SEO\Context\UriMetadataContext">
+            <argument type="service" id="dedi_sylius_seo_plugin.repository.seo_content" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.seo_content_to_metadata" />
+            <tag name="dedi_sylius_seo_plugin.context.metadata" priority="100"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.context.metadata.context.request_parameters" class="Dedi\SyliusSEOPlugin\SEO\Context\RequestParametersMetadataContext">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="dedi_sylius_seo_plugin.links.shop.filter_registry" />
+            <tag name="dedi_sylius_seo_plugin.context.metadata" priority="50"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.context.metadata.context.product" class="Dedi\SyliusSEOPlugin\SEO\Context\ProductMetadataContext">
+            <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_product_filter" />
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.referenceable_to_metadata" />
+            <tag name="dedi_sylius_seo_plugin.context.metadata" priority="0"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.context.metadata.context.taxon" class="Dedi\SyliusSEOPlugin\SEO\Context\TaxonMetadataContext">
+            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter" />
+            <argument type="service" id="sylius.repository.taxon" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.referenceable_to_metadata" />
+            <tag name="dedi_sylius_seo_plugin.context.metadata" priority="0"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.context.metadata.context.channel" class="Dedi\SyliusSEOPlugin\SEO\Context\ChannelMetadataContext">
+            <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.referenceable_to_metadata" />
+            <tag name="dedi_sylius_seo_plugin.context.metadata" priority="-50"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.context.metadata.composite" class="Dedi\SyliusSEOPlugin\SEO\Context\CompositeMetadataContext" decorates="dedi_sylius_seo_plugin.context.metadata" decoration-priority="256" public="false">
+            <argument type="service" id="dedi_sylius_seo_plugin.builder.metadata.director" />
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.transformer.referenceable_to_metadata" class="Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformer" />
+        <service id="dedi_sylius_seo_plugin.transformer.seo_content_to_metadata" class="Dedi\SyliusSEOPlugin\SEO\Transformer\SEOContentToMetadataTransformer" />
+        <service id="dedi_sylius_seo_plugin.builder.metadata.builder" class="Dedi\SyliusSEOPlugin\SEO\Builder\MetadataBuilder" />
+        <service id="dedi_sylius_seo_plugin.builder.metadata.director" class="Dedi\SyliusSEOPlugin\SEO\Builder\MetadataDirector">
+            <argument type="service" id="dedi_sylius_seo_plugin.builder.metadata.builder" />
+        </service>
+    </services>
+</container>

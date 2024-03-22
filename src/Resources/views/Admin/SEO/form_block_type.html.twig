@@ -1,13 +1,8 @@
 {% block dedi_sylius_seo_plugin_content_seo_widget %}
     {% import '@SyliusUi/Macro/flags.html.twig' as flags %}
 
-    {% if form.parent.vars.value.referenceableContent is defined %}
-        {% set resource = form.parent.vars.value %}
-    {% else %}
-        {% set resource = value %}
-    {% endif %}
-
     <div class="ui two column stackable grid">
+        {{ form_row(form.type) }}
         <div class="column">
             <div class="ui message info">
                 <i class="close icon"></i>
@@ -28,7 +23,10 @@
                         </div>
 
                         <div class="ui content seo-advanced-panel-content {% if 0 == loop.index0 %} active{% endif %}">
-                            {{ form_row(translationForm.notIndexable) }}
+                            {% if translationForm.uri is defined %}
+                                {{ form_row(translationForm.uri) }}
+                            {% endif %}
+                            {{ form_row(form.robots[locale].notIndexable) }}
                             {{ form_row(translationForm.metadataTitle, { 'attr': { 'data-form-title': '' }}) }}
                             {{ form_row(translationForm.metadataDescription, { 'attr': { 'data-form-description': '' }}) }}
 
@@ -44,10 +42,8 @@
                             {{ form_row(translationForm.openGraphMetadataTitle, { 'attr': { 'data-form-og-title': '' }}) }}
                             {{ form_row(translationForm.openGraphMetadataDescription, { 'attr': { 'data-form-og-description': '' }}) }}
                             {{ form_row(translationForm.openGraphMetadataImage, { 'attr': { 'data-form-og-image': '' }}) }}
-                            {{ form_row(translationForm.openGraphMetadataType) }}
                         </div>
 
-                        {% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
                         <div class="preview-default-data" style="display: none;">
                             <span class="title">{{ resource.metadataTitle }}</span>
                             <span class="description">{{ resource.metadataDescription }}</span>
@@ -58,6 +54,9 @@
                         </div>
                     </div>
                 {% endfor %}
+                <div class="ui content">
+                    {{ form_row(form.openGraphMetadataType) }}
+                </div>
             </div>
         </div>
 

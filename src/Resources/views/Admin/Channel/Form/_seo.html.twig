@@ -17,7 +17,9 @@
 
             <div class="ui hidden divider"></div>
 
-            {{ form_row(form.referenceableContent) }}
+            {% if form.referenceableContent is defined %}
+                {{ form_row(form.referenceableContent) }}
+            {% endif %}
         </div>
     </div>
 </div>

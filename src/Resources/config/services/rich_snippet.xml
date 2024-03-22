@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContext">
+            <argument key="$requestStack" type="service" id="request_stack"/>
+            <argument key="$subjectFetchers" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
+            <argument key="$richSnippetFactories" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.product_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ProductSubjectFetcher">
+            <argument key="$channelContext" type="service" id="sylius.context.channel"/>
+            <argument key="$localeContext" type="service" id="sylius.context.locale"/>
+            <argument key="$repository" type="service" id="sylius.repository.product"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_product_filter"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.taxon_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\TaxonSubjectFetcher">
+            <argument key="$localeContext" type="service" id="sylius.context.locale"/>
+            <argument key="$repository" type="service" id="sylius.repository.taxon"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.homepage_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher">
+            <argument key="$translator" type="service" id="translator"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_homepage_filter"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.contact_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ContactSubjectFetcher">
+            <argument key="$homepageSubjectFetcher" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.homepage_subject_fetcher"/>
+            <argument key="$translator" type="service" id="translator"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_contact_filter"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
+        </service>
+
+        <!-- Rich Snippets Factory -->
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.breadcrumb" class="Dedi\SyliusSEOPlugin\RichSnippet\Factory\BreadcrumbRichSnippetFactory">
+            <argument key="$richSnippetSubjectUrlFactory" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url"/>
+            <argument key="$homepageSubjectFetcher" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.homepage_subject_fetcher"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.product" class="Dedi\SyliusSEOPlugin\RichSnippet\Factory\ProductRichSnippetFactory">
+            <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
+            <argument key="$priceHelper" type="service" id="sylius.templating.helper.price"/>
+            <argument key="$channelContext" type="service" id="sylius.context.channel.cached"/>
+            <argument key="$localeContext" type="service" id="sylius.context.locale"/>
+            <argument key="$currencyContext" type="service" id="sylius.context.shopper"/>
+            <argument key="$productUrlGenerator" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator"/>
+            <argument key="$availabilityChecker" type="service" id="sylius.availability_checker.default"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url" class="Dedi\SyliusSEOPlugin\RichSnippet\Factory\RichSnippetSubjectUrlFactory">
+            <argument key="$urlGenerators" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.homepage_url_generator" class="Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator\HomepageUrlGenerator">
+            <argument key="$router" type="service" id="router.default"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator" class="Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator\ProductUrlGenerator">
+            <argument key="$router" type="service" id="router.default"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.taxon_url_generator" class="Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator\TaxonUrlGenerator">
+            <argument key="$router" type="service" id="router.default"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.rich_snippets.twig.rich_snippets_extension" class="Dedi\SyliusSEOPlugin\RichSnippet\Twig\RichSnippetsExtension">
+            <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <!-- Data Collector -->
+        <service id="dedi_sylius_seo_plugin.data_collector.rich_snippets" class="Dedi\SyliusSEOPlugin\DataCollector\RichSnippetsDataCollector">
+            <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
+            <tag name="data_collector" template="@DediSyliusSEOPlugin/DataCollector/rich_snippets.html.twig" id="dedi_sylius_seo_plugin.rich_snippets"/>
+        </service>
+    </services>
+</container>

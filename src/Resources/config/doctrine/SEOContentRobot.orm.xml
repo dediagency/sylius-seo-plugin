@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <mapped-superclass name="Dedi\SyliusSEOPlugin\Entity\SEOContentRobot" table="dedi_sylius_seo_content_robots">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+        <many-to-one field="seoContent" target-entity="Dedi\SyliusSEOPlugin\Entity\SEOContentInterface" inversed-by="robots">
+            <join-column name="seo_content_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
+        </many-to-one>
+        <field name="notIndexable" column="is_not_indexable" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="locale" column="locale_code" nullable="false"/>
+    </mapped-superclass>
+</doctrine-mapping>

@@ -1,0 +1,7 @@
+{% if resource.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::PRODUCT') %}
+    {{ form_row(form.product) }}
+{% elseif resource.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::TAXON') %}
+    {{ form_row(form.taxon) }}
+{% endif %}
+
+{{ form_row(form, {'label': false}) }}

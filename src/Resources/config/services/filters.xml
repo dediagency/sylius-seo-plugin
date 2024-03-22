@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.meta.shop.filter_registry" class="Dedi\SyliusSEOPlugin\Filter\FilterRegistry">
+            <argument type="tagged_iterator" tag="dedi_sylius_seo_plugin.meta.shop.filter" index-by="key"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.links.shop.filter_registry" class="Dedi\SyliusSEOPlugin\Filter\FilterRegistry">
+            <argument type="tagged_iterator" tag="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter" index-by="key"/>
+        </service>
+
+        <service id="dedi.sylius_seoplugin.context.filter.specification.is_homepage_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsHomePageFilter"/>
+        <service id="dedi.sylius_seoplugin.context.filter.specification.is_contact_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsContactPageFilter"/>
+        <service id="dedi.sylius_seoplugin.context.filter.specification.is_product_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsProductFilter"/>
+        <service id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsTaxonFilter"/>
+        <service id="dedi.sylius_seoplugin.context.filter.specification.is_sorting_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsSortedFilter"/>
+        <service id="dedi.sylius_seoplugin.context.filter.specification.is_paginated_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsPaginatedFilter"/>
+
+        <service id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted" class="Dedi\SyliusSEOPlugin\Filter\Logic\OrSpecification">
+            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_paginated_filter"/>
+            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_sorting_filter"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter" class="Dedi\SyliusSEOPlugin\Filter\Logic\AndSpecification" public="false">
+            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter"/>
+            <argument type="service" id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted"/>
+            <tag name="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.grid.filter.indexable" class="Dedi\SyliusSEOPlugin\Grid\Filter\IndexableFilter">
+            <tag name="sylius.grid_filter" type="seo_content_indexable" form_type="Dedi\SyliusSEOPlugin\Form\Type\IndexableFilterType"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.grid.filter.product" class="Dedi\SyliusSEOPlugin\Grid\Filter\ProductFilter">
+            <tag name="sylius.grid_filter" type="seo_content_product" form_type="Sylius\Bundle\ProductBundle\Form\Type\ProductAutocompleteChoiceType"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.grid.filter.taxon" class="Dedi\SyliusSEOPlugin\Grid\Filter\TaxonFilter">
+            <tag name="sylius.grid_filter" type="seo_content_taxon" form_type="Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType"/>
+        </service>
+    </services>
+</container>

@@ -4,36 +4,35 @@ declare(strict_types=1);
 
 namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product;
 
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectInterface;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetProductSubjectTrait;
-use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectTrait;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableProductTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="sylius_product")
  */
 class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
 {
-    use ReferenceableTrait {
+    use ReferenceableProductTrait {
         getMetadataTitle as getBaseMetadataTitle;
         getMetadataDescription as getBaseMetadataDescription;
         getOpenGraphMetadataImage as getBaseOpenGraphMetadataImage;
     }
-
     use RichSnippetProductSubjectTrait;
 
     public function getMetadataTitle(): ?string
     {
         if (null === $this->getReferenceableContent()->getMetadataTitle()) {
-            $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
-
             return null === $this->getMainTaxon() ? $this->getName() :
-                $this->getMainTaxon()->getName() . ' | ' . $this->getName();
+                $this->getName() . ' | ' . $this->getMainTaxon()->getName();
         }
 
         return $this->getBaseMetadataTitle();
@@ -42,8 +41,6 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
     public function getMetadataDescription(): ?string
     {
         if (null === $this->getReferenceableContent()->getMetadataDescription()) {
-            $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
-
             return $this->getShortDescription();
         }
 
@@ -62,7 +59,7 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
         return $this->getBaseOpenGraphMetadataImage();
     }
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }

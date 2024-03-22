@@ -10,7 +10,10 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
 {
     protected ?int $id = null;
 
+    /** @deprecated Use SEOContentRobot::$notIndexable instead */
     protected bool $notIndexable = false;
+
+    protected ?string $uri = null;
 
     protected ?string $metadataTitle = null;
 
@@ -24,6 +27,7 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
 
     protected ?string $openGraphMetadataImage = null;
 
+    /** @deprecated Use SEOContent::$openGraphMetadataType instead */
     protected ?string $openGraphMetadataType = null;
 
     public function getId(): ?int
@@ -39,6 +43,18 @@ class SEOContentTranslation extends AbstractTranslation implements SEOContentTra
     public function setNotIndexable(bool $notIndexable): self
     {
         $this->notIndexable = $notIndexable;
+
+        return $this;
+    }
+
+    public function getUri(): ?string
+    {
+        return $this->uri;
+    }
+
+    public function setUri(?string $url): static
+    {
+        $this->uri = $url;
 
         return $this;
     }

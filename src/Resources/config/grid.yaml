@@ -1,0 +1,109 @@
+sylius_grid:
+    templates:
+        filter:
+            seo_content_product: '@DediSyliusSEOPlugin/Admin/Grid/Filter/product.html.twig'
+            seo_content_taxon: '@DediSyliusSEOPlugin/Admin/Grid/Filter/taxon.html.twig'
+            seo_content_indexable: '@DediSyliusSEOPlugin/Admin/Grid/Filter/indexable.html.twig'
+    grids:
+        dedi_sylius_seo_plugin.seo_content:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%dedi_sylius_seo_plugin.model.seo_content.class%"
+                    repository:
+                        method: createListQueryBuilder
+                        arguments: [ "expr:service('sylius.context.locale').getLocaleCode()" ]
+            sorting:
+                metadataTitle: asc
+            fields:
+                type:
+                    type: twig
+                    label: sylius.ui.type
+                    options:
+                        template: "@DediSyliusSEOPlugin/UI/Grid/Field/type.html.twig"
+                resource:
+                    type: twig
+                    label: dedi_sylius_seo_plugin.ui.resource
+                    path: .
+                    sortable: false
+                    options:
+                        template: "@DediSyliusSEOPlugin/UI/Grid/Field/resource.html.twig"
+                metadataTitle:
+                    type: string
+                    label: dedi_sylius_seo_plugin.form.metadata_title
+                    sortable: translation.metadataTitle
+                metadataDescription:
+                    type: string
+                    label: dedi_sylius_seo_plugin.form.metadata_description
+                    sortable: translation.metadataDescription
+                notIndexable:
+                    type: twig
+                    label: dedi_sylius_seo_plugin.ui.indexable
+                    path: robot.isNotIndexable
+                    options:
+                        template: "@DediSyliusSEOPlugin/UI/Grid/Field/indexable.html.twig"
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [ translation.metadataTitle, translation.metadataDescription ]
+                product:
+                    type: seo_content_product
+                taxon:
+                    type: seo_content_taxon
+                uri:
+                    type: string
+                    label: URI
+                    form_options:
+                        type: contains
+                    options:
+                        fields: [ translation.uri ]
+                channel:
+                    type: entities
+                    label: sylius.ui.channel
+                    form_options:
+                        class: "%sylius.model.channel.class%"
+                    options:
+                        field: channel.id
+                indexable:
+                    type: seo_content_indexable
+
+            actions:
+                main:
+                    create:
+                        type: links
+                        label: sylius.ui.create
+                        options:
+                            class: primary
+                            icon: plus
+                            header:
+                                icon: search
+                                label: sylius.ui.type
+                            links:
+                                product:
+                                    label: dedi_sylius_seo_plugin.ui.seo_for_product
+                                    icon: plus
+                                    route: dedi_sylius_seo_plugin_admin_seo_content_create
+                                    parameters:
+                                        type: product
+                                taxon:
+                                    label: dedi_sylius_seo_plugin.ui.seo_for_taxon
+                                    icon: plus
+                                    route: dedi_sylius_seo_plugin_admin_seo_content_create
+                                    parameters:
+                                        type: taxon
+                                url:
+                                    label: dedi_sylius_seo_plugin.ui.seo_for_url
+                                    icon: plus
+                                    route: dedi_sylius_seo_plugin_admin_seo_content_create
+                                    parameters:
+                                        type: uri
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
+                bulk:
+                    delete:
+                        type: delete

@@ -1,5 +1,6 @@
 dedi_sylius_seo_plugin:
     ui:
+        resource: Resource
         seo: SEO
         open_graph_info: More information about OpenGraph
         advanced_options: Advanced options
@@ -13,6 +14,16 @@ dedi_sylius_seo_plugin:
         sku_title: Merchant-specific identifier for product
         global_identifiers_title: Global identifiers
         google_tracking_info: If both Google Analytics and Google Tag Manager are configured, Google Tag Manager will be used over Google Analytics
+        seo_contents: SEO contents
+        seo_content: SEO content
+        new_seo_content: New SEO content
+        edit_seo_content: Edit SEO content
+        seo_content_subtitle: Manage your SEO contents
+        indexable: Indexable
+        not_indexable: Not indexable
+        seo_for_product: SEO content for product
+        seo_for_taxon: SEO content for taxon
+        seo_for_url: SEO content for url
     form:
         not_indexable: Content not indexable
         metadata_title: Metadata title
