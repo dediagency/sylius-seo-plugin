@@ -59,7 +59,7 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
         );
     }
 
-    public function canFromRequest(Request $request): bool
+    public function supports(Request $request): bool
     {
         return 'sylius_shop_contact_request' === $request->attributes->get('_route');
     }

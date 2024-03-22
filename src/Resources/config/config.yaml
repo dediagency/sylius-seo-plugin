@@ -1,3 +1,4 @@
 imports:
-    - { resource: ui.yaml }
+    - { resource: grid.yaml }
     - { resource: resources.yaml }
+    - { resource: ui.yaml }

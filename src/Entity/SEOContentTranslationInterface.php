@@ -10,6 +10,10 @@ use Sylius\Component\Resource\Model\TranslationInterface;
 
 interface SEOContentTranslationInterface extends ResourceInterface, TranslationInterface, MetadataAwareInterface
 {
+    public function getUri(): ?string;
+
+    public function setUri(?string $url): static;
+
     public function setMetadataTitle(?string $title): self;
 
     public function setMetadataDescription(?string $description): self;

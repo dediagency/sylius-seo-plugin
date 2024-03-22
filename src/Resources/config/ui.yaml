@@ -34,3 +34,9 @@ sylius_ui:
         sylius.admin.taxon.update.form:
             blocks:
                 dedi_seo_channel: "@DediSyliusSEOPlugin/Admin/Taxon/Form/_seo.html.twig"
+
+        dedi_sylius_seo_plugin.admin.seo.form:
+            blocks:
+                content:
+                    template: '@DediSyliusSEOPlugin/Admin/SEO/Form/_content.html.twig'
+                    priority: 10

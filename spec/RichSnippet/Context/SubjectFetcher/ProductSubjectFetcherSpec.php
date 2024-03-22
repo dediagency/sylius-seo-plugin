@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterInterface;

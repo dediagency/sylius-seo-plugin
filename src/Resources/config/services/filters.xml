@@ -27,5 +27,17 @@
             <argument type="service" id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted"/>
             <tag name="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter"/>
         </service>
+
+        <service id="dedi_sylius_seo_plugin.grid.filter.indexable" class="Dedi\SyliusSEOPlugin\Grid\Filter\IndexableFilter">
+            <tag name="sylius.grid_filter" type="seo_content_indexable" form_type="Dedi\SyliusSEOPlugin\Form\Type\IndexableFilterType"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.grid.filter.product" class="Dedi\SyliusSEOPlugin\Grid\Filter\ProductFilter">
+            <tag name="sylius.grid_filter" type="seo_content_product" form_type="Sylius\Bundle\ProductBundle\Form\Type\ProductAutocompleteChoiceType"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.grid.filter.taxon" class="Dedi\SyliusSEOPlugin\Grid\Filter\TaxonFilter">
+            <tag name="sylius.grid_filter" type="seo_content_taxon" form_type="Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType"/>
+        </service>
     </services>
 </container>

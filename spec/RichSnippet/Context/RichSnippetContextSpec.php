@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Context;
 
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
@@ -22,7 +24,7 @@ class RichSnippetContextSpec extends ObjectBehavior
         RichSnippetFactoryInterface $snippetFactoryA,
         RichSnippetFactoryInterface $snippetFactoryB,
         RichSnippetFactoryInterface $snippetFactoryC,
-        RichSnippetFactoryInterface $snippetFactoryD
+        RichSnippetFactoryInterface $snippetFactoryD,
     ) {
         $requestStack->getMainRequest()->willReturn($request);
 
@@ -38,7 +40,7 @@ class RichSnippetContextSpec extends ObjectBehavior
                 $snippetFactoryB->getWrappedObject(),
                 $snippetFactoryC->getWrappedObject(),
                 $snippetFactoryD->getWrappedObject(),
-            ])
+            ]),
         );
     }
 
@@ -51,7 +53,7 @@ class RichSnippetContextSpec extends ObjectBehavior
         Request $request,
         SubjectFetcherInterface $subjectFetcherA,
         SubjectFetcherInterface $subjectFetcherB,
-        SubjectFetcherInterface $subjectFetcherC
+        SubjectFetcherInterface $subjectFetcherC,
     ) {
         $subjectFetcherA->supports($request)->willReturn(false);
         $subjectFetcherB->supports($request)->willReturn(false);
@@ -71,7 +73,7 @@ class RichSnippetContextSpec extends ObjectBehavior
         RichSnippetFactoryInterface $snippetFactoryD,
         RichSnippetSubjectInterface $subject,
         RichSnippetInterface $richSnippetB,
-        RichSnippetInterface $richSnippetD
+        RichSnippetInterface $richSnippetD,
     ) {
         $subjectFetcherA->supports($request)->willReturn(false);
         $subjectFetcherB->supports($request)->willReturn(true);

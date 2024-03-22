@@ -1,9 +1,2 @@
-dedi_sylius_seo_shop:
-    resource: "@DediSyliusSEOPlugin/Resources/config/shop_routing.yml"
-    prefix: /{_locale}
-    requirements:
-        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
-
-dedi_sylius_seo_admin:
-    resource: "@DediSyliusSEOPlugin/Resources/config/admin_routing.yml"
-    prefix: /admin
+dedi_sylius_seo_plugin:
+    resource: "@DediSyliusSEOPlugin/Resources/config/routes.yaml"

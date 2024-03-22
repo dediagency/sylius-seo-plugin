@@ -9,10 +9,10 @@ use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 
 class ReferenceableToMetadataTransformer implements ReferenceableToMetadataTransformerInterface
 {
-    public function transform(ReferenceableInterface $referenceable, string $origin): Metadata
+    public function transform(ReferenceableInterface $referenceable): Metadata
     {
         return new Metadata(
-            $origin,
+            $referenceable->getReferenceableContent()->getType(),
             !$referenceable->isNotIndexable(),
             $referenceable->getMetadataTitle(),
             $referenceable->getMetadataDescription(),

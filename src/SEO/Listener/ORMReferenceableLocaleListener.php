@@ -13,7 +13,7 @@ use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Locale\Context\LocaleNotFoundException;
 use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInterface;
 
-class ORMReferenceableListener implements EventSubscriber
+class ORMReferenceableLocaleListener implements EventSubscriber
 {
     public function __construct(
         private LocaleContextInterface $localeContext,

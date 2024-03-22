@@ -3,8 +3,9 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="dedi_sylius_seo_plugin.form.type.seo_content" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentType">
+            <argument type="service" key="$localeContext" id="sylius.context.locale" />
+            <argument type="service" key="$eventSubscriber" id="dedi.sylius_seo_plugin.form.event.seo_content_subscriber" />
             <argument key="$dataClass">%dedi_sylius_seo_plugin.model.seo_content.class%</argument>
-
             <argument key="$validationGroups" type="collection">
                 <argument>default</argument>
                 <argument>sylius</argument>
@@ -30,7 +31,6 @@
 
         <service id="dedi_sylius_seo_plugin.form.type.seo_content_translation" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentTranslationType">
             <argument key="$dataClass">%dedi_sylius_seo_plugin.model.seo_content_translation.class%</argument>
-
             <argument key="$validationGroups" type="collection">
                 <argument>default</argument>
                 <argument>sylius</argument>
@@ -50,5 +50,7 @@
         <service id="dedi.sylius_seo_plugin.form.extension.taxon_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\TaxonTypeExtension">
             <tag name="form.type_extension"/>
         </service>
+
+        <service id="dedi.sylius_seo_plugin.form.event.seo_content_subscriber" class="Dedi\SyliusSEOPlugin\Form\EventListener\SEOContentFormSubscriber" />
     </services>
 </container>

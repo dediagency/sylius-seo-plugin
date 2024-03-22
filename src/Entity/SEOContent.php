@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Entity;
 
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TranslatableTrait;
@@ -16,6 +17,14 @@ class SEOContent implements SEOContentInterface
 
     /** @var Collection<int, SEOContentRobotInterface> */
     protected Collection $robots;
+
+    protected ?string $type = null;
+
+    protected ?ReferenceableInterface $product = null;
+
+    protected ?ReferenceableInterface $taxon = null;
+
+    protected ?ReferenceableInterface $channel = null;
 
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -47,7 +56,7 @@ class SEOContent implements SEOContentInterface
         return false;
     }
 
-    public function setNotIndexable(bool $notIndexable): self
+    public function setNotIndexable(bool $notIndexable): static
     {
         $this->getTranslation()->setNotIndexable($notIndexable);
 
@@ -59,7 +68,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getMetadataTitle();
     }
 
-    public function setMetadataTitle(?string $title): self
+    public function setMetadataTitle(?string $title): static
     {
         $this->getTranslation()->setMetadataTitle($title);
 
@@ -71,7 +80,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getMetadataDescription();
     }
 
-    public function setMetadataDescription(?string $description): self
+    public function setMetadataDescription(?string $description): static
     {
         $this->getTranslation()->setMetadataDescription($description);
 
@@ -83,7 +92,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataTitle();
     }
 
-    public function setOpenGraphMetadataTitle(?string $title): self
+    public function setOpenGraphMetadataTitle(?string $title): static
     {
         $this->getTranslation()->setOpenGraphMetadataTitle($title);
 
@@ -95,7 +104,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataDescription();
     }
 
-    public function setOpenGraphMetadataDescription(?string $description): self
+    public function setOpenGraphMetadataDescription(?string $description): static
     {
         $this->getTranslation()->setOpenGraphMetadataDescription($description);
 
@@ -107,7 +116,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataUrl();
     }
 
-    public function setOpenGraphMetadataUrl(?string $url): self
+    public function setOpenGraphMetadataUrl(?string $url): static
     {
         $this->getTranslation()->setOpenGraphMetadataUrl($url);
 
@@ -119,7 +128,7 @@ class SEOContent implements SEOContentInterface
         return $this->openGraphMetadataType;
     }
 
-    public function setOpenGraphMetadataType(?string $openGraphMetadataType): self
+    public function setOpenGraphMetadataType(?string $openGraphMetadataType): static
     {
         $this->openGraphMetadataType = $openGraphMetadataType;
 
@@ -131,7 +140,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataImage();
     }
 
-    public function setOpenGraphMetadataImage(?string $path): self
+    public function setOpenGraphMetadataImage(?string $path): static
     {
         $this->getTranslation()->setOpenGraphMetadataImage($path);
 
@@ -146,9 +155,16 @@ class SEOContent implements SEOContentInterface
         return $translation;
     }
 
-    protected function createTranslation(): SEOContentTranslation
+    public function getType(): ?string
     {
-        return new SEOContentTranslation();
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     public function getRobot(): ?SEOContentRobotInterface
@@ -188,5 +204,64 @@ class SEOContent implements SEOContentInterface
         }
 
         return $this;
+    }
+
+    public function getProduct(): ?ReferenceableInterface
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?ReferenceableInterface $product): static
+    {
+        if (null !== $this->product) {
+            $this->product->setReferenceableContent(null);
+        }
+        if (null !== $product) {
+            $product->setReferenceableContent($this);
+        }
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getTaxon(): ?ReferenceableInterface
+    {
+        return $this->taxon;
+    }
+
+    public function setTaxon(?ReferenceableInterface $taxon): static
+    {
+        if (null !== $this->taxon) {
+            $this->taxon->setReferenceableContent(null);
+        }
+        if (null !== $taxon) {
+            $taxon->setReferenceableContent($this);
+        }
+        $this->taxon = $taxon;
+
+        return $this;
+    }
+
+    public function getChannel(): ?ReferenceableInterface
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?ReferenceableInterface $channel): static
+    {
+        if (null !== $this->channel) {
+            $this->channel->setReferenceableContent(null);
+        }
+        if (null !== $channel) {
+            $channel->setReferenceableContent($this);
+        }
+        $this->channel = $channel;
+
+        return $this;
+    }
+
+    protected function createTranslation(): SEOContentTranslation
+    {
+        return new SEOContentTranslation();
     }
 }

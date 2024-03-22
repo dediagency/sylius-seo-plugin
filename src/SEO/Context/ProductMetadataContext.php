@@ -6,7 +6,6 @@ namespace Dedi\SyliusSEOPlugin\SEO\Context;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\SEO\Enum\MetadataOriginEnum;
 use Dedi\SyliusSEOPlugin\SEO\Exception\ContextNotAvailableInRequestException;
 use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 use Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformerInterface;
@@ -54,6 +53,6 @@ class ProductMetadataContext implements MetadataContextInterface
 
         Assert::isInstanceOf($product, ReferenceableInterface::class);
 
-        return $this->transformer->transform($product, MetadataOriginEnum::PRODUCT);
+        return $this->transformer->transform($product);
     }
 }

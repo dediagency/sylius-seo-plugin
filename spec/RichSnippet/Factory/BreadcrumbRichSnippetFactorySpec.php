@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Factory;
 
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
@@ -53,7 +55,7 @@ class BreadcrumbRichSnippetFactorySpec extends ObjectBehavior
         RichSnippetSubjectInterface $child,
         RichSnippetSubjectInterface $parent,
         RichSnippetSubjectInterface $grandParent,
-        HomepageRichSnippetSubject $homepage
+        HomepageRichSnippetSubject $homepage,
     ) {
         $child->getRichSnippetSubjectParent()->willReturn($parent);
         $parent->getRichSnippetSubjectParent()->willReturn($grandParent);
@@ -81,19 +83,19 @@ class BreadcrumbRichSnippetFactorySpec extends ObjectBehavior
                         '@type' => 'ListItem',
                         'position' => 1,
                         'name' => 'Home',
-                        'item' => '/my-shop'
+                        'item' => '/my-shop',
                     ],
                     [
                         '@type' => 'ListItem',
                         'position' => 2,
                         'name' => 'Star Wars',
-                        'item' => '/my-shop/star-wars'
+                        'item' => '/my-shop/star-wars',
                     ],
                     [
                         '@type' => 'ListItem',
                         'position' => 3,
                         'name' => 'Spaceships',
-                        'item' => '/my-shop/star-wars/spaceships'
+                        'item' => '/my-shop/star-wars/spaceships',
                     ],
                     [
                         '@type' => 'ListItem',
@@ -101,7 +103,7 @@ class BreadcrumbRichSnippetFactorySpec extends ObjectBehavior
                         'name' => 'X-wing',
                     ],
                 ],
-            ]
+            ],
         ]);
     }
 }

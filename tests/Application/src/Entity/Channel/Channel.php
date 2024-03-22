@@ -6,8 +6,8 @@ namespace Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Channel;
 
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableChannelTrait;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +20,7 @@ use Sylius\Component\Core\Model\Channel as BaseChannel;
  */
 class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareChannelInterface
 {
-    use ReferenceableTrait {
+    use ReferenceableChannelTrait {
         getMetadataTitle as getBaseMetadataTitle;
         getMetadataDescription as getBaseMetadataDescription;
     }

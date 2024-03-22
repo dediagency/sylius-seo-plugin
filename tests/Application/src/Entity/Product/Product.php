@@ -10,7 +10,7 @@ use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectTrait;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableProductTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 
@@ -21,7 +21,7 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
  */
 class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
 {
-    use ReferenceableTrait {
+    use ReferenceableProductTrait {
         getMetadataTitle as getBaseMetadataTitle;
         getMetadataDescription as getBaseMetadataDescription;
         getOpenGraphMetadataImage as getBaseOpenGraphMetadataImage;
@@ -31,8 +31,6 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
     public function getMetadataTitle(): ?string
     {
         if (null === $this->getReferenceableContent()->getMetadataTitle()) {
-            $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
-
             return null === $this->getMainTaxon() ? $this->getName() :
                 $this->getName() . ' | ' . $this->getMainTaxon()->getName();
         }
@@ -43,8 +41,6 @@ class Product extends BaseProduct implements ReferenceableInterface, RichSnippet
     public function getMetadataDescription(): ?string
     {
         if (null === $this->getReferenceableContent()->getMetadataDescription()) {
-            $this->setCurrentLocale($this->getReferenceableContent()->getTranslation()->getLocale());
-
             return $this->getShortDescription();
         }
 

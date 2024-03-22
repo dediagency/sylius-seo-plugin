@@ -1,0 +1,9 @@
+{% if data.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::PRODUCT') %}
+    <a href="{{ path('sylius_admin_product_update', {id: data.product.id}) }}">{{ data.product.name }}</a>
+{% elseif data.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::TAXON') %}
+    <a href="{{ path('sylius_admin_taxon_update', { 'id': data.taxon.id }) }}">{{ data.taxon.fullName }}</a>
+{% elseif data.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::CHANNEL') %}
+    <a href="{{ path('sylius_admin_channel_update', { 'id': data.channel.id }) }}">{{ data.channel.name }}</a>
+{% elseif data.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::URI') %}
+    <a href="{{ data.translation.uri }}" target="_blank">{{ data.translation.uri }}</a>
+{% endif %}

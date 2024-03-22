@@ -18,11 +18,28 @@ trait ReferenceableTrait
     {
         if (null === $this->referenceableContent) {
             $this->referenceableContent = $this->createReferenceableContent();
+            if (null === $this->referenceableLocale) {
+                if (property_exists($this, 'currentLocale')) {
+                    $this->referenceableLocale = $this->currentLocale;
+                }
+            }
+            if (null === $this->referenceableFallbackLocale) {
+                if (property_exists($this, 'fallbackLocale')) {
+                    $this->referenceableFallbackLocale = $this->fallbackLocale;
+                }
+            }
             $this->referenceableContent->setCurrentLocale($this->referenceableLocale);
             $this->referenceableContent->setFallbackLocale($this->referenceableFallbackLocale);
         }
 
         return $this->referenceableContent;
+    }
+
+    public function setReferenceableContent(?SEOContentInterface $referenceableContent): static
+    {
+        $this->referenceableContent = $referenceableContent;
+
+        return $this;
     }
 
     public function isNotIndexable(): bool

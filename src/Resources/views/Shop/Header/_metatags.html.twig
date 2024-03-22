@@ -18,6 +18,6 @@
     {% endif %}
     {% if app.request.attributes.get('_route') is not empty %}
         <meta property="og:type" content="{{ metadata.ogType|default('website') }}">
-        <meta property="og:url" content="{{ metadata.ogURl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">
+        <meta property="og:url" content="{{ metadata.ogUrl|default(url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">
     {% endif %}
 {% endif %}

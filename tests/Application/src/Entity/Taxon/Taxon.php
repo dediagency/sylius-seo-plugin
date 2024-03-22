@@ -8,7 +8,7 @@ use Dedi\SyliusSEOPlugin\Entity\SEOContent;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTaxonTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 
@@ -19,7 +19,7 @@ use Sylius\Component\Core\Model\Taxon as BaseTaxon;
  */
 class Taxon extends BaseTaxon implements ReferenceableInterface, RichSnippetSubjectInterface
 {
-    use ReferenceableTrait;
+    use ReferenceableTaxonTrait;
 
     public function getRichSnippetSubjectType(): string
     {

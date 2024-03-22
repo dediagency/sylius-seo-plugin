@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Factory;
 
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
@@ -31,7 +33,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
         LocaleContextInterface $localeContext,
         CurrencyContextInterface $currencyContext,
         ProductUrlGenerator $productUrlGenerator,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ) {
         $this->beConstructedWith(
             $cacheManager,
@@ -40,7 +42,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
             $localeContext,
             $currencyContext,
             $productUrlGenerator,
-            $availabilityChecker
+            $availabilityChecker,
         );
     }
 
@@ -71,7 +73,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
         CurrencyContextInterface $currencyContext,
         ChannelInterface $channel,
         ProductUrlGenerator $productUrlGenerator,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ) {
         $subject = \Mockery::mock(ProductInterface::class, RichSnippetProductSubjectInterface::class);
 
@@ -106,7 +108,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
 
         $availabilityChecker->isStockAvailable(Argument::any())->willReturn(
             false,
-            true
+            true,
         );
 
         $variants = new ArrayCollection([$variantA, $variantB, $variantC]);
@@ -116,7 +118,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
         $priceHelper->getPrice(Argument::any(), ['channel' => $channel])->willReturn(
             69009,
             1337,
-            12345
+            12345,
         );
 
         $currencyContext->getCurrencyCode()->willReturn('EUR');
@@ -189,21 +191,21 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
                 'offers' => [
                     [
                         '@type' => 'Offer',
-                        'url' => "/my_shop/products/ficus",
+                        'url' => '/my_shop/products/ficus',
                         'priceCurrency' => 'EUR',
                         'price' => '690.09',
                         'availability' => 'https://schema.org/InStock',
                     ],
                     [
                         '@type' => 'Offer',
-                        'url' => "/my_shop/products/ficus",
+                        'url' => '/my_shop/products/ficus',
                         'priceCurrency' => 'EUR',
                         'price' => '13.37',
                         'availability' => 'https://schema.org/OutOfStock',
                     ],
                     [
                         '@type' => 'Offer',
-                        'url' => "/my_shop/products/ficus",
+                        'url' => '/my_shop/products/ficus',
                         'priceCurrency' => 'EUR',
                         'price' => '123.45',
                         'availability' => 'https://schema.org/InStock',
@@ -218,15 +220,15 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
                     'reviewBody' => 'This is a gr8 plant',
                     'author' => [
                         '@type' => 'Person',
-                        'name' => 'Capucine'
-                    ]
+                        'name' => 'Capucine',
+                    ],
                 ],
                 'aggregateRating' => [
                     '@type' => 'AggregateRating',
                     'ratingValue' => 4.6667,
                     'reviewCount' => 3,
                 ],
-            ]
+            ],
         ]);
     }
 }

@@ -6,7 +6,7 @@
             <generator strategy="AUTO" />
         </id>
         <many-to-one field="seoContent" target-entity="Dedi\SyliusSEOPlugin\Entity\SEOContentInterface" inversed-by="robots">
-            <join-column name="seo_content_id" referenced-column-name="id" nullable="false" />
+            <join-column name="seo_content_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
         </many-to-one>
         <field name="notIndexable" column="is_not_indexable" type="boolean">
             <options>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
@@ -7,7 +9,6 @@ use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ContactSubjectFetche
 use Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\GenericPageRichSnippetSubject;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

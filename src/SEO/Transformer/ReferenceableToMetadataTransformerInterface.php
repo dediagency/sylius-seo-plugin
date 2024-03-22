@@ -9,5 +9,5 @@ use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 
 interface ReferenceableToMetadataTransformerInterface
 {
-    public function transform(ReferenceableInterface $referenceable, string $origin): Metadata;
+    public function transform(ReferenceableInterface $referenceable): Metadata;
 }
