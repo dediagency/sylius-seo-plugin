@@ -33,8 +33,6 @@ class UriMetadataContext implements MetadataContextInterface
             $this->localeContext->getLocaleCode(),
         );
 
-        dump($request->getUri());
-
         Assert::isInstanceOf($seo, SEOContentInterface::class);
 
         return $this->transformer->transform($seo);

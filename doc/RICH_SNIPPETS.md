@@ -1,3 +1,5 @@
+### TODO REWORK OR REMOVE THIS DOC ?
+
 # Rich Snippets
 
 This plugin allow you to add RichSnippet on your pages.

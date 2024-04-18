@@ -12,27 +12,27 @@
             <argument key="$channelContext" type="service" id="sylius.context.channel"/>
             <argument key="$localeContext" type="service" id="sylius.context.locale"/>
             <argument key="$repository" type="service" id="sylius.repository.product"/>
-            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_product_filter"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_product_filter"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
         </service>
 
         <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.taxon_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\TaxonSubjectFetcher">
             <argument key="$localeContext" type="service" id="sylius.context.locale"/>
             <argument key="$repository" type="service" id="sylius.repository.taxon"/>
-            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_taxon_filter"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
         </service>
 
         <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.homepage_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\HomepageSubjectFetcher">
             <argument key="$translator" type="service" id="translator"/>
-            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_homepage_filter"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_homepage_filter"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
         </service>
 
         <service id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.contact_subject_fetcher" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher\ContactSubjectFetcher">
             <argument key="$homepageSubjectFetcher" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.subject_fetcher.homepage_subject_fetcher"/>
             <argument key="$translator" type="service" id="translator"/>
-            <argument key="$filter" type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_contact_filter"/>
+            <argument key="$filter" type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_contact_filter"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.subject_fetcher"/>
         </service>
 

@@ -35,7 +35,7 @@
 
         <service id="dedi_sylius_seo_plugin.context.metadata.context.product" class="Dedi\SyliusSEOPlugin\SEO\Context\ProductMetadataContext">
             <argument type="service" id="sylius.context.channel" />
-            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_product_filter" />
+            <argument type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_product_filter" />
             <argument type="service" id="sylius.repository.product" />
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="request_stack" />
@@ -44,7 +44,7 @@
         </service>
 
         <service id="dedi_sylius_seo_plugin.context.metadata.context.taxon" class="Dedi\SyliusSEOPlugin\SEO\Context\TaxonMetadataContext">
-            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter" />
+            <argument type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_taxon_filter" />
             <argument type="service" id="sylius.repository.taxon" />
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="request_stack" />

@@ -10,20 +10,22 @@
             <argument type="tagged_iterator" tag="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter" index-by="key"/>
         </service>
 
-        <service id="dedi.sylius_seoplugin.context.filter.specification.is_homepage_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsHomePageFilter"/>
-        <service id="dedi.sylius_seoplugin.context.filter.specification.is_contact_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsContactPageFilter"/>
-        <service id="dedi.sylius_seoplugin.context.filter.specification.is_product_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsProductFilter"/>
-        <service id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsTaxonFilter"/>
-        <service id="dedi.sylius_seoplugin.context.filter.specification.is_sorting_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsSortedFilter"/>
-        <service id="dedi.sylius_seoplugin.context.filter.specification.is_paginated_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsPaginatedFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_homepage_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsHomePageFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_contact_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsContactPageFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_product_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsProductFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_taxon_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsTaxonFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_sorting_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsSortedFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_paginated_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsPaginatedFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_cart_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsCartFilter"/>
+        <service id="dedi.sylius_seo_plugin.context.filter.specification.is_login_filter" class="Dedi\SyliusSEOPlugin\Filter\Specification\IsLoginFilter"/>
 
         <service id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted" class="Dedi\SyliusSEOPlugin\Filter\Logic\OrSpecification">
-            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_paginated_filter"/>
-            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_sorting_filter"/>
+            <argument type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_paginated_filter"/>
+            <argument type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_sorting_filter"/>
         </service>
 
         <service id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter" class="Dedi\SyliusSEOPlugin\Filter\Logic\AndSpecification" public="false">
-            <argument type="service" id="dedi.sylius_seoplugin.context.filter.specification.is_taxon_filter"/>
+            <argument type="service" id="dedi.sylius_seo_plugin.context.filter.specification.is_taxon_filter"/>
             <argument type="service" id="dedi_sylius_seo_plugin.links.shop.taxon_no_index_no_follow_filter.is_paginated_or_sorted"/>
             <tag name="dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter"/>
         </service>

@@ -51,7 +51,7 @@ The `@SyliusShop/layout.html.twig` should be overridden to add plugin's blocks a
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!--- use dedi_sylius_seo_get_title() to fetch current page title -->
-    <title>{% block seo_title %}{{ dedi_sylius_seo_get_title('Sylius') }}{% endblock %}</title>
+    <title>{% block seo_title %}{{ dedi_sylius_seo_get_title(sylius.channel.name) }}{% endblock %}</title>
 
     <!--- add metatags block with template events to add meta tags and rich snippet script tag-->
     {% block metatags %}

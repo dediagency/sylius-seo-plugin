@@ -25,7 +25,7 @@ class TitleExtension extends AbstractExtension
     public function getTitle(?string $defaultTitle): ?string
     {
         try {
-            return $this->metadataContext->getMetadata()->title;
+            return $this->metadataContext->getMetadata()->title ?? $defaultTitle;
         } catch (\Exception $e) {
             return $defaultTitle;
         }
