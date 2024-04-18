@@ -56,7 +56,7 @@ class SEOContent extends BaseSEOContent
         return $this->customEntity;
     }
 
-    public function setCustomEntity(?ReferenceableInterface $customEntity):void 
+    public function setCustomEntity(?ReferenceableInterface $customEntity): static 
     {
         if (null !== $this->customEntity) {
             $this->customEntity->setReferenceableContent(null);
@@ -72,6 +72,15 @@ class SEOContent extends BaseSEOContent
 ```
 
 
+###  TODO - The form's view data is expected to be a "App\SEO\Entity\SEOContent", but it is a "Dedi\SyliusSEOPlugin\Entity\SEOContent". You can avoid this error by setting the "data_class" option to null or by adding a view transformer that transforms "Dedi\SyliusSEOPlugin\Entity\SEOContent" to an instance of "App\SEO\Entity\SEOContent".
+
+### TODO - Add Sylius Resource SEOCONTENT
+
+### TODO - Override any function that instanciate "new SEOContent"
+
+### TODO override \Dedi\SyliusSEOPlugin\Factory\SEOContentFactory to return App\SEO\Entity\SEOContent
+
+
 ### 3 - Add `referenceableContent` field to your entity form type.
 
 ```php
@@ -83,7 +92,7 @@ class CustomEntityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $build
+        $builder
             ->add('referenceableContent', SEOContentType::class, [
                 'label' => 'dedi_sylius_seo_plugin.ui.seo',
                 'constraints' => [new Valid()],
