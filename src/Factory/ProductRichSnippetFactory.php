@@ -163,6 +163,10 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         $currencyCode = $this->currencyContext->getCurrencyCode();
 
         return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
+            if (!$variant->isEnabled()) {
+                return;
+            }
+            
             $price = $this->priceHelper->getPrice(
                 $variant,
                 ['channel' => $channel],
