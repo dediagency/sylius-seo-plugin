@@ -10,11 +10,8 @@ use Twig\TwigFunction;
 
 class RichSnippetsExtension extends AbstractExtension
 {
-    private RichSnippetContext $richSnippetContext;
-
-    public function __construct(RichSnippetContext $richSnippetContext)
+    public function __construct(private readonly RichSnippetContext $richSnippetContext)
     {
-        $this->richSnippetContext = $richSnippetContext;
     }
 
     public function getFunctions(): array

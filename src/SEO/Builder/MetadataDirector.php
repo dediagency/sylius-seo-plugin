@@ -8,7 +8,7 @@ use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 
 class MetadataDirector implements MetadataDirectorInterface
 {
-    public function __construct(private MetadataBuilderInterface $builder)
+    public function __construct(private readonly MetadataBuilderInterface $builder)
     {
     }
 

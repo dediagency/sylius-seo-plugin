@@ -2,17 +2,11 @@ dedi_sylius_seo_plugin_seo_admin:
   resource: |
     alias: dedi_sylius_seo_plugin.seo_content
     section: admin
-    templates: "@SyliusAdmin\\Crud"
+    templates: "@SyliusAdmin/shared/crud"
     grid: dedi_sylius_seo_plugin.seo_content
     except: ['show']
     permission: true
-    vars:
-        all:
-            subheader: dedi_sylius_seo_plugin.ui.seo_content_subtitle
-            templates:
-                form: "@DediSyliusSEOPlugin/Admin/SEO/Form/_form.html.twig"
-        index:
-            icon: 'search'
+    form: Dedi\SyliusSEOPlugin\Form\Type\Admin\SEOContentType
   type: sylius.resource
 
 dedi_sylius_seo_plugin_admin_seo_content_create:
@@ -26,13 +20,10 @@ dedi_sylius_seo_plugin_admin_seo_content_create:
         method: createTyped
         arguments:
           type: $type
-      template: "@SyliusAdmin/Crud/create.html.twig"
+      template: "@SyliusAdmin/shared/crud/create.html.twig"
       redirect: dedi_sylius_seo_plugin_admin_seo_content_update
       permission: true
       vars:
-        subheader: dedi_sylius_seo_plugin.ui.seo_content_subtitle
-        templates:
-          form: "@DediSyliusSEOPlugin/Admin/SEO/Form/_form.html.twig"
         route:
           parameters:
             type: $type

@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\SEO\Enum;
 
-final class MetadataTypeEnum
+enum MetadataTypeEnum: string
 {
-    public const PRODUCT = 'product';
-
-    public const TAXON = 'taxon';
-
-    public const CHANNEL = 'channel';
-
-    public const URI = 'uri';
-
-    private function __construct()
-    {
-    }
+    case PRODUCT = 'product';
+    case TAXON = 'taxon';
+    case CHANNEL = 'channel';
+    case URI = 'uri';
 }

@@ -19,15 +19,16 @@ use Webmozart\Assert\Assert;
 
 class GetProductMetadataAction
 {
+    /** @param ProductRepositoryInterface<ProductInterface> $productRepository */
     public function __construct(
-        private ChannelContextInterface $channelContext,
-        private ProductRepositoryInterface $productRepository,
-        private ReferenceableToMetadataTransformerInterface $transformer,
-        private SEOContentToMetadataTransformerInterface $SEOContentToMetadataTransformer,
-        private MetadataDirectorInterface $metadataDirector,
-        private RequestStack $requestStack,
-        private LocaleContextInterface $localeContext,
-        private SEOContentRepositoryInterface $SEOContentRepository,
+        private readonly ChannelContextInterface $channelContext,
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly ReferenceableToMetadataTransformerInterface $transformer,
+        private readonly SEOContentToMetadataTransformerInterface $SEOContentToMetadataTransformer,
+        private readonly MetadataDirectorInterface $metadataDirector,
+        private readonly RequestStack $requestStack,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly SEOContentRepositoryInterface $SEOContentRepository,
     ) {
     }
 

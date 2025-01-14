@@ -12,16 +12,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HomepageSubjectFetcher implements SubjectFetcherInterface
 {
-    private TranslatorInterface $translator;
-
-    private FilterInterface $filter;
-
     public function __construct(
-        FilterInterface $filter,
-        TranslatorInterface $translator,
+        private readonly FilterInterface $filter,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->translator = $translator;
-        $this->filter = $filter;
     }
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface

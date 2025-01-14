@@ -57,11 +57,10 @@
             <argument type="service" id="sylius.context.locale" />
             <argument type="service" id="dedi_sylius_seo_plugin.repository.seo_content" />
         </service>
-        <service id="dedi_sylius_seo_plugin.api.data_persister.seo_content" class="Dedi\SyliusSEOPlugin\Api\Persister\SEOContentPersister"
-            decorates="api_platform.doctrine.orm.data_persister"
-        >
-            <argument type="service" id="dedi_sylius_seo_plugin.api.data_persister.seo_content.inner" />
-            <tag name="api_platform.data_persister"/>
+        <service id="dedi_sylius_seo_plugin.api.processor.seo_content" class="Dedi\SyliusSEOPlugin\Api\Processor\SEOContentProcessor">
+            <argument type="service" id="api_platform.doctrine.orm.state.persist_processor" />
+            <argument type="service" id="api_platform.doctrine.orm.state.remove_processor" />
+            <tag name="api_platform.state_processor"/>
         </service>
     </services>
 </container>

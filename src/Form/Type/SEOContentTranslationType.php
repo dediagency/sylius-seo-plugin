@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class SEOContentTranslationType extends AbstractResourceType
 {
@@ -25,7 +26,6 @@ class SEOContentTranslationType extends AbstractResourceType
                 'label' => 'dedi_sylius_seo_plugin.form.metadata_description',
                 'required' => false,
             ])
-
             ->add('openGraphMetadataTitle', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.og_metadata_title',
                 'required' => false,
@@ -41,8 +41,7 @@ class SEOContentTranslationType extends AbstractResourceType
             ->add('openGraphMetadataImage', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.og_metadata_image',
                 'required' => false,
-            ])
-        ;
+            ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $form = $event->getForm();
@@ -53,6 +52,9 @@ class SEOContentTranslationType extends AbstractResourceType
             if (null !== $seo && $seo->getType() === 'uri') {
                 $form->add('uri', UrlType::class, [
                     'required' => true,
+                    'constraints' => [
+                        new NotNull(['groups' => ['sylius', 'default']]),
+                    ],
                 ]);
             }
         });

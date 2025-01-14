@@ -1,23 +1,9 @@
 const TITLE_LIMIT = 70;
 const DESCRIPTION_LIMIT = 160;
-const seoAdvancedButton = document.getElementById('seo-advanced-button');
-const seoAdvancedPanel = document.getElementById('seo-advanced-panel');
+const seoFormContainer = document.getElementById('dedi_sylius_seo_plugin_content_seo_admin_container');
 const seoGooglePreview = document.getElementById('google-preview');
 const seoTwitterPreview = document.getElementById('twitter-preview');
 const seoFacebookPreview = document.getElementById('facebook-preview');
-
-/**
- * Load a CSS script dynamically
- * @param {string} url
- */
-const loadCss = function(url) {
-    const link = document.createElement('link');
-    link.href = url;
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-
-    document.getElementsByTagName('head')[0].appendChild(link);
-};
 
 /**
  * Update data for Google preview widget
@@ -103,7 +89,7 @@ const setCounter = function(el, count, max) {
     counterContainer.innerHTML = count + ' / ' + max;
 };
 
-if (seoAdvancedPanel && seoAdvancedButton) {
+if (seoFormContainer) {
     /**
      * It's current form data for SEO content
      */
@@ -112,9 +98,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {HTMLElement|null}
          */
         get defaultData() {
-            const parent = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active').closest('*[data-locale]');
-
-            return parent ? parent.querySelector('.preview-default-data') : null;
+            return seoFormContainer.querySelector('.preview-default-data');
         },
 
         /**
@@ -176,7 +160,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {string}
          */
         get title() {
-            const input = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active input[data-form-title]');
+            const input = seoFormContainer.querySelector('.accordion-collapse.show input[data-form-title]');
 
             return this.limitString(input ? input.value || this._title : this._title, TITLE_LIMIT);
         },
@@ -186,7 +170,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {string}
          */
         get description() {
-            const input = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active input[data-form-description]');
+            const input = seoFormContainer.querySelector('.accordion-collapse.show input[data-form-description]');
 
             return this.limitString(input ? input.value || this._description : this._description, DESCRIPTION_LIMIT);
         },
@@ -196,7 +180,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {string}
          */
         get ogTitle() {
-            const input = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active input[data-form-og-title]');
+            const input = seoFormContainer.querySelector('.accordion-collapse.show input[data-form-og-title]');
 
             return this.limitString(input ? input.value || this._ogTitle || this.title : this._ogTitle || this.title, TITLE_LIMIT);
         },
@@ -206,7 +190,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {string}
          */
         get ogDescription() {
-            const input = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active input[data-form-og-description]');
+            const input = seoFormContainer.querySelector('.accordion-collapse.show input[data-form-og-description]');
 
             return this.limitString(input ? input.value || this._ogDescription || this.description : this._ogDescription || this.description, DESCRIPTION_LIMIT);
         },
@@ -216,7 +200,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {string}
          */
         get ogImage() {
-            const input = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active input[data-form-og-image]');
+            const input = seoFormContainer.querySelector('.accordion-collapse.show input[data-form-og-image]');
 
             return input ? input.value || this._ogImage : this._ogImage;
         },
@@ -226,7 +210,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {string}
          */
         get ogUrl() {
-            const input = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active input[data-form-og-url]');
+            const input = seoFormContainer.querySelector('.accordion-collapse.show input[data-form-og-url]');
 
             return input ? input.value || this._ogUrl : this._ogUrl;
         },
@@ -246,7 +230,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
     };
 
     updatePreviewWidgets(form);
-    seoAdvancedPanel.addEventListener('keyup', function(event) {
+    seoFormContainer.addEventListener('keyup', function(event) {
         updatePreviewWidgets(form);
 
         // Update char counter for formTitle and formOgTitle inputs into current form
@@ -260,17 +244,9 @@ if (seoAdvancedPanel && seoAdvancedButton) {
         }
     });
 
-    seoAdvancedPanel.style.display = 'none';
-    seoAdvancedButton.addEventListener('click', function() {
-        if (seoAdvancedPanel.style.display === 'none') {
-            seoAdvancedPanel.style.display = 'block';
-        } else {
-            seoAdvancedPanel.style.display = 'none';
-        }
-    });
-
-    seoAdvancedPanel.querySelectorAll('*[data-locale]').forEach(function(el) {
+    seoFormContainer.querySelectorAll('[data-bs-target*="#translation-seo-content-"]').forEach(function(el) {
         el.addEventListener('click', function() {
+            console.log('caca')
             // Need sleep some time to update widget after semantic-ui lib perform click event on accordion element
             setTimeout(function() {
                 if (form.defaultData) {
@@ -280,10 +256,3 @@ if (seoAdvancedPanel && seoAdvancedButton) {
         });
     });
 }
-
-loadCss('/bundles/dedisyliusseoplugin/css/seo-content-form.css');
-
-// Sticky previews
-document.addEventListener('DOMContentLoaded', function() {
-    $('.ui.sticky').sticky({ context: '#previews-column' });
-});

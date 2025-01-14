@@ -13,7 +13,7 @@ use Twig\TwigFunction;
 class MetadataExtension extends AbstractExtension
 {
     public function __construct(
-        private MetadataContextInterface $metadataContext,
+        private readonly MetadataContextInterface $metadataContext,
     ) {
     }
 

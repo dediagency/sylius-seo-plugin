@@ -45,12 +45,12 @@
 
         <service id="dedi_sylius_seo_plugin.rich_snippets.factory.product" class="Dedi\SyliusSEOPlugin\RichSnippet\Factory\ProductRichSnippetFactory">
             <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
-            <argument key="$priceHelper" type="service" id="sylius.templating.helper.price"/>
+            <argument key="$productVariantPricesCalculator" type="service" id="sylius.calculator.product_variant_price"/>
             <argument key="$channelContext" type="service" id="sylius.context.channel.cached"/>
             <argument key="$localeContext" type="service" id="sylius.context.locale"/>
             <argument key="$currencyContext" type="service" id="sylius.context.shopper"/>
             <argument key="$productUrlGenerator" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator"/>
-            <argument key="$availabilityChecker" type="service" id="sylius.availability_checker.default"/>
+            <argument key="$availabilityChecker" type="service" id="sylius.checker.inventory.availability"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
         </service>
 
@@ -80,7 +80,7 @@
         <!-- Data Collector -->
         <service id="dedi_sylius_seo_plugin.data_collector.rich_snippets" class="Dedi\SyliusSEOPlugin\DataCollector\RichSnippetsDataCollector">
             <argument key="$richSnippetContext" type="service" id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context"/>
-            <tag name="data_collector" template="@DediSyliusSEOPlugin/DataCollector/rich_snippets.html.twig" id="dedi_sylius_seo_plugin.rich_snippets"/>
+            <tag name="data_collector" template="@DediSyliusSEOPlugin/data_collector/rich_snippets.html.twig" id="dedi_sylius_seo_plugin.rich_snippets"/>
         </service>
     </services>
 </container>

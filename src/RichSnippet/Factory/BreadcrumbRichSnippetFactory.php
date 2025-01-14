@@ -12,16 +12,10 @@ use Dedi\SyliusSEOPlugin\RichSnippet\Model\Subject\HomepageRichSnippetSubject;
 
 final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
 {
-    protected RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory;
-
-    protected SubjectFetcherInterface  $homepageSubjectFetcher;
-
     public function __construct(
-        RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory,
-        SubjectFetcherInterface $homepageSubjectFetcher,
+        private readonly RichSnippetSubjectUrlFactoryInterface $richSnippetSubjectUrlFactory,
+        private readonly SubjectFetcherInterface $homepageSubjectFetcher,
     ) {
-        $this->richSnippetSubjectUrlFactory = $richSnippetSubjectUrlFactory;
-        $this->homepageSubjectFetcher = $homepageSubjectFetcher;
     }
 
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface

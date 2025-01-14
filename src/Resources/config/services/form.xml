@@ -25,7 +25,7 @@
         </service>
 
         <service id="dedi_sylius_seo_plugin.form.type.seo_content_robots" class="Dedi\SyliusSEOPlugin\Form\Type\SEOContentRobotsType">
-            <argument type="service" id="sylius.translation_locale_provider"/>
+            <argument type="service" id="sylius.provider.translation_locale.admin"/>
             <tag name="form.type"/>
         </service>
 
@@ -52,5 +52,27 @@
         </service>
 
         <service id="dedi.sylius_seo_plugin.form.event.seo_content_subscriber" class="Dedi\SyliusSEOPlugin\Form\EventListener\SEOContentFormSubscriber" />
+
+        <service
+                id="sylius_seo_plugin.twig.component.seo_content.form"
+                class="Dedi\SyliusSEOPlugin\Twig\Component\SeoContentFormComponent"
+        >
+            <argument type="service" id="dedi_sylius_seo_plugin.repository.seo_content" />
+            <argument type="service" id="form.factory" />
+            <argument>%dedi_sylius_seo_plugin.model.seo_content.class%</argument>
+            <argument>Dedi\SyliusSEOPlugin\Form\Type\Admin\SEOContentType</argument>
+            <argument type="service" id="dedi_sylius_seo_plugin.factory.seo_content" />
+
+            <tag name="sylius.live_component.admin" key="sylius_admin:seo_content:form" />
+        </service>
+
+
+        <service id="dedi.sylius_seo_plugin.form.type.seo_content.admin" class="Dedi\SyliusSEOPlugin\Form\Type\Admin\SEOContentType">
+            <argument key="$validationGroups" type="collection">
+                <argument>default</argument>
+                <argument>sylius</argument>
+            </argument>
+            <tag name="form.type"/>
+        </service>
     </services>
 </container>

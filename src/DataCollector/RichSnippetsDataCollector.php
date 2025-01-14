@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\DataCollector;
 
-use Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContext;
+use Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContextInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\RichSnippetInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +13,8 @@ use Throwable;
 
 class RichSnippetsDataCollector extends DataCollector
 {
-    private RichSnippetContext $richSnippetContext;
-
-    public function __construct(RichSnippetContext $richSnippetContext)
+    public function __construct(private readonly RichSnippetContextInterface $richSnippetContext)
     {
-        $this->richSnippetContext = $richSnippetContext;
     }
 
     public function collect(Request $request, Response $response, Throwable $exception = null): void

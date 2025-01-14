@@ -12,14 +12,32 @@ use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTaxonTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="sylius_taxon")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'sylius_taxon')]
 class Taxon extends BaseTaxon implements ReferenceableInterface, RichSnippetSubjectInterface
 {
-    use ReferenceableTaxonTrait;
+    use ReferenceableTaxonTrait {
+        getMetadataTitle as getBaseMetadataTitle;
+        getMetadataDescription as getBaseMetadataDescription;
+    }
+
+    public function getMetadataTitle(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataTitle()) {
+            return $this->getName();
+        }
+
+        return $this->getBaseMetadataTitle();
+    }
+
+    public function getMetadataDescription(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataDescription()) {
+            return $this->getDescription();
+        }
+
+        return $this->getBaseMetadataDescription();
+    }
 
     public function getRichSnippetSubjectType(): string
     {

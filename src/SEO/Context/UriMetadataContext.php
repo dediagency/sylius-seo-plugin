@@ -15,10 +15,10 @@ use Webmozart\Assert\Assert;
 class UriMetadataContext implements MetadataContextInterface
 {
     public function __construct(
-        private SEOContentRepositoryInterface $repository,
-        private LocaleContextInterface $localeContext,
-        private RequestStack $requestStack,
-        private SEOContentToMetadataTransformerInterface $transformer,
+        private readonly SEOContentRepositoryInterface $repository,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly RequestStack $requestStack,
+        private readonly SEOContentToMetadataTransformerInterface $transformer,
     ) {
     }
 

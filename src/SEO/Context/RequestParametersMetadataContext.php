@@ -14,8 +14,8 @@ use Webmozart\Assert\Assert;
 class RequestParametersMetadataContext implements MetadataContextInterface
 {
     public function __construct(
-        private RequestStack $requestStack,
-        private FilterRegistryInterface $filterRegistry,
+        private readonly RequestStack $requestStack,
+        private readonly FilterRegistryInterface $filterRegistry,
     ) {
     }
 

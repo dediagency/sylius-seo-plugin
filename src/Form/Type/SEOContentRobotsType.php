@@ -7,7 +7,7 @@ namespace Dedi\SyliusSEOPlugin\Form\Type;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentRobotInterface;
 use Sylius\Bundle\ResourceBundle\Form\Type\FixedCollectionType;
-use Sylius\Component\Resource\Translation\Provider\TranslationLocaleProviderInterface;
+use Sylius\Resource\Translation\Provider\TranslationLocaleProviderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;

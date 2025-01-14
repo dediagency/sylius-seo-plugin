@@ -1,0 +1,154 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.seo_content.create.content':
+            form:
+                enabled: false
+            sections:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections.html.twig'
+                priority: 0
+
+        'sylius_admin.seo_content.create.content.sections#left':
+            form:
+                component: 'sylius_admin:seo_content:form'
+                props:
+                    form: '@=_context.form'
+                    resource: '@=_context.resource'
+                    type: '@=_context.resource.getType()'
+                    template: '@DediSyliusSEOPlugin/admin/seo_content/content/form.html.twig'
+                priority: 0
+
+        'sylius_admin.seo_content.create.content.sections.form':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/type.html.twig'
+                priority: 200
+            general:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/general.html.twig'
+                priority: 100
+            translations:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations.html.twig'
+                priority: 80
+            opengraph:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph.html.twig'
+                priority: 60
+
+        'sylius_admin.seo_content.create.content.sections.form.translations':
+            uri:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/uri.html.twig'
+                priority: 100
+            not_indexable:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/not_indexable.html.twig'
+                priority: 80
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_title.html.twig'
+                priority: 60
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_description.html.twig'
+                priority: 40
+
+        'sylius_admin.seo_content.create.content.sections.form.opengraph.general':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/general/og_type.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.create.content.sections.form.opengraph.translations':
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_title.html.twig'
+                priority: 100
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_description.html.twig'
+                priority: 80
+            image:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_image.html.twig'
+                priority: 50
+
+        'sylius_admin.seo_content.create.content.sections#right':
+            preview:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/right/preview.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.create#stylesheets':
+            stylesheets:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/stylesheets.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.create#javascripts':
+            javascripts:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/javascripts.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.update.content':
+            form:
+                enabled: false
+            sections:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections.html.twig'
+                priority: 0
+
+
+        'sylius_admin.seo_content.update.content.sections#left':
+            form:
+                component: 'sylius_admin:seo_content:form'
+                props:
+                    form: '@=_context.form'
+                    resource: '@=_context.resource'
+                    type: '@=_context.resource.getType()'
+                    template: '@DediSyliusSEOPlugin/admin/seo_content/content/form.html.twig'
+                priority: 0
+
+        'sylius_admin.seo_content.update.content.sections.form':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/type.html.twig'
+                priority: 200
+            general:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/general.html.twig'
+                priority: 100
+            translations:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations.html.twig'
+                priority: 80
+            opengraph:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph.html.twig'
+                priority: 60
+
+        'sylius_admin.seo_content.update.content.sections.form.translations':
+            uri:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/uri.html.twig'
+                priority: 100
+            not_indexable:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/not_indexable.html.twig'
+                priority: 80
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_title.html.twig'
+                priority: 60
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_description.html.twig'
+                priority: 40
+
+        'sylius_admin.seo_content.update.content.sections.form.opengraph.general':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/general/og_type.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.update.content.sections.form.opengraph.translations':
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_title.html.twig'
+                priority: 100
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_description.html.twig'
+                priority: 80
+            image:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_image.html.twig'
+                priority: 50
+
+        'sylius_admin.seo_content.update.content.sections#right':
+            preview:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/right/preview.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.update#stylesheets':
+            stylesheets:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/stylesheets.html.twig'
+                priority: 100
+
+        'sylius_admin.seo_content.update#javascripts':
+            javascripts:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/javascripts.html.twig'
+                priority: 100

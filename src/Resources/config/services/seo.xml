@@ -3,7 +3,7 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="dedi_sylius_seo_plugin.factory.seo_content" class="Dedi\SyliusSEOPlugin\Factory\SEOContentFactory">
-            <argument type="service" id="sylius.locale_provider"/>
+            <argument type="service" id="sylius.provider.locale"/>
         </service>
         <service id="dedi_sylius_seo_plugin.metadata.twig.title_extension" class="Dedi\SyliusSEOPlugin\SEO\Twig\TitleExtension">
             <argument type="service" id="dedi_sylius_seo_plugin.context.metadata"/>
