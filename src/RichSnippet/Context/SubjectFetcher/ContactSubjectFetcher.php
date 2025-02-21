@@ -14,20 +14,11 @@ class ContactSubjectFetcher implements SubjectFetcherInterface
 {
     public const TYPE = 'contact';
 
-    private SubjectFetcherInterface $homepageSubjectFetcher;
-
-    private TranslatorInterface $translator;
-
-    private FilterInterface $filter;
-
     public function __construct(
-        FilterInterface $filter,
-        SubjectFetcherInterface $homepageSubjectFetcher,
-        TranslatorInterface $translator,
+        private readonly FilterInterface $filter,
+        private readonly SubjectFetcherInterface $homepageSubjectFetcher,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->translator = $translator;
-        $this->homepageSubjectFetcher = $homepageSubjectFetcher;
-        $this->filter = $filter;
     }
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface

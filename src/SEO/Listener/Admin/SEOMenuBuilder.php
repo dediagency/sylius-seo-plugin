@@ -17,7 +17,7 @@ final class SEOMenuBuilder
             $menu
                 ->addChild('seo', ['route' => 'dedi_sylius_seo_plugin_admin_seo_content_index'])
                 ->setLabel('dedi_sylius_seo_plugin.ui.seo')
-                ->setLabelAttribute('icon', 'search')
+                ->setLabelAttribute('icon', 'tabler:search')
             ;
         }
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources
+    xmlns="https://api-platform.com/schema/metadata/resources-3.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://api-platform.com/schema/metadata/resources-3.0 https://api-platform.com/schema/metadata/resources-3.0.xsd"
+>
+    <resource class="%dedi_sylius_seo_plugin.model.seo_content_translation.class%">
+        <operations>
+            <operation name="sylius_api_shop_seo_content_translation_get" class="ApiPlatform\Metadata\Get"
+                       uriTemplate="/shop/seo-contents-translation/{id}">
+                <normalizationContext>
+                    <values>
+                        <value name="groups">
+                            <values>
+                                <value>sylius:shop:seo_content:show</value>
+                            </values>
+                        </value>
+                    </values>
+                </normalizationContext>
+            </operation>
+        </operations>
+    </resource>
+</resources>

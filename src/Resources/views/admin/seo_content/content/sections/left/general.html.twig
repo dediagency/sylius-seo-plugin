@@ -1,0 +1,24 @@
+{% set form = hookable_metadata.context.form %}
+{% set resource = hookable_metadata.context.resource %}
+{% set prefixes = hookable_metadata.prefixes %}
+
+{% set form_to_display = null %}
+
+{% if resource.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::PRODUCT').value %}
+    {% set form_to_display = form.product %}
+{% elseif resource.type == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::TAXON').value %}
+    {% set form_to_display = form.taxon %}
+{% endif %}
+
+{% if form_to_display is not null %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="card-title">
+                {{ 'sylius.ui.general'|trans }}
+            </h2>
+        </div>
+        <div class="card-body">
+            {{ form_row(form_to_display) }}
+        </div>
+    </div>
+{% endif %}

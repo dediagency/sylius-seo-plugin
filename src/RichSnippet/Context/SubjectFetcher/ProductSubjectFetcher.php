@@ -8,6 +8,7 @@ use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,24 +16,13 @@ use Webmozart\Assert\Assert;
 
 class ProductSubjectFetcher implements SubjectFetcherInterface
 {
-    private ChannelContextInterface $channelContext;
-
-    private LocaleContextInterface $localeContext;
-
-    private ProductRepositoryInterface $repository;
-
-    private FilterInterface $filter;
-
+    /** @param ProductRepositoryInterface<ProductInterface> $repository */
     public function __construct(
-        ChannelContextInterface $channelContext,
-        LocaleContextInterface $localeContext,
-        ProductRepositoryInterface $repository,
-        FilterInterface $filter,
+        private readonly ChannelContextInterface $channelContext,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly ProductRepositoryInterface $repository,
+        private readonly FilterInterface $filter,
     ) {
-        $this->channelContext = $channelContext;
-        $this->localeContext = $localeContext;
-        $this->repository = $repository;
-        $this->filter = $filter;
     }
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface

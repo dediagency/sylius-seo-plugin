@@ -4,16 +4,14 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model: Dedi\SyliusSEOPlugin\Entity\SEOContent
-                form: Dedi\SyliusSEOPlugin\Form\Type\SEOContentType
+                form: Dedi\SyliusSEOPlugin\Form\Type\Admin\SEOContentType
                 repository: Dedi\SyliusSEOPlugin\Repository\SEOContentRepository
                 factory: Dedi\SyliusSEOPlugin\Factory\SEOContentFactory
             translation:
                 classes:
                     model: Dedi\SyliusSEOPlugin\Entity\SEOContentTranslation
                     factory: Sylius\Component\Resource\Factory\TranslatableFactory
-                    form: Dedi\SyliusSEOPlugin\Form\Type\SEOContentTranslationType
         dedi_sylius_seo_plugin.seo_content_robot:
             driver: doctrine/orm
             classes:
                 model: Dedi\SyliusSEOPlugin\Entity\SEOContentRobot
-                form: Dedi\SyliusSEOPlugin\Form\Type\SEOContentRobotType

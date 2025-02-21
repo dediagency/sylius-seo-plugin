@@ -6,11 +6,8 @@ namespace Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet;
 
 final class ProductRichSnippet implements RichSnippetInterface
 {
-    private array $data;
-
-    public function __construct(array $data = [])
+    public function __construct(private array $data = [])
     {
-        $this->data = $data;
     }
 
     public function addData(array $data): static

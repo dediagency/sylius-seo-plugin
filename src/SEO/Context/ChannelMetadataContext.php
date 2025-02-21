@@ -13,8 +13,8 @@ use Webmozart\Assert\Assert;
 class ChannelMetadataContext implements MetadataContextInterface
 {
     public function __construct(
-        private ChannelContextInterface $channelContext,
-        private ReferenceableToMetadataTransformerInterface $transformer,
+        private readonly ChannelContextInterface $channelContext,
+        private readonly ReferenceableToMetadataTransformerInterface $transformer,
     ) {
     }
 

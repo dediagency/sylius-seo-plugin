@@ -33,41 +33,43 @@ dedi_sylius_seo_plugin:
 
 ## Override default layout template
 
-The `@SyliusShop/layout.html.twig` should be overridden to add plugin's blocks and functions in the `<head>` section of your page
+The `@SyliusShop/shared/layout/base.html.twig` should be overridden to add plugin's twig hooks and functions in the `<head>` section of your page
 
->Note : it is important to override the default layout.html.twig and not just extend it.
+>Note : it is important to override the default base.html.twig and not just extend it.
 >
-> To make sure the `<title>` is populated with plugin's data on every pages, we renamed the `{% block title %}` to `{% block seo_title %}`
+> To make sure the `<title>` is populated with plugin's data on every pages, we renamed the `{% block title %}` to `{% block seo_title %}`.<br>
 > 
-> If you want to keep the `{% block title %}`, make sure you have overriden `SyliusShop/Product/show.html.twig` template to call `dedi_sylius_seo_get_title()` in the block.
+> Add `{% hook 'before_body' with { _prefixes: prefixes } %}` hook to add Google Tag Manager noscript iframe before just after the  `<body>` tag.
 
 ```html
-{# templates/bundles/SyliusShopBundle/layout.html.twig #}
+{# templates/bundles/SyliusShopBundle/shared/layout/base.html.twig #}
 <!DOCTYPE html>
 
 <html lang="{{ app.request.locale|slice(0, 2) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+    
     <!--- use dedi_sylius_seo_get_title() to fetch current page title -->
-    <title>{% block seo_title %}{{ dedi_sylius_seo_get_title(sylius.channel.name) }}{% endblock %}</title>
+    <title>{% block seo_title %}{{ dedi_sylius_seo_get_title('Sylius') }}{% endblock %}</title>
 
-    <!--- add metatags block with template events to add meta tags and rich snippet script tag-->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" name="viewport">
+
     {% block metatags %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.metatags') }}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.rich_snippets') }}
+        {% hook '#metatags' with { _prefixes: prefixes } %}
     {% endblock %}
 
-    <!--- add links block with template events to add canonical and hreflang link tags -->
-    {% block links %}
-        {{ sylius_template_event('dedi_sylius_seo_plugin.links') }}
+    {% block stylesheets %}
+        {% hook '#stylesheets' with { _prefixes: prefixes } %}
     {% endblock %}
 
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-    ...
+    {% hook 'head' with { _prefixes: prefixes } %}
 </head>
+
+<body data-route="{{ app.request.get('_route') }}">
+
+    <!--- add 'before_body' hook for google tag manager noscript iframe -->
+    {% hook 'before_body' with { _prefixes: prefixes } %}
 ```
 
 ## SEO usage for entities
@@ -84,7 +86,29 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
 
 class Product extends BaseProduct implements ReferenceableInterface
 {
-    use ReferenceableProductTrait;
+    use ReferenceableProductTrait {
+        getMetadataTitle as getBaseMetadataTitle;
+        getMetadataDescription as getBaseMetadataDescription;
+    }
+    
+    public function getMetadataTitle(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataTitle()) {
+            return null === $this->getMainTaxon() ? $this->getName() :
+                $this->getName() . ' | ' . $this->getMainTaxon()->getName();
+        }
+
+        return $this->getBaseMetadataTitle();
+    }
+
+    public function getMetadataDescription(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataDescription()) {
+            return $this->getShortDescription();
+        }
+
+        return $this->getBaseMetadataDescription();
+    }
 
     protected function createReferenceableContent(): ReferenceableInterface
     {
@@ -101,7 +125,28 @@ use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 
 class Taxon extends BaseTaxon implements ReferenceableInterface
 {
-    use ReferenceableTaxonTrait;
+    use ReferenceableTaxonTrait {
+        getMetadataTitle as getBaseMetadataTitle;
+        getMetadataDescription as getBaseMetadataDescription;
+    }
+
+    public function getMetadataTitle(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataTitle()) {
+            return $this->getName();
+        }
+
+        return $this->getBaseMetadataTitle();
+    }
+
+    public function getMetadataDescription(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataDescription()) {
+            return $this->getDescription();
+        }
+
+        return $this->getBaseMetadataDescription();
+    }
 
     protected function createReferenceableContent(): ReferenceableInterface
     {
@@ -118,8 +163,29 @@ use Sylius\Component\Core\Model\Channel as BaseChannel;
 
 class Channel extends BaseChannel implements ReferenceableInterface
 {
-    use ReferenceableChannelTrait;
+    use ReferenceableChannelTrait {
+        getMetadataTitle as getBaseMetadataTitle;
+        getMetadataDescription as getBaseMetadataDescription;
+    }
 
+    public function getMetadataTitle(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataTitle()) {
+            return $this->getName();
+        }
+
+        return $this->getBaseMetadataTitle();
+    }
+
+    public function getMetadataDescription(): ?string
+    {
+        if (null === $this->getReferenceableContent()->getMetadataDescription()) {
+            return $this->getDescription();
+        }
+
+        return $this->getBaseMetadataDescription();
+    }
+    
     protected function createReferenceableContent(): ReferenceableInterface
     {
         return new SEOContent();

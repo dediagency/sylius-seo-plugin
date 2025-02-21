@@ -10,7 +10,7 @@ use Sylius\Component\Locale\Provider\LocaleProviderInterface;
 
 class SEOContentFactory implements SEOContentFactoryInterface
 {
-    public function __construct(private LocaleProviderInterface $localeProvider)
+    public function __construct(private readonly LocaleProviderInterface $localeProvider)
     {
     }
 

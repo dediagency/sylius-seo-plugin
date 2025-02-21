@@ -8,28 +8,28 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait RichSnippetProductSubjectTrait
 {
-    /** @ORM\Column(type="string", name="seo_brand", nullable=true) */
+    #[ORM\Column(name: 'seo_brand', type: 'string', nullable: true)]
     protected ?string $SEOBrand = null;
 
-    /** @ORM\Column(type="string", length=8, name="seo_gtin8", nullable=true) */
+    #[ORM\Column(name: 'seo_gtin8', type: 'string', length: 8, nullable: true)]
     protected ?string $SEOGtin8 = null;
 
-    /** @ORM\Column(type="string", length=13, name="seo_gtin13", nullable=true) */
+    #[ORM\Column(name: 'seo_gtin13', type: 'string', length: 13, nullable: true)]
     protected ?string $SEOGtin13 = null;
 
-    /** @ORM\Column(type="string", length=14, name="seo_gtin14", nullable=true) */
+    #[ORM\Column(name: 'seo_gtin14', type: 'string', length: 14, nullable: true)]
     protected ?string $SEOGtin14 = null;
 
-    /** @ORM\Column(type="string", name="seo_mpn", nullable=true) */
+    #[ORM\Column(name: 'seo_mpn', type: 'string', nullable: true)]
     protected ?string $SEOMpn = null;
 
-    /** @ORM\Column(type="string", name="seo_isbn", nullable=true) */
+    #[ORM\Column(name: 'seo_isbn', type: 'string', nullable: true)]
     protected ?string $SEOIsbn = null;
 
-    /** @ORM\Column(type="string", name="seo_sku", nullable=true) */
+    #[ORM\Column(name: 'seo_sku', type: 'string', nullable: true)]
     protected ?string $SEOSku = null;
 
-    /** @ORM\Column(type="boolean", name="seo_offer_aggregated", nullable=false, options={"default" : 0}) */
+    #[ORM\Column(name: 'seo_offer_aggregated', type: 'boolean', nullable: false, options: ['default' => 0])]
     protected bool $SEOOfferAggregated = false;
 
     public function getSEOBrand(): ?string

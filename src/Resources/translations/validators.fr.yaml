@@ -1,0 +1,4 @@
+dedi_sylius_seo_plugin:
+    seo_content:
+        product_is_mandatory: Le produit est obligatoire.
+        taxon_is_mandatory: Le taxon est obligatoire.

@@ -5,7 +5,7 @@ dedi_sylius_seo_plugin:
         open_graph_info: Plus d'information sur OpenGraph
         advanced_options: Options avancées
         info_title: Comment fonctionne le réferencement de mon contenu ?
-        info_description: Une partie du contenu est généré automatiquement à partir des informations précédement renseignées. En cliquant sur "Options avancées", vous pouvez modifier toutes les métadonnées.
+        info_description: Une partie du contenu est généré automatiquement à partir des informations précédement renseignées. Remplissez les champs suivant pour écraser les métadonnées automatiques.
         product_info_title: Optimisations RichSnippet product
         product_info_description: Les champs suivants permettent d'optimiser le référencement des produits. Il est préférable de remplir au moins un champs par section.
         product_info_link: Plus d'informations
@@ -24,6 +24,8 @@ dedi_sylius_seo_plugin:
         seo_for_product: Contenu SEO pour un produit
         seo_for_taxon: Contenu SEO pour un taxon
         seo_for_url: Contenu SEO pour une url
+        metadata: Metadonnées
+        tracking: Tracking
     form:
         not_indexable: Ne pas rendre indexable le contenu
         metadata_title: Métadonnée titre

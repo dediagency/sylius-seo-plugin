@@ -7,21 +7,14 @@ namespace Dedi\SyliusSEOPlugin\Enum;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\Entity\SEOContentTranslationInterface;
 
-class SEOContentTypeEnum
+enum SEOContentTypeEnum: string
 {
-    private const PRODUCT = 'product';
+    case PRODUCT = 'product';
+    case TAXON = 'taxon';
+    case CHANNEL = 'channel';
+    case URI = 'uri';
 
-    private const TAXON = 'taxon';
-
-    private const CHANNEL = 'channel';
-
-    private const URI = 'uri';
-
-    private function __construct()
-    {
-    }
-
-    public static function fromSEOContent(SEOContentInterface $SEOContent): ?string
+    public static function fromSEOContent(SEOContentInterface $SEOContent): ?static
     {
         /** @var SEOContentTranslationInterface $translation */
         foreach ($SEOContent->getTranslations() as $translation) {

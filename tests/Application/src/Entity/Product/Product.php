@@ -14,11 +14,8 @@ use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableProductTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="sylius_product")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'sylius_product')]
 class Product extends BaseProduct implements ReferenceableInterface, RichSnippetProductSubjectInterface
 {
     use ReferenceableProductTrait {

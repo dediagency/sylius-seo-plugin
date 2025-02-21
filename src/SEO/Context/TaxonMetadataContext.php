@@ -9,6 +9,7 @@ use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Exception\ContextNotAvailableInRequestException;
 use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 use Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformerInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -16,12 +17,13 @@ use Webmozart\Assert\Assert;
 
 class TaxonMetadataContext implements MetadataContextInterface
 {
+    /** @param TaxonRepositoryInterface<TaxonInterface> $repository */
     public function __construct(
-        private FilterInterface $filter,
-        private TaxonRepositoryInterface $repository,
-        private LocaleContextInterface $localeContext,
-        private RequestStack $requestStack,
-        private ReferenceableToMetadataTransformerInterface $transformer,
+        private readonly FilterInterface $filter,
+        private readonly TaxonRepositoryInterface $repository,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly RequestStack $requestStack,
+        private readonly ReferenceableToMetadataTransformerInterface $transformer,
     ) {
     }
 

@@ -7,7 +7,7 @@ namespace Dedi\SyliusSEOPlugin\Form\Extension;
 use Dedi\SyliusSEOPlugin\Form\Type\SEOContentType;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Enum\MetadataTypeEnum;
-use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType;
+use Sylius\Bundle\AdminBundle\Form\Type\TaxonType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -24,7 +24,7 @@ class TaxonTypeExtension extends AbstractTypeExtension
                     ->add('referenceableContent', SEOContentType::class, [
                         'label' => 'dedi_sylius_seo_plugin.ui.seo',
                         'constraints' => [new Valid()],
-                        'type' => MetadataTypeEnum::TAXON,
+                        'type' => MetadataTypeEnum::TAXON->value,
                     ])
                 ;
             }

@@ -1,4 +1,4 @@
 imports:
     - { resource: grid.yaml }
     - { resource: resources.yaml }
-    - { resource: ui.yaml }
+    - { resource: twig_hooks/* }

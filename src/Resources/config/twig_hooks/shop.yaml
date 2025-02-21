@@ -1,0 +1,20 @@
+sylius_twig_hooks:
+    hooks:
+        sylius_shop.base#metatags:
+            dedi_seo_metatags:
+                template: '@DediSyliusSEOPlugin/shop/head/metatags.html.twig'
+                priority: 100
+            dedi_seo_rich_snippets:
+                template: '@DediSyliusSEOPlugin/shop/head/rich_snippets.html.twig'
+                priority: 100
+        sylius_shop.base.head:
+            dedi_seo_links:
+                template: '@DediSyliusSEOPlugin/shop/head/links.html.twig'
+                priority: 100
+            dedi_seo_google_tracking:
+                template: '@DediSyliusSEOPlugin/shop/head/google_tracking.html.twig'
+                priority: 100
+        sylius_shop.base.before_body:
+            dedi_seo_google_tracking:
+                template: '@DediSyliusSEOPlugin/shop/body/google_tracking.html.twig'
+                priority: 1000

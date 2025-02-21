@@ -11,6 +11,7 @@ use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 use Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformerInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,13 +19,14 @@ use Webmozart\Assert\Assert;
 
 class ProductMetadataContext implements MetadataContextInterface
 {
+    /** @param ProductRepositoryInterface<ProductInterface> $repository */
     public function __construct(
-        private ChannelContextInterface $channelContext,
-        private FilterInterface $filter,
-        private ProductRepositoryInterface $repository,
-        private LocaleContextInterface $localeContext,
-        private RequestStack $requestStack,
-        private ReferenceableToMetadataTransformerInterface $transformer,
+        private readonly ChannelContextInterface $channelContext,
+        private readonly FilterInterface $filter,
+        private readonly ProductRepositoryInterface $repository,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly RequestStack $requestStack,
+        private readonly ReferenceableToMetadataTransformerInterface $transformer,
     ) {
     }
 

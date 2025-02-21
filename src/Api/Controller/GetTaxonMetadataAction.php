@@ -11,6 +11,7 @@ use Dedi\SyliusSEOPlugin\SEO\Model\Metadata;
 use Dedi\SyliusSEOPlugin\SEO\Transformer\ReferenceableToMetadataTransformerInterface;
 use Dedi\SyliusSEOPlugin\SEO\Transformer\SEOContentToMetadataTransformerInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,15 +19,16 @@ use Webmozart\Assert\Assert;
 
 class GetTaxonMetadataAction
 {
+    /** @param TaxonRepositoryInterface<TaxonInterface> $taxonRepository */
     public function __construct(
-        private ChannelContextInterface $channelContext,
-        private TaxonRepositoryInterface $taxonRepository,
-        private ReferenceableToMetadataTransformerInterface $transformer,
-        private SEOContentToMetadataTransformerInterface $SEOContentToMetadataTransformer,
-        private MetadataDirectorInterface $metadataDirector,
-        private RequestStack $requestStack,
-        private LocaleContextInterface $localeContext,
-        private SEOContentRepositoryInterface $SEOContentRepository,
+        private readonly ChannelContextInterface $channelContext,
+        private readonly TaxonRepositoryInterface $taxonRepository,
+        private readonly ReferenceableToMetadataTransformerInterface $transformer,
+        private readonly SEOContentToMetadataTransformerInterface $SEOContentToMetadataTransformer,
+        private readonly MetadataDirectorInterface $metadataDirector,
+        private readonly RequestStack $requestStack,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly SEOContentRepositoryInterface $SEOContentRepository,
     ) {
     }
 

@@ -8,17 +8,8 @@ use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 
 class GenericPageRichSnippetSubject implements RichSnippetSubjectInterface
 {
-    private string $name;
-
-    private string $type;
-
-    private RichSnippetSubjectInterface $parent;
-
-    public function __construct(string $name, string $type, RichSnippetSubjectInterface $parent)
+    public function __construct(private string $name, private string $type, private RichSnippetSubjectInterface $parent)
     {
-        $this->name = $name;
-        $this->type = $type;
-        $this->parent = $parent;
     }
 
     public function getId(): ?int

@@ -6,6 +6,7 @@ namespace Dedi\SyliusSEOPlugin\RichSnippet\Context\SubjectFetcher;
 
 use Dedi\SyliusSEOPlugin\Filter\FilterInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,20 +14,12 @@ use Webmozart\Assert\Assert;
 
 class TaxonSubjectFetcher implements SubjectFetcherInterface
 {
-    private LocaleContextInterface $localeContext;
-
-    private TaxonRepositoryInterface $repository;
-
-    private FilterInterface $filter;
-
+    /** @param TaxonRepositoryInterface<TaxonInterface> $repository */
     public function __construct(
-        FilterInterface $filter,
-        LocaleContextInterface $localeContext,
-        TaxonRepositoryInterface $repository,
+        private readonly FilterInterface $filter,
+        private readonly LocaleContextInterface $localeContext,
+        private readonly TaxonRepositoryInterface $repository,
     ) {
-        $this->repository = $repository;
-        $this->localeContext = $localeContext;
-        $this->filter = $filter;
     }
 
     public function fetch(?int $id = null): ?RichSnippetSubjectInterface

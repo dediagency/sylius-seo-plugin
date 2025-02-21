@@ -6,10 +6,11 @@ namespace Dedi\SyliusSEOPlugin\Form\Type;
 
 use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductAutocompleteChoiceType;
+use Dedi\SyliusSEOPlugin\Validation\Constraints\SEOContent;
+use Sylius\Bundle\AdminBundle\Form\Type\ProductAutocompleteType;
+use Sylius\Bundle\AdminBundle\Form\Type\TaxonAutocompleteType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
-use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -50,10 +51,10 @@ class SEOContentType extends AbstractResourceType
                     'page' => 'article',
                 ],
             ])
-            ->add('product', ProductAutocompleteChoiceType::class, [
+            ->add('product', ProductAutocompleteType::class, [
                 'required' => true,
             ])
-            ->add('taxon', TaxonAutocompleteChoiceType::class, [
+            ->add('taxon', TaxonAutocompleteType::class, [
                 'required' => true,
             ])
         ;
@@ -81,11 +82,11 @@ class SEOContentType extends AbstractResourceType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault('type', null);
-    }
-
-    public function getBlockPrefix(): string
-    {
-        return 'dedi_sylius_seo_plugin_content_seo';
+        $resolver->setDefaults([
+            'type' => null,
+            'constraints' => [
+                new SEOContent(['groups' => ['sylius', 'default']]),
+            ],
+        ]);
     }
 }

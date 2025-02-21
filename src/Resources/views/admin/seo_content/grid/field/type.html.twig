@@ -1,0 +1,13 @@
+<span class="ui label">
+    {% if data == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::PRODUCT').value %}
+        {{ 'sylius.ui.product'|trans }}
+    {% elseif data == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::TAXON').value %}
+        {{ 'sylius.ui.taxonomy'|trans }}
+    {% elseif data == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::CHANNEL').value %}
+        {{ 'sylius.ui.channel'|trans }}
+    {% elseif data == constant('Dedi\\SyliusSEOPlugin\\SEO\\Enum\\MetadataTypeEnum::URI').value %}
+        URI
+    {% else %}
+        {{ data }}
+    {% endif %}
+</span>

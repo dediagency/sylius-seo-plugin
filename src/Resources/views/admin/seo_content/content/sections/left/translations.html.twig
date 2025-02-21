@@ -1,0 +1,15 @@
+{% import '@SyliusAdmin/shared/helper/translations.html.twig' as translations %}
+
+{% set form = hookable_metadata.context.form %}
+{% set prefixes = hookable_metadata.prefixes %}
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h2 class="card-title">
+            {{ 'dedi_sylius_seo_plugin.ui.metadata'|trans }}
+        </h2>
+    </div>
+    <div class="">
+        {{ translations.with_hook(form.translations, prefixes, 'translations', { accordion_id: 'seo-content-translations', accordion_flush: true }) }}
+    </div>
+</div>

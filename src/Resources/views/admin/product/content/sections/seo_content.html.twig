@@ -1,0 +1,16 @@
+{% set product = hookable_metadata.context.resource %}
+{% set form = hookable_metadata.context.form %}
+
+{% if form.referenceableContent is defined %}
+    <div class="tab-pane {% if hookable_metadata.configuration.active|default(false) %}show active{% endif %}"
+         id="seo-content" role="tabpanel" tabindex="0">
+        <div class="row" id="dedi_sylius_seo_plugin_content_seo_admin_container">
+            <div class="col-12 col-lg-7">
+                {% hook 'seo#left' with { form: form.referenceableContent, product_form: form, resource: form.referenceableContent.vars.data } %}
+            </div>
+            <div class="col-12 col-lg-5">
+                {% hook 'seo#right' with { form: form.referenceableContent, product_form: form } %}
+            </div>
+        </div>
+    </div>
+{% endif %}

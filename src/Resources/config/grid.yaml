@@ -1,9 +1,4 @@
 sylius_grid:
-    templates:
-        filter:
-            seo_content_product: '@DediSyliusSEOPlugin/Admin/Grid/Filter/product.html.twig'
-            seo_content_taxon: '@DediSyliusSEOPlugin/Admin/Grid/Filter/taxon.html.twig'
-            seo_content_indexable: '@DediSyliusSEOPlugin/Admin/Grid/Filter/indexable.html.twig'
     grids:
         dedi_sylius_seo_plugin.seo_content:
             driver:
@@ -20,14 +15,14 @@ sylius_grid:
                     type: twig
                     label: sylius.ui.type
                     options:
-                        template: "@DediSyliusSEOPlugin/UI/Grid/Field/type.html.twig"
+                        template: "@DediSyliusSEOPlugin/admin/seo_content/grid/field/type.html.twig"
                 resource:
                     type: twig
                     label: dedi_sylius_seo_plugin.ui.resource
                     path: .
                     sortable: false
                     options:
-                        template: "@DediSyliusSEOPlugin/UI/Grid/Field/resource.html.twig"
+                        template: "@DediSyliusSEOPlugin/admin/seo_content/grid/field/resource.html.twig"
                 metadataTitle:
                     type: string
                     label: dedi_sylius_seo_plugin.form.metadata_title
@@ -41,7 +36,7 @@ sylius_grid:
                     label: dedi_sylius_seo_plugin.ui.indexable
                     path: robot.isNotIndexable
                     options:
-                        template: "@DediSyliusSEOPlugin/UI/Grid/Field/indexable.html.twig"
+                        template: "@DediSyliusSEOPlugin/admin/seo_content/grid/field/indexable.html.twig"
             filters:
                 search:
                     type: string
@@ -49,9 +44,23 @@ sylius_grid:
                     options:
                         fields: [ translation.metadataTitle, translation.metadataDescription ]
                 product:
-                    type: seo_content_product
+                    type: ux_translatable_autocomplete
+                    label: sylius.ui.product
+                    form_options:
+                        multiple: false
+                        extra_options:
+                            class: '%sylius.model.product.class%'
+                            translation_fields: [name]
+                            choice_label: name
                 taxon:
-                    type: seo_content_taxon
+                    type: ux_translatable_autocomplete
+                    label: sylius.ui.taxon
+                    form_options:
+                        multiple: false
+                        extra_options:
+                            class: '%sylius.model.taxon.class%'
+                            translation_fields: [name]
+                            choice_label: fullname
                 uri:
                     type: string
                     label: URI
@@ -60,14 +69,14 @@ sylius_grid:
                     options:
                         fields: [ translation.uri ]
                 channel:
-                    type: entities
+                    type: entity
                     label: sylius.ui.channel
                     form_options:
                         class: "%sylius.model.channel.class%"
                     options:
                         field: channel.id
                 indexable:
-                    type: seo_content_indexable
+                    type: boolean
 
             actions:
                 main:
@@ -76,26 +85,23 @@ sylius_grid:
                         label: sylius.ui.create
                         options:
                             class: primary
-                            icon: plus
+                            icon: "tabler:plus"
                             header:
-                                icon: search
+                                icon: "tabler:search"
                                 label: sylius.ui.type
                             links:
                                 product:
                                     label: dedi_sylius_seo_plugin.ui.seo_for_product
-                                    icon: plus
                                     route: dedi_sylius_seo_plugin_admin_seo_content_create
                                     parameters:
                                         type: product
                                 taxon:
                                     label: dedi_sylius_seo_plugin.ui.seo_for_taxon
-                                    icon: plus
                                     route: dedi_sylius_seo_plugin_admin_seo_content_create
                                     parameters:
                                         type: taxon
                                 url:
                                     label: dedi_sylius_seo_plugin.ui.seo_for_url
-                                    icon: plus
                                     route: dedi_sylius_seo_plugin_admin_seo_content_create
                                     parameters:
                                         type: uri

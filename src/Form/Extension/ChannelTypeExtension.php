@@ -7,7 +7,7 @@ namespace Dedi\SyliusSEOPlugin\Form\Extension;
 use Dedi\SyliusSEOPlugin\Form\Type\SEOContentType;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Enum\MetadataTypeEnum;
-use Sylius\Bundle\ChannelBundle\Form\Type\ChannelType;
+use Sylius\Bundle\AdminBundle\Form\Type\ChannelType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +42,7 @@ class ChannelTypeExtension extends AbstractTypeExtension
                     ->add('referenceableContent', SEOContentType::class, [
                         'label' => 'dedi_sylius_seo_plugin.ui.seo',
                         'constraints' => [new Valid()],
-                        'type' => MetadataTypeEnum::CHANNEL,
+                        'type' => MetadataTypeEnum::CHANNEL->value,
                     ])
                 ;
             }

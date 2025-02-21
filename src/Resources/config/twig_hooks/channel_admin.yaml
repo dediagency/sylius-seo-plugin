@@ -1,0 +1,151 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.channel.create.content.form.sections':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/seo_content.html.twig'
+                priority: -100
+
+        'sylius_admin.channel.create.content.form.sections.seo#left':
+            tracking:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/left/tracking.html.twig'
+                priority: 250
+            alert:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/alert.html.twig'
+                priority: 200
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/type.html.twig'
+                priority: 100
+            translations:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations.html.twig'
+                priority: 60
+            opengraph:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph.html.twig'
+                priority: 40
+
+        'sylius_admin.channel.create.content.form.sections.seo.tracking':
+            google_analytics_code:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/left/tracking/google_analytics_code.html.twig'
+                priority: 100
+            google_tag_manager_id:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/left/tracking/google_tag_manager_id.html.twig'
+                priority: 50
+
+        'sylius_admin.channel.create.content.form.sections.seo.translations':
+            uri:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/uri.html.twig'
+                priority: 100
+            not_indexable:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/not_indexable.html.twig'
+                priority: 80
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_title.html.twig'
+                priority: 60
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_description.html.twig'
+                priority: 40
+
+        'sylius_admin.channel.create.content.form.sections.seo.opengraph.general':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/general/og_type.html.twig'
+                priority: 100
+
+        'sylius_admin.channel.create.content.form.sections.seo.opengraph.translations':
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_title.html.twig'
+                priority: 100
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_description.html.twig'
+                priority: 80
+            image:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_image.html.twig'
+                priority: 50
+
+        'sylius_admin.channel.create.content.form.sections.seo#right':
+            preview:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/right/preview.html.twig'
+                priority: 100
+
+        'sylius_admin.channel.create#stylesheets':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/stylesheets.html.twig'
+                priority: -100
+
+        'sylius_admin.channel.create#javascripts':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/javascripts.html.twig'
+                priority: -100
+
+        'sylius_admin.channel.update.content.form.sections':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/seo_content.html.twig'
+                priority: -100
+
+        'sylius_admin.channel.update.content.form.sections.seo#left':
+            tracking:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/left/tracking.html.twig'
+                priority: 250
+            alert:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/alert.html.twig'
+                priority: 200
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/type.html.twig'
+                priority: 100
+            translations:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations.html.twig'
+                priority: 60
+            opengraph:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph.html.twig'
+                priority: 40
+
+        'sylius_admin.channel.update.content.form.sections.seo.tracking':
+            google_analytics_code:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/left/tracking/google_analytics_code.html.twig'
+                priority: 100
+            google_tag_manager_id:
+                template: '@DediSyliusSEOPlugin/admin/channel/content/sections/left/tracking/google_tag_manager_id.html.twig'
+                priority: 50
+
+        'sylius_admin.channel.update.content.form.sections.seo.translations':
+            uri:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/uri.html.twig'
+                priority: 100
+            not_indexable:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/not_indexable.html.twig'
+                priority: 80
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_title.html.twig'
+                priority: 60
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_description.html.twig'
+                priority: 40
+
+        'sylius_admin.channel.update.content.form.sections.seo.opengraph.general':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/general/og_type.html.twig'
+                priority: 100
+
+        'sylius_admin.channel.update.content.form.sections.seo.opengraph.translations':
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_title.html.twig'
+                priority: 100
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_description.html.twig'
+                priority: 80
+            image:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_image.html.twig'
+                priority: 50
+
+        'sylius_admin.channel.update.content.form.sections.seo#right':
+            preview:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/right/preview.html.twig'
+                priority: 100
+
+        'sylius_admin.channel.update#stylesheets':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/stylesheets.html.twig'
+                priority: -100
+
+        'sylius_admin.channel.update#javascripts':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/javascripts.html.twig'
+                priority: -100

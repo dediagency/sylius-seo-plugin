@@ -15,7 +15,7 @@ class CompositeMetadataContext implements MetadataContextInterface
     /** @var PriorityQueue<MetadataContextInterface, int> */
     private PriorityQueue $metadataContexts;
 
-    public function __construct(private MetadataDirectorInterface $metadataDirector)
+    public function __construct(private readonly MetadataDirectorInterface $metadataDirector)
     {
         $this->metadataContexts = new PriorityQueue();
     }

@@ -5,15 +5,12 @@
     <services>
         <service id="dedi_sylius_seo_plugin.listener.referenceable_locale" class="Dedi\SyliusSEOPlugin\SEO\Listener\ORMReferenceableLocaleListener">
             <argument type="service" id="sylius.context.locale"/>
-            <argument type="service" id="sylius.translation_locale_provider"/>
+            <argument type="service" id="sylius.provider.translation_locale.admin"/>
             <argument type="service" id="Sylius\Component\Core\Checker\CLIContextCheckerInterface"/>
-            <tag name="doctrine.event_subscriber" connection="default" priority="99"/>
+            <tag name="doctrine.event_listener" connection="default" event="postLoad" priority="99" />
         </service>
         <service id="dedi.sylius_seo_plugin.admin.menu_builder.seo" class="Dedi\SyliusSEOPlugin\SEO\Listener\Admin\SEOMenuBuilder">
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addItem"/>
-        </service>
-        <service id="dedi.sylius_seo_plugin.admin.menu_builder.product" class="Dedi\SyliusSEOPlugin\SEO\Listener\Admin\ProductMenuBuilder">
-            <tag name="kernel.event_listener" event="sylius.menu.admin.product.form" method="addSeoMenuItem"/>
         </service>
     </services>
 </container>
