@@ -13,11 +13,9 @@ use Webmozart\Assert\Assert;
 
 class TaxonUrlGenerator implements SubjectUrlGeneratorInterface
 {
-    protected RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
-    {
-        $this->router = $router;
+    public function __construct(
+        protected readonly RouterInterface $router
+    ) {
     }
 
     public function can(RichSnippetSubjectInterface $subject): bool

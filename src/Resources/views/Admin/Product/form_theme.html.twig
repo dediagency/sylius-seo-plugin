@@ -1,0 +1,18 @@
+{% extends '@SyliusAdmin/shared/form_theme.html.twig' %}
+
+{% block _sylius_admin_product_referenceableContent_row %}
+	{% import '@SyliusAdmin/shared/helper/translations.html.twig' as translations %}
+
+	{% set prefixes = [
+		"sylius_admin.product.update.content.form.sections.seo", "sylius_admin.common.update.content.form.sections.seo"
+		] %}
+
+	<div class="row mb-3">
+		<div class="col-12 col-md-6" id="seo-advanced-panel">
+			{{ translations.with_hook(form.translations, prefixes, null, {accordion_id: 'seo-content-product-translations', accordion_flush: false}) }}
+		</div>
+		<div class="col-12 col-md-6">
+			{% hook prefixes|first ~ '.seo_preview' %}
+		</div>
+	</div>
+{% endblock %}

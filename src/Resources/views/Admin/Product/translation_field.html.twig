@@ -1,0 +1,36 @@
+{% set form = hookable_metadata.context.form %}
+{% set locale = hookable_metadata.context.locale %}
+
+{% if form.parent.parent.parent.vars.value.referenceableContent is defined %}
+	{% set resource = form.parent.parent.parent.vars.value %}
+{% else %}
+	{% set resource = form.parent.parent.parent.vars.value %}
+{% endif %}
+
+<div class="ui content seo-advanced-panel-content active">
+	{{ form_row(form.notIndexable, sylius_test_form_attribute('no-index', locale)) }}
+
+	{{ form_row(form.metadataTitle, {attr: sylius_test_form_attribute('metadata-title', locale)['attr']|default([])|merge({'data-form-title': '' })}) }}
+	{{ form_row(form.metadataDescription, {attr: sylius_test_form_attribute('metadata-description', locale)['attr']|default([])|merge({'data-form-description': '' })}) }}
+	<p class="fw-bold my-4">
+		OpenGraph
+		<small>
+			<a target="_blank" href="https://ogp.me/">{{ 'dedi_sylius_seo_plugin.ui.open_graph_info'|trans }}</a>
+		</small>
+	</p>
+	{{ form_row(form.openGraphMetadataTitle, {attr: sylius_test_form_attribute('open-graph-metadata-title', locale)['attr']|default([])|merge({'data-form-og-title': '' })}) }}
+	{{ form_row(form.openGraphMetadataDescription, {attr: sylius_test_form_attribute('open-graph-metadata-description', locale)['attr']|default([])|merge({'data-form-og-description': '' })}) }}
+	{{ form_row(form.openGraphMetadataImage, {attr: sylius_test_form_attribute('open-graph-metadata-image', locale)['attr']|default([])|merge({'data-form-og-image': '' })}) }}
+	{{ form_row(form.openGraphMetadataType, sylius_test_form_attribute('open-graph-metadata-type', locale)) }}
+	{% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
+	{% set donothing = resource.referenceableContent.setFallbackLocale(locale) %}
+
+	<div class="preview-default-data" style="display: none;">
+		<span class="title">{{ resource.metadataTitle }}</span>
+		<span class="description">{{ resource.metadataDescription }}</span>
+		<span class="og-title">{{ resource.openGraphMetadataTitle }}</span>
+		<span class="og-description">{{ resource.openGraphMetadataDescription }}</span>
+		<span class="og-image">{{ dedi_sylius_seo_get_image_url(resource.openGraphMetadataImage) }}</span>
+		<span class="og-url">{{ resource.openGraphMetadataUrl|default(sylius.channel.hostname) }}</span>
+	</div>
+</div>

@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait SeoAwareChannelTrait
 {
-    /** @ORM\Column(type="string", name="google_analytics_code", nullable=true) */
+    #[ORM\Column(type: 'string', name: 'google_analytics_code', nullable: true)]
     protected ?string $googleAnalyticsCode = null;
 
-    /** @ORM\Column(type="string", name="google_tag_manager_id", nullable=true) */
+    #[ORM\Column(type: 'string', name: 'google_tag_manager_id', nullable: true)]
     protected ?string $googleTagManagerId = null;
 
     public function getGoogleAnalyticsCode(): ?string

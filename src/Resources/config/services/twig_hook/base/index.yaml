@@ -1,0 +1,39 @@
+sylius_twig_hooks:
+    hooks:
+        "sylius_shop.homepage.index#metatags":
+            seo:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_googleTracking.html.twig"
+                priority: 500
+            snippets:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_richSnippets.html.twig"
+                priority: 400
+            links:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_links.html.twig"
+                priority: 300
+            metatags:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_metatags.html.twig"
+                priority: 200
+
+        "sylius_shop.base#metatags":
+            seo:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_googleTracking.html.twig"
+                priority: 500
+            snippets:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_richSnippets.html.twig"
+                priority: 400
+            links:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_links.html.twig"
+                priority: 300
+            metatags:
+                template: "@DediSyliusSEOPlugin/Shop/Header/_metatags.html.twig"
+                priority: 200
+
+        "sylius_shop.homepage.index.before_body":
+            seo:
+                template: "@DediSyliusSEOPlugin/Shop/Body/_googleTracking.html.twig"
+                priority: 0
+
+        "sylius_shop.base.before_body":
+            seo:
+                template: "@DediSyliusSEOPlugin/Shop/Body/_googleTracking.html.twig"
+                priority: 0

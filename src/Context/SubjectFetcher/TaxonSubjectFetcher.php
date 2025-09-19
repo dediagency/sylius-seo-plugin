@@ -42,9 +42,15 @@ class TaxonSubjectFetcher implements SubjectFetcherInterface
 
     public function fetchFromRequest(Request $request): ?RichSnippetSubjectInterface
     {
+        $slug = $request->attributes->get('slug');
+
+        if (null === $slug) {
+            return null;
+        }
+
         /** @var RichSnippetSubjectInterface|null $subject */
         $subject = $this->repository->findOneBySlug(
-            $request->attributes->get('slug'),
+            $slug,
             $this->localeContext->getLocaleCode(),
         );
 

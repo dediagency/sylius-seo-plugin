@@ -1,0 +1,59 @@
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title">{{ 'dedi_sylius_seo_plugin.ui.seo_preview'|trans }}</h3>
+	</div>
+	<div class="card-body">
+		<div id="google-preview" class="google-preview preview-container mb-3">
+			<header class="preview-header">
+				<aside class="preview-url">
+					{{ sylius.channel.hostname }}
+					<i class="caret down icon"></i>
+				</aside>
+				<h3 class="preview-title"></h3>
+			</header>
+
+			<div class="preview-content">
+				<p class="preview-description"></p>
+			</div>
+		</div>
+		<h4 class="ui header">Twitter</h4>
+
+		<div id="twitter-preview" class="twitter-preview preview-container mb-3">
+			<div class="preview-left">
+				<img class="preview-image" src="">
+			</div>
+
+			<div class="preview-right">
+				<header class="preview-header">
+					<h3 class="preview-title"></h3>
+				</header>
+
+				<div class="preview-content">
+					<p class="preview-description"></p>
+					<aside class="preview-url"></aside>
+				</div>
+			</div>
+		</div>
+
+		<h4>Facebook</h4>
+
+		<div id="facebook-preview" class="twitter-preview preview-container mb-3">
+			<div class="preview-left">
+				<img class="preview-image" src="">
+			</div>
+
+			<div class="preview-right">
+				<header class="preview-header">
+					<aside class="preview-url"></aside>
+					<h3 class="preview-title"></h3>
+				</header>
+
+				<div class="preview-content">
+					<p class="preview-description"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{ asset('bundles/dedisyliusseoplugin/js/seo-content-form.js') }}" defer></script>

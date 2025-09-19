@@ -1,6 +1,5 @@
 const TITLE_LIMIT = 70;
 const DESCRIPTION_LIMIT = 160;
-const seoAdvancedButton = document.getElementById('seo-advanced-button');
 const seoAdvancedPanel = document.getElementById('seo-advanced-panel');
 const seoGooglePreview = document.getElementById('google-preview');
 const seoTwitterPreview = document.getElementById('twitter-preview');
@@ -10,7 +9,7 @@ const seoFacebookPreview = document.getElementById('facebook-preview');
  * Load a CSS script dynamically
  * @param {string} url
  */
-const loadCss = function(url) {
+const loadCss = function (url) {
     const link = document.createElement('link');
     link.href = url;
     link.type = 'text/css';
@@ -23,7 +22,7 @@ const loadCss = function(url) {
  * Update data for Google preview widget
  * @param {Object} form
  */
-const updateGooglePreview = function(form) {
+const updateGooglePreview = function (form) {
     if (!seoGooglePreview) {
         return;
     }
@@ -36,7 +35,7 @@ const updateGooglePreview = function(form) {
  * Update data for Twitter preview widget
  * @param {Object} form
  */
-const updateTwitterPreview = function(form) {
+const updateTwitterPreview = function (form) {
     if (!seoTwitterPreview) {
         return;
     }
@@ -56,7 +55,7 @@ const updateTwitterPreview = function(form) {
  * Update data for Facebook preview widget
  * @param {Object} form
  */
-const updateFacebookPreview = function(form) {
+const updateFacebookPreview = function (form) {
     if (!seoFacebookPreview) {
         return;
     }
@@ -75,7 +74,7 @@ const updateFacebookPreview = function(form) {
 /**
  * @param {Object} form
  */
-const updatePreviewWidgets = function(form) {
+const updatePreviewWidgets = function (form) {
     updateGooglePreview(form);
     updateTwitterPreview(form);
     updateFacebookPreview(form);
@@ -87,7 +86,7 @@ const updatePreviewWidgets = function(form) {
  * @param {number} count
  * @param {number} max
  */
-const setCounter = function(el, count, max) {
+const setCounter = function (el, count, max) {
     let counterContainer = el.querySelector('.counter');
     if (!counterContainer) {
         counterContainer = document.createElement('div');
@@ -103,7 +102,7 @@ const setCounter = function(el, count, max) {
     counterContainer.innerHTML = count + ' / ' + max;
 };
 
-if (seoAdvancedPanel && seoAdvancedButton) {
+if (seoAdvancedPanel) {
     /**
      * It's current form data for SEO content
      */
@@ -112,7 +111,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
          * @returns {HTMLElement|null}
          */
         get defaultData() {
-            const parent = seoAdvancedPanel.querySelector('.seo-advanced-panel-content.active').closest('*[data-locale]');
+            const parent = seoAdvancedPanel.querySelector('.seo-advanced-panel-content');
 
             return parent ? parent.querySelector('.preview-default-data') : null;
         },
@@ -246,7 +245,7 @@ if (seoAdvancedPanel && seoAdvancedButton) {
     };
 
     updatePreviewWidgets(form);
-    seoAdvancedPanel.addEventListener('keyup', function(event) {
+    seoAdvancedPanel.addEventListener('keyup', function (event) {
         updatePreviewWidgets(form);
 
         // Update char counter for formTitle and formOgTitle inputs into current form
@@ -260,19 +259,10 @@ if (seoAdvancedPanel && seoAdvancedButton) {
         }
     });
 
-    seoAdvancedPanel.style.display = 'none';
-    seoAdvancedButton.addEventListener('click', function() {
-        if (seoAdvancedPanel.style.display === 'none') {
-            seoAdvancedPanel.style.display = 'block';
-        } else {
-            seoAdvancedPanel.style.display = 'none';
-        }
-    });
-
-    seoAdvancedPanel.querySelectorAll('*[data-locale]').forEach(function(el) {
-        el.addEventListener('click', function() {
+    seoAdvancedPanel.querySelectorAll('*[data-locale]').forEach(function (el) {
+        el.addEventListener('click', function () {
             // Need sleep some time to update widget after semantic-ui lib perform click event on accordion element
-            setTimeout(function() {
+            setTimeout(function () {
                 if (form.defaultData) {
                     updatePreviewWidgets(form);
                 }
@@ -282,8 +272,3 @@ if (seoAdvancedPanel && seoAdvancedButton) {
 }
 
 loadCss('/bundles/dedisyliusseoplugin/css/seo-content-form.css');
-
-// Sticky previews
-document.addEventListener('DOMContentLoaded', function() {
-    $('.ui.sticky').sticky({ context: '#previews-column' });
-});

@@ -1,18 +1,18 @@
 {% set locale = sylius.localeCode|default(sylius_base_locale) %}
 {% if resource is defined and resource.referenceableContent is defined and resource.referenceableContent is not null %}
-    {% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
-    {% set seo = resource %}
+	{% set donothing = resource.referenceableContent.setCurrentLocale(locale) %}
+	{% set seo = resource %}
 {% endif %}
 
 {% if sylius.channel.referenceableContent is defined and sylius.channel.referenceableContent is not null %}
-    {% set donothing = sylius.channel.referenceableContent.setCurrentLocale(locale) %}
-    {% set baseSeo = sylius.channel %}
+	{% set donothing = sylius.channel.referenceableContent.setCurrentLocale(locale) %}
+	{% set baseSeo = sylius.channel %}
 {% endif %}
 
 {% if seo is defined and seo.metadataTitle %}
-    <title>{{ seo.metadataTitle }}</title>
+	<title>{{ seo.metadataTitle }}</title>
 {% elseif baseSeo is defined and baseSeo.metadataTitle %}
-    <title>{{ baseSeo.metadataTitle }}</title>
+	<title>{{ baseSeo.metadataTitle }}</title>
 {% else %}
-    <title>Sylius</title>
+	<title>Sylius</title>
 {% endif %}

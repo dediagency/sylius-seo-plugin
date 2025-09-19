@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Twig;
 
-use Liip\ImagineBundle\Templating\FilterExtension;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -12,11 +12,11 @@ class ReferenceableImageExtension extends AbstractExtension
 {
     public const IMAGE_PATTERN = '/^(?:\/{0,1}[\w\d]+)+.\w+$/';
 
-    private FilterExtension $filterExtension;
+    private CacheManager $cacheManager;
 
-    public function __construct(FilterExtension $filterExtension)
+    public function __construct(CacheManager $cacheManager)
     {
-        $this->filterExtension = $filterExtension;
+        $this->cacheManager = $cacheManager;
     }
 
     public function getFunctions(): array
@@ -32,6 +32,6 @@ class ReferenceableImageExtension extends AbstractExtension
             return $imagePath;
         }
 
-        return $this->filterExtension->filter($imagePath, $filterName);
+        return $this->cacheManager->generateUrl($imagePath, $filterName);
     }
 }

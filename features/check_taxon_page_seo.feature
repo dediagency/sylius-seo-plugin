@@ -21,6 +21,19 @@ Feature: Check Taxon page Rich Snippets definition
       | Caps         | /en_US/taxons/caps |
       | With pompons |                                                  |
 
+  @rich_snippets
+  Scenario: Accessing the CollectionPage Rich Snippet for a parent taxon
+    When I browse products from taxon "Caps"
+    Then it should access the taxon collection rich snippet for "Caps" with the following subcategories:
+      | name         | url                         |
+      | Simple       | /en_US/taxons/simple        |
+      | With pompons | /en_US/taxons/with-pompons |
+
+  @rich_snippets
+  Scenario: Accessing the CollectionPage Rich Snippet parent reference
+    When I browse products from taxon "With pompons"
+    Then the taxon collection rich snippet should reference parent "Caps" with url "/en_US/taxons/caps"
+
   @og_data
   Scenario: Accessing og data
     When I browse products from taxon "With pompons"

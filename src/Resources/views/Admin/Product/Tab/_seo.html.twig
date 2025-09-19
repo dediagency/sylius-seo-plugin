@@ -1,52 +1,54 @@
 <div class="ui tab" data-tab="seo">
-    <h3 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.seo'|trans }}</h3>
+	<h3 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.seo'|trans }}</h3>
 
-    <div class="ui segment attached">
-        {{ form_row(form.referenceableContent) }}
+	<div class="ui segment attached">
+		{{ form_row(form.referenceableContent) }}
 
-        <div class="ui hidden divider"></div>
+		<div class="ui hidden divider"></div>
 
-        <div class="ui message info">
-            <div class="header">{{ 'dedi_sylius_seo_plugin.ui.product_info_title'|trans }}</div>
-            <p>{{ 'dedi_sylius_seo_plugin.ui.product_info_description'|trans }}</p>
-            <a href="https://developers.google.com/search/docs/data-types/product" target="_blank">{{ 'dedi_sylius_seo_plugin.ui.product_info_link'|trans }}</a>
-        </div>
+		<div class="ui message info">
+			<div class="header">{{ 'dedi_sylius_seo_plugin.ui.product_info_title'|trans }}</div>
+			<p>{{ 'dedi_sylius_seo_plugin.ui.product_info_description'|trans }}</p>
+			<a href="https://developers.google.com/search/docs/data-types/product" target="_blank">{{ 'dedi_sylius_seo_plugin.ui.product_info_link'|trans }}</a>
+		</div>
 
-        <div class="ui hidden divider"></div>
+		<div class="ui hidden divider"></div>
 
-        <div class="ui two column stackable grid">
-            <div class="column">
-                <h4 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.brand_title'|trans }}</h4>
-                <div class="ui attached segment">
-                    {{ form_row(form.SEOBrand) }}
-                </div>
-            </div>
-            <div class="column">
-                <h4 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.sku_title'|trans }}</h4>
-                <div class="ui attached segment">
-                    {{ form_row(form.SEOSku) }}
-                </div>
-            </div>
-        </div>
+		<div class="ui two column stackable grid">
+			<div class="column">
+				<h4 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.brand_title'|trans }}</h4>
+				<div class="ui attached segment">
+					{{ form_row(form.SEOBrand) }}
+				</div>
+			</div>
+			<div class="column">
+				<h4 class="ui top attached header">{{ 'dedi_sylius_seo_plugin.ui.sku_title'|trans }}</h4>
+				<div class="ui attached segment">
+					{{ form_row(form.SEOSku) }}
+				</div>
+			</div>
+		</div>
 
-        <div class="ui hidden divider"></div>
+		<div class="ui hidden divider"></div>
 
-        <h4 class="ui top attached header">
-            {{ 'dedi_sylius_seo_plugin.ui.global_identifiers_title'|trans }}
-            <small><a href="https://schema.org/Product" target="_blank">{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_link'|trans }}</a></small>
-        </h4>
-        <div class="ui attached segment">
-            <div class="ui two column stackable grid">
-                <div class="column">
-                    {{ form_row(form.SEOGtin8) }}
-                    {{ form_row(form.SEOGtin13) }}
-                    {{ form_row(form.SEOGtin14) }}
-                </div>
-                <div class="column">
-                    {{ form_row(form.SEOMpn) }}
-                    {{ form_row(form.SEOIsbn) }}
-                </div>
-            </div>
-        </div>
-    </div>
+		<h4 class="ui top attached header">
+			{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_title'|trans }}
+			<small>
+				<a href="https://schema.org/Product" target="_blank">{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_link'|trans }}</a>
+			</small>
+		</h4>
+		<div class="ui attached segment">
+			<div class="ui two column stackable grid">
+				<div class="column">
+					{{ form_row(form.SEOGtin8) }}
+					{{ form_row(form.SEOGtin13) }}
+					{{ form_row(form.SEOGtin14) }}
+				</div>
+				<div class="column">
+					{{ form_row(form.SEOMpn) }}
+					{{ form_row(form.SEOIsbn) }}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

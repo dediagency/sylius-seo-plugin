@@ -6,7 +6,6 @@ namespace Dedi\SyliusSEOPlugin\Domain\SEO\Factory;
 
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Factory\SubjectUrl\SubjectUrlGeneratorInterface;
-use LogicException;
 
 final class RichSnippetSubjectUrlFactory implements RichSnippetSubjectUrlFactoryInterface
 {
@@ -29,6 +28,6 @@ final class RichSnippetSubjectUrlFactory implements RichSnippetSubjectUrlFactory
             }
         }
 
-        throw new LogicException('Can\'t generate route for Subject with type %s', $subject::class);
+        throw new \LogicException(sprintf('Can\'t generate route for Subject with type %s', $subject::class), 400);
     }
 }

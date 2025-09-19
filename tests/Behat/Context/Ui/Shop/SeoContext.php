@@ -17,6 +17,8 @@ class SeoContext extends MinkContext
 
     public const RICHSNIPPET_PRODUCT = 'Product';
 
+    public const RICHSNIPPET_COLLECTION_PAGE = 'CollectionPage';
+
     private PageCollection $pageCollection;
 
     private CurrentPageResolverInterface $currentPageResolver;
@@ -110,6 +112,98 @@ class SeoContext extends MinkContext
             $expected,
             'Expected product Rich Snippet and resolved product Rich Snippet do not match',
         );
+    }
+
+    /**
+     * @Then it should access the taxon collection rich snippet for :taxonName with the following subcategories:
+     */
+    public function itShouldAccessTheTaxonCollectionRichSnippet(string $taxonName, TableNode $table): void
+    {
+        $richSnippets = $this->getCurrentPage()->getRichSnippetData();
+
+        Assert::keyExists(
+            $richSnippets,
+            self::RICHSNIPPET_COLLECTION_PAGE,
+            'This page doesn\'t have the Taxon CollectionPage Rich Snippet',
+        );
+
+        $collectionSnippet = $richSnippets[self::RICHSNIPPET_COLLECTION_PAGE][0];
+
+        Assert::same(
+            $collectionSnippet['name'],
+            $taxonName,
+            sprintf('CollectionPage Rich Snippet name does not match, expected "%s".', $taxonName),
+        );
+
+        Assert::keyExists(
+            $collectionSnippet,
+            'mainEntity',
+            'CollectionPage Rich Snippet should expose a mainEntity node for subcategories.',
+        );
+
+        Assert::same(
+            $collectionSnippet['mainEntity']['itemListElement'],
+            $this->buildExpectedSubcategories($table),
+            'Unexpected subcategories structure in CollectionPage Rich Snippet.',
+        );
+    }
+
+    /**
+     * @Then the taxon collection rich snippet should reference parent :parentName with url :url
+     */
+    public function theTaxonCollectionRichSnippetShouldReferenceParent(string $parentName, string $url): void
+    {
+        $richSnippets = $this->getCurrentPage()->getRichSnippetData();
+
+        Assert::keyExists(
+            $richSnippets,
+            self::RICHSNIPPET_COLLECTION_PAGE,
+            'This page doesn\'t have the Taxon CollectionPage Rich Snippet',
+        );
+
+        $collectionSnippet = $richSnippets[self::RICHSNIPPET_COLLECTION_PAGE][0];
+
+        Assert::keyExists(
+            $collectionSnippet,
+            'isPartOf',
+            'CollectionPage Rich Snippet should expose an isPartOf node for parent taxon.',
+        );
+
+        Assert::same(
+            $collectionSnippet['isPartOf']['name'] ?? null,
+            $parentName,
+            'Unexpected parent name in CollectionPage Rich Snippet.',
+        );
+
+        if (array_key_exists('url', $collectionSnippet['isPartOf'])) {
+            Assert::same(
+                $collectionSnippet['isPartOf']['url'],
+                $this->locatePath($url),
+                'Unexpected parent url in CollectionPage Rich Snippet.',
+            );
+        }
+    }
+
+    private function buildExpectedSubcategories(TableNode $table): array
+    {
+        $expected = [];
+        $position = 1;
+
+        foreach ($table->getHash() as $row) {
+            $itemData = [
+                '@type' => 'ListItem',
+                'position' => $position++,
+                'item' => array_filter([
+                    '@type' => 'CollectionPage',
+                    'name' => $row['name'] ?? null,
+                    'url' => ($row['url'] ?? null) ? $this->locatePath($row['url']) : null,
+                ]),
+            ];
+
+            $expected[] = $itemData;
+        }
+
+        return $expected;
     }
 
     /**

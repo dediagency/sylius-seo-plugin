@@ -1,0 +1,21 @@
+sylius_twig_hooks:
+    hooks:
+        "sylius_admin.channel.create.content.form.sections":
+            seo:
+                template: "@DediSyliusSEOPlugin/Admin/Channel/Form/seo_card.html.twig"
+                priority: 0
+
+        "sylius_admin.channel.create.content.form.sections.seo":
+            seo:
+                template: "@DediSyliusSEOPlugin/Admin/Channel/Form/seo/seo_fields.html.twig"
+                priority: 0
+
+        "sylius_admin.channel.create.content.form.sections.seo.translations":
+            translation:
+                template: "@DediSyliusSEOPlugin/Admin/Channel/Form/seo/translation_field.html.twig"
+                priority: 0
+
+        "sylius_admin.channel.create.content.form.sections.seo.seo_preview":
+            seo_preview:
+                template: "@DediSyliusSEOPlugin/Admin/Channel/Form/seo/seo_preview.html.twig"
+                priority: 0

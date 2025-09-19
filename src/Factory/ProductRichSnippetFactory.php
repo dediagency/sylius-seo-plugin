@@ -11,9 +11,8 @@ use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippet\ProductRichSnippet;
 use Dedi\SyliusSEOPlugin\Domain\SEO\Model\RichSnippetInterface;
 use Dedi\SyliusSEOPlugin\Factory\SubjectUrl\ProductUrlGenerator;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use NumberFormatter;
-use Sylius\Bundle\CoreBundle\Templating\Helper\PriceHelper;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -45,38 +44,20 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
     public const PRODUCT_AVAILABILITY_SOLD_OUT = 'https://schema.org/SoldOut';
 
-    protected CacheManager $cacheManager;
-
-    protected PriceHelper $priceHelper;
-
-    protected ChannelContextInterface $channelContext;
-
-    protected LocaleContextInterface $localeContext;
-
-    protected CurrencyContextInterface $currencyContext;
-
-    protected ProductUrlGenerator $productUrlGenerator;
-
-    protected AvailabilityCheckerInterface $availabilityChecker;
-
     public function __construct(
-        CacheManager $cacheManager,
-        PriceHelper $priceHelper,
-        ChannelContextInterface $channelContext,
-        LocaleContextInterface $localeContext,
-        CurrencyContextInterface $currencyContext,
-        ProductUrlGenerator $productUrlGenerator,
-        AvailabilityCheckerInterface $availabilityChecker,
+        protected readonly CacheManager $cacheManager,
+        protected readonly ProductVariantPricesCalculatorInterface $productVariantPriceCalculator,
+        protected readonly ChannelContextInterface $channelContext,
+        protected readonly LocaleContextInterface $localeContext,
+        protected readonly CurrencyContextInterface $currencyContext,
+        protected readonly ProductUrlGenerator $productUrlGenerator,
+        protected readonly AvailabilityCheckerInterface $availabilityChecker,
     ) {
-        $this->cacheManager = $cacheManager;
-        $this->priceHelper = $priceHelper;
-        $this->channelContext = $channelContext;
-        $this->localeContext = $localeContext;
-        $this->currencyContext = $currencyContext;
-        $this->productUrlGenerator = $productUrlGenerator;
-        $this->availabilityChecker = $availabilityChecker;
     }
 
+    /**
+     * @param ProductRichSnippetSubject $subject
+     */
     public function buildRichSnippet(RichSnippetSubjectInterface $subject): RichSnippetInterface
     {
         Assert::isInstanceOf($subject, ProductInterface::class);
@@ -166,8 +147,8 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             if (!$variant->isEnabled()) {
                 return;
             }
-            
-            $price = $this->priceHelper->getPrice(
+
+            $price = $this->productVariantPriceCalculator->calculate(
                 $variant,
                 ['channel' => $channel],
             );
@@ -178,6 +159,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
                 'priceCurrency' => $currencyCode,
                 'price' => $this->formatCurrencyForRichSnippets($price, $currencyCode),
                 'availability' => $this->getAvailability($variant),
+                'priceValidUntil' => (new \DateTime())->modify('+1 month')->format('Y-m-d'),
             ];
         }, $subject->getVariants()->toArray());
     }
@@ -193,16 +175,16 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
     protected function formatCurrencyForRichSnippets(int $amount, string $currency): string
     {
-        $formatter = new NumberFormatter($this->localeContext->getLocaleCode(), NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter($this->localeContext->getLocaleCode(), \NumberFormatter::CURRENCY);
 
         // let's remove any monetary symbol and spaces
-        $formatter->setSymbol(NumberFormatter::MONETARY_SEPARATOR_SYMBOL, '.');
-        $formatter->setSymbol(NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
+        $formatter->setSymbol(\NumberFormatter::MONETARY_SEPARATOR_SYMBOL, '.');
+        $formatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
         $formatter->setPattern('#0.0#');
 
         $result = $formatter->formatCurrency(abs($amount / 100), $currency);
 
-        return $amount >= 0 ? $result : '-' . $result;
+        return $amount >= 0 ? $result : '-'.$result;
     }
 
     protected function getReviewAndRatingData(ProductInterface $subject): array
@@ -220,6 +202,10 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             'reviewRating' => [
                 '@type' => 'Rating',
                 'ratingValue' => $bestReview->getRating(),
+            ],
+            'author' => [
+                '@type' => 'Person',
+                'name' => !empty($bestReview->getAuthor()->getFullName()) ? $bestReview->getAuthor()->getFullName() : $bestReview->getAuthor()->getEmail(),
             ],
             'reviewBody' => $bestReview->getComment(),
         ];

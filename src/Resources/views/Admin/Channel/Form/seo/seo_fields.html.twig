@@ -1,0 +1,21 @@
+{% import '@SyliusAdmin/shared/helper/translations.html.twig' as translations %}
+
+{% set form = hookable_metadata.context.form %}
+{% set prefixes = hookable_metadata.prefixes %}
+
+{% form_theme form '@DediSyliusSEOPlugin/Admin/Channel/Form/form_theme.html.twig' %}
+
+<div class="alert alert-info">
+	{{ 'dedi_sylius_seo_plugin.ui.google_tracking_info'|trans }}
+</div>
+
+<div class="row">
+	<div class="col-12 col-md-6">
+		{{ form_row(form.googleAnalyticsCode) }}
+	</div>
+	<div class="col-12 col-md-6">
+		{{ form_row(form.googleTagManagerId) }}
+	</div>
+</div>
+
+{{ form_row(form.referenceableContent) }}

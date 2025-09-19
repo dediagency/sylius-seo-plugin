@@ -1,0 +1,13 @@
+{% set form = hookable_metadata.context.form %}
+{% set channel = form.vars.data %}
+
+<div class="g-col-12 card mb-3">
+	<div class="card-header">
+		<h2 id="channel-seo" class="card-title">
+			{{ 'dedi_sylius_seo_plugin.ui.seo'|trans }}
+		</h2>
+	</div>
+	<div class="card-body">
+		{% hook 'seo' with { channel } %}
+	</div>
+</div>

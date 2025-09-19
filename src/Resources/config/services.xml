@@ -51,12 +51,25 @@
 
         <service id="dedi_sylius_seo_plugin.rich_snippets.factory.product" class="Dedi\SyliusSEOPlugin\Factory\ProductRichSnippetFactory">
             <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
-            <argument key="$priceHelper" type="service" id="sylius.templating.helper.price"/>
+            <argument key="$productVariantPriceCalculator" type="service" id="sylius.calculator.product_variant_price"/>
             <argument key="$channelContext" type="service" id="sylius.context.channel.cached"/>
             <argument key="$localeContext" type="service" id="sylius.context.locale.composite"/>
             <argument key="$currencyContext" type="service" id="sylius.context.shopper"/>
             <argument key="$productUrlGenerator" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator"/>
-            <argument key="$availabilityChecker" type="service" id="sylius.availability_checker.default"/>
+            <argument key="$availabilityChecker" type="service" id="sylius.checker.inventory.availability"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.taxon" class="Dedi\SyliusSEOPlugin\Factory\TaxonRichSnippetFactory">
+            <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
+            <argument key="$localeContext" type="service" id="sylius.context.locale.composite"/>
+            <argument key="$router" type="service" id="router.default"/>
+            <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.factory.organization" class="Dedi\SyliusSEOPlugin\Factory\OrganizationRichSnippetFactory">
+            <argument key="$channelContext" type="service" id="sylius.context.channel.cached"/>
+            <argument key="$router" type="service" id="router.default"/>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
         </service>
 
@@ -100,7 +113,7 @@
         </service>
 
         <service id="dedi_sylius_seo_plugin.metadata.twig.metadata_image_extension" class="Dedi\SyliusSEOPlugin\Twig\ReferenceableImageExtension">
-            <argument key="$filterExtension" type="service" id="liip_imagine.templating.filter_extension"/>
+            <argument key="$cacheManager" type="service" id="liip_imagine.cache.manager"/>
             <tag name="twig.extension"/>
         </service>
 

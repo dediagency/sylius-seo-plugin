@@ -1,0 +1,60 @@
+{% set form = hookable_metadata.context.form %}
+{% set prefixes = hookable_metadata.prefixes %}
+
+{% form_theme form '@DediSyliusSEOPlugin/Admin/Product/form_theme.html.twig' %}
+
+<div class="alert alert-info dismisable">
+	<div class="fs-3 fw-bold">{{ 'dedi_sylius_seo_plugin.ui.info_title'|trans }}</div>
+	<p>{{ 'dedi_sylius_seo_plugin.ui.info_description'|trans }}</p>
+</div>
+
+{{ form_row(form.referenceableContent) }}
+
+<div class="alert alert-info">
+	<div class="fs-3 fw-bold">{{ 'dedi_sylius_seo_plugin.ui.product_info_title'|trans }}</div>
+	<p>{{ 'dedi_sylius_seo_plugin.ui.product_info_description'|trans }}</p>
+	<a href="https://developers.google.com/search/docs/data-types/product" target="_blank">{{ 'dedi_sylius_seo_plugin.ui.product_info_link'|trans }}</a>
+</div>
+
+<div class="row mb-3">
+	<div class="col-12 col-md-6">
+		<div class="card">
+			<div class="card-header">
+				<div class="card-title">{{ 'dedi_sylius_seo_plugin.ui.brand_title'|trans }}</div>
+			</div>
+			<div class="card-body">
+				{{ form_row(form.SEOBrand) }}
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-6">
+		<div class="card">
+			<div class="card-header">
+				<div class="card-title">{{ 'dedi_sylius_seo_plugin.ui.sku_title'|trans }}</div>
+			</div>
+			<div class="card-body">
+				{{ form_row(form.SEOSku) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-header">
+		<div class="card-title">
+			{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_title'|trans }}
+			<small>
+				<a href="https://schema.org/Product" target="_blank">{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_link'|trans }}</a>
+			</small>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-12 col-md-6">{{ form_row(form.SEOGtin8) }}</div>
+			<div class="col-12 col-md-6">{{ form_row(form.SEOMpn) }}</div>
+			<div class="col-12 col-md-6">{{ form_row(form.SEOGtin13) }}</div>
+			<div class="col-12 col-md-6">{{ form_row(form.SEOIsbn) }}</div>
+			<div class="col-12 col-md-6">{{ form_row(form.SEOGtin14) }}</div>
+		</div>
+	</div>
+</div>

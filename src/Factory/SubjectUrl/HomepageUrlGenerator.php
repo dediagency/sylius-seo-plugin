@@ -12,11 +12,9 @@ use Symfony\Component\Routing\RouterInterface;
 
 class HomepageUrlGenerator implements SubjectUrlGeneratorInterface
 {
-    protected RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
-    {
-        $this->router = $router;
+    public function __construct(
+        protected readonly RouterInterface $router
+    ) {
     }
 
     public function can(RichSnippetSubjectInterface $subject): bool

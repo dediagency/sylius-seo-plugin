@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Domain\SEO\Adapter;
 
+use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Doctrine\ORM\Mapping as ORM;
+
 trait ReferenceableTrait
 {
+    #[ORM\OneToOne(targetEntity: SEOContent::class, cascade: ['persist', 'remove'])]
     protected ?ReferenceableInterface $referenceableContent = null;
 
     public function getReferenceableContent(): ReferenceableInterface

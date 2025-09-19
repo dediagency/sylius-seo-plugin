@@ -1,0 +1,20 @@
+{% extends '@SyliusAdmin/shared/form_theme.html.twig' %}
+
+{% block _sylius_admin_channel_referenceableContent_row %}
+	{% import '@SyliusAdmin/shared/helper/translations.html.twig' as translations %}
+	{% set prefixes = ["sylius_admin.channel.update.content.form.sections.seo", "sylius_admin.common.update.content.form.sections.seo"] %}
+
+	<p class="fw-bold mt-3">{{ 'dedi_sylius_seo_plugin.ui.advanced_options'|trans }}</p>
+	<div class="alert alert-info">
+		<h3>{{ 'dedi_sylius_seo_plugin.ui.info_title'|trans }}</h3>
+		<p>{{ 'dedi_sylius_seo_plugin.ui.info_description'|trans }}</p>
+	</div>
+	<div class="row">
+		<div class="col-12 col-md-6" id="seo-advanced-panel">
+			{{ translations.with_hook(form.translations, prefixes, null, {accordion_id: 'seo-content-channel-translations', accordion_flush: false}) }}
+		</div>
+		<div class="col-12 col-md-6">
+			{% hook prefixes|first ~ '.seo_preview' %}
+		</div>
+	</div>
+{% endblock %}

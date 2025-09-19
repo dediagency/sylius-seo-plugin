@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Entity;
 
+use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 
 class SEOContent implements SEOContentInterface
 {
     protected ?int $id = null;
+
+    #[ORM\OneToOne(targetEntity: ReferenceableInterface::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    protected ?ReferenceableInterface $referenceableContent = null;
 
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -132,5 +138,17 @@ class SEOContent implements SEOContentInterface
     protected function createTranslation(): SEOContentTranslation
     {
         return new SEOContentTranslation();
+    }
+
+    public function getReferenceableContent(): ?ReferenceableInterface
+    {
+        return $this->referenceableContent;
+    }
+
+    public function setReferenceableContent(?ReferenceableInterface $referenceableContent): self
+    {
+        $this->referenceableContent = $referenceableContent;
+
+        return $this;
     }
 }

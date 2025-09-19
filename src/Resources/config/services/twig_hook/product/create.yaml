@@ -1,0 +1,26 @@
+sylius_twig_hooks:
+    hooks:
+        "sylius_admin.product.create.content.form.side_navigation":
+            seo:
+                template: "@DediSyliusSEOPlugin/Admin/Product/side_button.html.twig"
+                priority: -10
+
+        "sylius_admin.product.create.content.form.sections":
+            seo:
+                template: "@DediSyliusSEOPlugin/Admin/Product/seo_card.html.twig"
+                priority: -10
+
+        "sylius_admin.product.create.content.form.sections.seo":
+            fields:
+                template: "@DediSyliusSEOPlugin/Admin/Product/seo_fields.html.twig"
+                priority: -10
+
+        "sylius_admin.product.update.content.form.sections.seo.seo_preview":
+            seo_preview:
+                template: "@DediSyliusSEOPlugin/Admin/Channel/Form/seo/seo_preview.html.twig"
+                priority: 0
+
+        "sylius_admin.product.update.content.form.sections.seo.translations":
+            translation:
+                template: "@DediSyliusSEOPlugin/Admin/Product/translation_field.html.twig"
+                priority: 0

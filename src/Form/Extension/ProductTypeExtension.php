@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class ProductTypeExtension extends AbstractTypeExtension
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('referenceableContent', SEOContentType::class, [

@@ -1,0 +1,15 @@
+{% set form = hookable_metadata.context.form %}
+{% set product = form.vars.data %}
+
+<div class="tab-pane {% if hookable_metadata.configuration.active|default(false) %}show active{% endif %}" id="product-seo" role="tabpanel" tabindex="0">
+	<div class="card mb-3">
+		<div class="card-header">
+			<h2 id="product-seo" class="card-title">
+				{{ 'dedi_sylius_seo_plugin.ui.seo'|trans }}
+			</h2>
+		</div>
+		<div class="card-body">
+			{% hook 'seo' with { product } %}
+		</div>
+	</div>
+</div>
