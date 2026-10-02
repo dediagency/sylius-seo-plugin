@@ -185,7 +185,10 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
                 'price' => $this->formatCurrencyForRichSnippets($price, $currencyCode),
                 'availability' => $this->getAvailability($variant),
             ];
-        }, $subject->getVariants()->toArray());
+        }, array_values(array_filter(
+            $subject->getVariants()->toArray(),
+            static fn (BaseProductVariantInterface $variant): bool => $variant->isEnabled(),
+        )));
     }
 
     private function getAvailability(StockableInterface $stockable): string
