@@ -246,7 +246,6 @@ if (seoFormContainer) {
 
     seoFormContainer.querySelectorAll('[data-bs-target*="#translation-seo-content-"]').forEach(function(el) {
         el.addEventListener('click', function() {
-            console.log('caca')
             // Need sleep some time to update widget after semantic-ui lib perform click event on accordion element
             setTimeout(function() {
                 if (form.defaultData) {
