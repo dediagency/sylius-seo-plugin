@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties xmlns="https://api-platform.com/schema/metadata/properties-3.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://api-platform.com/schema/metadata/properties-3.0 https://api-platform.com/schema/metadata/properties-3.0.xsd"
+>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="id" identifier="true"/>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="product" identifier="false" required="false"  writable="true"/>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="taxon" identifier="false" required="false" writable="true"/>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="channel" identifier="false" required="false" writable="true"/>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="robots" identifier="false" required="false" writable="true" readable="true"/>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="type" identifier="false" required="false" writable="false"/>
+    <property resource="%dedi_sylius_seo_plugin.model.seo_content.class%" name="translations" writable="true" readable="true"/>
+</properties>

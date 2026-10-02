@@ -1,0 +1,34 @@
+{
+  "quality": {
+    "include": [
+      {
+        "php": "8.2",
+        "node": "20",
+        "sylius": "~2.0.0",
+        "symfony": "^7.1"
+      }
+    ]
+  },
+  "integration": {
+    "include": [
+      {
+        "php": "8.2",
+        "node": "20",
+        "mysql": "8.0",
+        "sylius": "~2.0.0",
+        "symfony": "^7.1"
+      }
+    ]
+  },
+  "e2e_tests": {
+    "include": [
+      {
+        "php": "8.2",
+        "node": "20",
+        "mysql": "8.0",
+        "sylius": "~2.0.0",
+        "symfony": "^7.1"
+      }
+    ]
+  }
+}

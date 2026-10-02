@@ -1,0 +1,133 @@
+name: Plugin quality
+
+on:
+  workflow_call:
+    inputs:
+      matrix_path:
+        type: string
+        default: '.github/workflows/matrix.json'
+      app_path:
+        type: string
+        default: 'tests/Application'
+      run_js_lint:
+        type: boolean
+        default: false
+      run_validate_container:
+        type: boolean
+        default: false
+      twig_paths:
+        type: string
+        default: 'src/Resources/views'
+      yaml_paths:
+        type: string
+        default: 'src/Resources/config'
+
+concurrency:
+  group: plugin-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  get-matrix:
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 10
+    name: "Get matrix"
+    outputs:
+      matrix: ${{ steps.matrix.outputs.prop }}
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: "Get matrix"
+        id: matrix
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: ${{ inputs.matrix_path || '.github/workflows/matrix.json' }}
+          prop_path: 'quality'
+
+  static_checks:
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 20
+    needs: get-matrix
+    name: "PHP ${{ matrix.php }}, Sylius ${{ matrix.sylius }}, Symfony ${{ matrix.symfony }}"
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+    env:
+      APP_ENV: test
+      php_extensions: intl, mbstring, gd, zip, pdo_mysql, bcmath, soap, opcache, sqlite3, imagick
+      NODE_OPTIONS: --dns-result-order=ipv4first
+      npm_config_fetch_retries: 5
+      npm_config_fetch_retry_mintimeout: 5000
+      npm_config_fetch_retry_maxtimeout: 30000
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Install php
+        uses: shivammathur/setup-php@verbose
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.php_extensions }}
+          tools: composer:v2, flex
+          coverage: none
+
+      - uses: actions/setup-node@v6
+        if: inputs.run_js_lint
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Restrict Symfony version
+        if: matrix.symfony != ''
+        run: composer config extra.symfony.require "${{ matrix.symfony }}"
+
+      - name: Restrict Sylius version
+        if: matrix.sylius != ''
+        run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-
+
+      - name: Install PHP dependencies
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: composer install --no-interaction --no-progress --no-scripts
+
+      - name: Validate composer.json
+        run: composer validate --ansi --strict
+
+      - name: "Run ECS"
+        run: vendor/bin/ecs check
+
+      - name: "Run PhpStan"
+        run: vendor/bin/phpstan analyse -c phpstan.neon
+
+      - name: "Validate Twig templates"
+        run: php ${{ inputs.app_path }}/bin/console lint:twig ${{ inputs.twig_paths }}
+
+      - if: inputs.run_validate_container
+        name: "Validate Container"
+        run: php ${{ inputs.app_path }}/bin/console lint:container
+
+      - name: Validate Yaml files
+        run: php ${{ inputs.app_path }}/bin/console lint:yaml ${{ inputs.yaml_paths }} --parse-tags
+
+      - if: inputs.run_js_lint
+        name: Install front assets
+        working-directory: ${{ inputs.app_path }}
+        run: npm ci
+
+      - if: inputs.run_js_lint
+        name: Run js lint
+        working-directory: ${{ inputs.app_path }}
+        run: npm run test:cs

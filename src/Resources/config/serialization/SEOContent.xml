@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+>
+    <class name="Dedi\SyliusSEOPlugin\Entity\SEOContent">
+        <attribute name="id">
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="openGraphMetadataType">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="robots">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="type">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="product">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="taxon">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="channel">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="translations">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+    </class>
+</serializer>

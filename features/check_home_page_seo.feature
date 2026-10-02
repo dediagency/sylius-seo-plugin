@@ -31,11 +31,11 @@ Feature: Check Homepage Rich Snippets definition
   @seo_links
   Scenario: Accessing the alernate URLs
     When I visit the homepage
-    Then I should be able to read an alternate URL tag with value "/fr_FR/" and hreflang attribute value "fr_fr"
-    And I should be able to read an alternate URL tag with value "/pl_PL/" and hreflang attribute value "pl_pl"
+    Then I should be able to read an alternate URL tag with value "/fr_FR/" and hreflang attribute value "fr-fr"
+    And I should be able to read an alternate URL tag with value "/pl_PL/" and hreflang attribute value "pl-pl"
 
   @seo_links
   Scenario: Accessing the alernate URLs after switching locale
     When I switch to the "Polish (Poland)" locale
-    Then I should be able to read an alternate URL tag with value "/fr_FR/" and hreflang attribute value "fr_fr"
-    And I should be able to read an alternate URL tag with value "/en_US/" and hreflang attribute value "en_us"
+    Then I should be able to read an alternate URL tag with value "/fr_FR/" and hreflang attribute value "fr-fr"
+    And I should be able to read an alternate URL tag with value "/en_US/" and hreflang attribute value "en-us"

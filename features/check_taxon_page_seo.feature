@@ -18,7 +18,7 @@ Feature: Check Taxon page Rich Snippets definition
       | name         | url                                              |
       | Home         | /en_US/                     |
       | Category     | /en_US/taxons/category      |
-      | Caps         | /en_US/taxons/caps |
+      | Caps         | /en_US/taxons/category/caps |
       | With pompons |                                                  |
 
   @og_data
@@ -26,19 +26,19 @@ Feature: Check Taxon page Rich Snippets definition
     When I browse products from taxon "With pompons"
     Then it should have the following og data:
       | name  | data                                                 |
-      | title | Fashion Web Store                                    |
-      | url   | /en_US/taxons/with-pompons |
+      | title | With pompons                                         |
+      | url   | /en_US/taxons/category/caps/with-pompons |
 
   @seo_links
   Scenario: Accessing the canonical URL in a taxon page
     When I browse products from taxon "Caps"
-    Then I should be able to read a canonical URL tag with value "/en_US/taxons/caps"
+    Then I should be able to read a canonical URL tag with value "/en_US/taxons/category/caps"
 
   @seo_links
   Scenario: Accessing the canonical URL in filtered taxon page
     When I browse products from taxon "Caps"
     And I search for products with name "shirt"
-    Then I should be able to read a canonical URL tag with value "/en_US/taxons/caps"
+    Then I should be able to read a canonical URL tag with value "/en_US/taxons/category/caps"
 
   @no_index_no_follow
   Scenario: Accessing a no index no follow meta tag in a taxon page

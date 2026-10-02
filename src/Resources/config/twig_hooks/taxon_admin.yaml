@@ -1,0 +1,129 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.taxon.create.content.sections.form':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/taxon/content/sections/seo_content.html.twig'
+                priority: -100
+
+        'sylius_admin.taxon.create.content.sections.form.seo#left':
+            alert:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/alert.html.twig'
+                priority: 200
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/type.html.twig'
+                priority: 200
+            translations:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations.html.twig'
+                priority: 80
+            opengraph:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph.html.twig'
+                priority: 60
+
+        'sylius_admin.taxon.create.content.sections.form.seo.translations':
+            uri:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/uri.html.twig'
+                priority: 100
+            not_indexable:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/not_indexable.html.twig'
+                priority: 80
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_title.html.twig'
+                priority: 60
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_description.html.twig'
+                priority: 40
+
+        'sylius_admin.taxon.create.content.sections.form.seo.opengraph.general':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/general/og_type.html.twig'
+                priority: 100
+
+        'sylius_admin.taxon.create.content.sections.form.seo.opengraph.translations':
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_title.html.twig'
+                priority: 100
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_description.html.twig'
+                priority: 80
+            image:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_image.html.twig'
+                priority: 50
+
+        'sylius_admin.taxon.create.content.sections.form.seo#right':
+            preview:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/right/preview.html.twig'
+                priority: 100
+
+        'sylius_admin.taxon.create#stylesheets':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/stylesheets.html.twig'
+                priority: -100
+
+        'sylius_admin.taxon.create#javascripts':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/javascripts.html.twig'
+                priority: -100
+
+        'sylius_admin.taxon.update.content.sections.form':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/taxon/content/sections/seo_content.html.twig'
+                priority: -100
+
+        'sylius_admin.taxon.update.content.sections.form.seo#left':
+            alert:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/alert.html.twig'
+                priority: 200
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/type.html.twig'
+                priority: 200
+            translations:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations.html.twig'
+                priority: 80
+            opengraph:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph.html.twig'
+                priority: 60
+
+        'sylius_admin.taxon.update.content.sections.form.seo.translations':
+            uri:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/uri.html.twig'
+                priority: 100
+            not_indexable:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/not_indexable.html.twig'
+                priority: 80
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_title.html.twig'
+                priority: 60
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/translations/metadata_description.html.twig'
+                priority: 40
+
+        'sylius_admin.taxon.update.content.sections.form.seo.opengraph.general':
+            type:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/general/og_type.html.twig'
+                priority: 100
+
+        'sylius_admin.taxon.update.content.sections.form.seo.opengraph.translations':
+            title:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_title.html.twig'
+                priority: 100
+            description:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_description.html.twig'
+                priority: 80
+            image:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/left/opengraph/translations/og_image.html.twig'
+                priority: 50
+
+        'sylius_admin.taxon.update.content.sections.form.seo#right':
+            preview:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/content/sections/right/preview.html.twig'
+                priority: 100
+
+        'sylius_admin.taxon.update#stylesheets':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/stylesheets.html.twig'
+                priority: -100
+
+        'sylius_admin.taxon.update#javascripts':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/seo_content/javascripts.html.twig'
+                priority: -100

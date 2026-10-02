@@ -1,0 +1,4 @@
+{% set form = hookable_metadata.context.form %}
+{% set locale = hookable_metadata.context.locale %}
+
+{{ form_row(form.openGraphMetadataImage, sylius_test_form_attribute('og-image', locale)|merge( { 'attr': { 'data-form-og-image': '' }})) }}

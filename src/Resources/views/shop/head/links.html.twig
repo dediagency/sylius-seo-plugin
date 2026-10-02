@@ -1,0 +1,12 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
+{% set currentLocale = sylius.localeCode|default('') %}
+{% set channel = sylius.channel %}
+
+{% if currentRoute is not null %}
+    <link rel="canonical" href="{{ url(currentRoute, app.request.attributes.get('_route_params')) }}"/>
+{% endif %}
+{% for locale in channel.locales %}
+    {% if locale.code != currentLocale %}
+        <link rel="alternate" hreflang="{{ locale.code|lower|replace({'_': '-'}) }}" href="{{ url('sylius_shop_homepage', {'_locale':locale.code}) }}"/>
+    {% endif %}
+{% endfor %}

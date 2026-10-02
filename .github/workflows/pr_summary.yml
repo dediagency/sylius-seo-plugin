@@ -1,0 +1,20 @@
+name: PR summary
+
+on:
+    pull_request:
+
+concurrency:
+    group: pr-summary-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    pr-summary:
+        runs-on: ${{ vars.RUNNER_LABEL }}
+        permissions:
+            checks: read
+        steps:
+            - name: GitHub Checks
+              uses: poseidon/wait-for-status-checks@v0.6.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  ignore: "pr-summary"
