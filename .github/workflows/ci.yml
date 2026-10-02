@@ -1,0 +1,17 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+    workflow_dispatch: ~
+
+jobs:
+    ci:
+        uses: dediagency/sylius-workflows/.github/workflows/plugin-ci.yml@v1
+        secrets: inherit
+        with:
+            matrix_path: .github/workflows/matrix.json

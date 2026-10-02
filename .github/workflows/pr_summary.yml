@@ -1,0 +1,9 @@
+name: PR summary
+
+on:
+    pull_request:
+
+jobs:
+    pr-summary:
+        uses: dediagency/sylius-workflows/.github/workflows/pr_summary.yml@v1
+        secrets: inherit

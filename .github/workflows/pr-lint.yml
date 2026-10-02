@@ -1,0 +1,11 @@
+name: PR lint
+
+on:
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    commitlint:
+        uses: dediagency/sylius-workflows/.github/workflows/pr-lint.yml@v1
+        secrets: inherit

@@ -1,3 +1,4 @@
 [submodule "satisfactory"]
 	path = satisfactory
-	url = ../../interne/satisfactory.git
+	url = git@github.com:dediagency/satisfactory.git
+	branch = main
