@@ -1,0 +1,20 @@
+{% set form = hookable_metadata.context.product_form %}
+
+{% if form.SEOGtin8 is defined %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="card-title">
+                {{ 'dedi_sylius_seo_plugin.ui.global_identifiers_title'|trans }}
+                <small>
+                    <a target="_blank"
+                       href="https://schema.org/Product">{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_link'|trans }}</a>
+                </small>
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% hook 'identification' %}
+            </div>
+        </div>
+    </div>
+{% endif %}

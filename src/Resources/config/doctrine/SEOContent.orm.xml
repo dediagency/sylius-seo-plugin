@@ -5,5 +5,17 @@
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
         </id>
+        <field name="type" column="type" nullable="true"/>
+        <field name="openGraphMetadataType" column="og_metadata_type" nullable="true"/>
+
+        <one-to-one field="product" target-entity="Sylius\Component\Product\Model\ProductInterface" mapped-by="referenceableContent"/>
+        <one-to-one field="taxon" target-entity="Sylius\Component\Taxonomy\Model\TaxonInterface" mapped-by="referenceableContent"/>
+        <one-to-one field="channel" target-entity="Sylius\Component\Channel\Model\ChannelInterface" mapped-by="referenceableContent"/>
+
+        <one-to-many field="robots" target-entity="Dedi\SyliusSEOPlugin\Entity\SEOContentRobotInterface" mapped-by="seoContent" index-by="locale">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many>
     </mapped-superclass>
 </doctrine-mapping>

@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Dedi\SyliusSEOPlugin\RichSnippet\Factory;
+
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
+
+abstract class AbstractRichSnippetFactory implements RichSnippetFactoryInterface
+{
+    final public function can(RichSnippetSubjectInterface $subject): bool
+    {
+        return in_array($subject->getRichSnippetSubjectType(), $this->getHandledSubjectTypes(), true);
+    }
+
+    /**
+     * @return string[] handled subject types for this factory
+     */
+    abstract protected function getHandledSubjectTypes(): array;
+}

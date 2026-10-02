@@ -1,0 +1,3 @@
+dedi_sylius_seo_plugin_seo:
+    resource: "@DediSyliusSEOPlugin/Resources/config/routes/admin_routing.yml"
+    prefix: /admin

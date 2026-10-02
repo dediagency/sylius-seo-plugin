@@ -4,11 +4,28 @@ declare(strict_types=1);
 
 namespace Dedi\SyliusSEOPlugin\Entity;
 
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TranslatableTrait;
+use Webmozart\Assert\Assert;
 
 class SEOContent implements SEOContentInterface
 {
     protected ?int $id = null;
+
+    protected ?string $openGraphMetadataType = null;
+
+    /** @var Collection<int, SEOContentRobotInterface> */
+    protected Collection $robots;
+
+    protected ?string $type = null;
+
+    protected ?ReferenceableInterface $product = null;
+
+    protected ?ReferenceableInterface $taxon = null;
+
+    protected ?ReferenceableInterface $channel = null;
 
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -18,6 +35,7 @@ class SEOContent implements SEOContentInterface
     public function __construct()
     {
         $this->initializeTranslationsCollection();
+        $this->robots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -27,12 +45,24 @@ class SEOContent implements SEOContentInterface
 
     public function isNotIndexable(): bool
     {
-        return $this->getTranslation()->isNotIndexable();
+        $robot = $this->getRobot() ?? $this->findRobotByLocale($this->fallbackLocale);
+
+        return null !== $robot && $robot->isNotIndexable();
     }
 
-    public function setNotIndexable(bool $notIndexable): self
+    public function setNotIndexable(bool $notIndexable): static
     {
-        $this->getTranslation()->setNotIndexable($notIndexable);
+        $robot = $this->getRobot();
+
+        if (null === $robot) {
+            Assert::notNull($this->currentLocale, 'No locale has been set and current locale is undefined.');
+
+            $robot = new SEOContentRobot();
+            $robot->setLocale($this->currentLocale);
+            $this->addRobot($robot);
+        }
+
+        $robot->setNotIndexable($notIndexable);
 
         return $this;
     }
@@ -42,7 +72,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getMetadataTitle();
     }
 
-    public function setMetadataTitle(?string $title): self
+    public function setMetadataTitle(?string $title): static
     {
         $this->getTranslation()->setMetadataTitle($title);
 
@@ -54,7 +84,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getMetadataDescription();
     }
 
-    public function setMetadataDescription(?string $description): self
+    public function setMetadataDescription(?string $description): static
     {
         $this->getTranslation()->setMetadataDescription($description);
 
@@ -66,7 +96,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataTitle();
     }
 
-    public function setOpenGraphMetadataTitle(?string $title): self
+    public function setOpenGraphMetadataTitle(?string $title): static
     {
         $this->getTranslation()->setOpenGraphMetadataTitle($title);
 
@@ -78,7 +108,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataDescription();
     }
 
-    public function setOpenGraphMetadataDescription(?string $description): self
+    public function setOpenGraphMetadataDescription(?string $description): static
     {
         $this->getTranslation()->setOpenGraphMetadataDescription($description);
 
@@ -90,7 +120,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataUrl();
     }
 
-    public function setOpenGraphMetadataUrl(?string $url): self
+    public function setOpenGraphMetadataUrl(?string $url): static
     {
         $this->getTranslation()->setOpenGraphMetadataUrl($url);
 
@@ -99,12 +129,12 @@ class SEOContent implements SEOContentInterface
 
     public function getOpenGraphMetadataType(): ?string
     {
-        return $this->getTranslation()->getOpenGraphMetadataType();
+        return $this->openGraphMetadataType;
     }
 
-    public function setOpenGraphMetadataType(?string $type): self
+    public function setOpenGraphMetadataType(?string $openGraphMetadataType): static
     {
-        $this->getTranslation()->setOpenGraphMetadataType($type);
+        $this->openGraphMetadataType = $openGraphMetadataType;
 
         return $this;
     }
@@ -114,7 +144,7 @@ class SEOContent implements SEOContentInterface
         return $this->getTranslation()->getOpenGraphMetadataImage();
     }
 
-    public function setOpenGraphMetadataImage(?string $path): self
+    public function setOpenGraphMetadataImage(?string $path): static
     {
         $this->getTranslation()->setOpenGraphMetadataImage($path);
 
@@ -127,6 +157,122 @@ class SEOContent implements SEOContentInterface
         $translation = $this->doGetTranslation($locale);
 
         return $translation;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getUri(): ?string
+    {
+        return $this->getTranslation()->getUri();
+    }
+
+    public function getRobot(): ?SEOContentRobotInterface
+    {
+        return $this->findRobotByLocale($this->currentLocale);
+    }
+
+    public function getRobots(): Collection
+    {
+        return $this->robots;
+    }
+
+    public function addRobot(SEOContentRobotInterface $robot): static
+    {
+        if (!$this->robots->contains($robot)) {
+            $robot->setSeoContent($this);
+            $this->robots->add($robot);
+        }
+
+        return $this;
+    }
+
+    public function removeRobot(SEOContentRobotInterface $robot): static
+    {
+        if ($this->robots->contains($robot)) {
+            $robot->setSeoContent(null);
+            $this->robots->removeElement($robot);
+        }
+
+        return $this;
+    }
+
+    public function getProduct(): ?ReferenceableInterface
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?ReferenceableInterface $product): static
+    {
+        if (null !== $this->product) {
+            $this->product->setReferenceableContent(null);
+        }
+        if (null !== $product) {
+            $product->setReferenceableContent($this);
+        }
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getTaxon(): ?ReferenceableInterface
+    {
+        return $this->taxon;
+    }
+
+    public function setTaxon(?ReferenceableInterface $taxon): static
+    {
+        if (null !== $this->taxon) {
+            $this->taxon->setReferenceableContent(null);
+        }
+        if (null !== $taxon) {
+            $taxon->setReferenceableContent($this);
+        }
+        $this->taxon = $taxon;
+
+        return $this;
+    }
+
+    public function getChannel(): ?ReferenceableInterface
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?ReferenceableInterface $channel): static
+    {
+        if (null !== $this->channel) {
+            $this->channel->setReferenceableContent(null);
+        }
+        if (null !== $channel) {
+            $channel->setReferenceableContent($this);
+        }
+        $this->channel = $channel;
+
+        return $this;
+    }
+
+    protected function findRobotByLocale(?string $locale): ?SEOContentRobotInterface
+    {
+        if (null === $locale) {
+            return null;
+        }
+
+        foreach ($this->getRobots() as $robot) {
+            if ($robot->getLocale() === $locale) {
+                return $robot;
+            }
+        }
+
+        return null;
     }
 
     protected function createTranslation(): SEOContentTranslation

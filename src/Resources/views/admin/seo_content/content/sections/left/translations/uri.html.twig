@@ -1,0 +1,6 @@
+{% set form = hookable_metadata.context.form %}
+{% set locale = hookable_metadata.context.locale %}
+
+{% if form.uri is defined %}
+    {{ form_row(form.uri, sylius_test_form_attribute('uri', locale)) }}
+{% endif %}
