@@ -52,6 +52,11 @@
             "dealerdirect/phpcodesniffer-composer-installer": false,
             "phpstan/extension-installer": true,
             "symfony/flex": false
+        },
+        "audit": {
+            "ignore": {
+                "PKSA-4g5g-4rkv-myqs": "enshrined/svg-sanitize CVE-2025-55166: no Sylius 1.12/1.13 release allows the patched >=0.22 version"
+            }
         }
     },
     "scripts": {
