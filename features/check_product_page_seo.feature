@@ -21,8 +21,8 @@ Feature: Check Product page Rich Snippets definition
       | name                       | url                                               |
       | Home                       | /en_US/                      |
       | Category                   | /en_US/taxons/category       |
-      | Jeans                      | /en_US/taxons/jeans |
-      | Women                      | /en_US/taxons/women    |
+      | Jeans                      | /en_US/taxons/category/jeans       |
+      | Women                      | /en_US/taxons/category/jeans/women |
       | 727F patched cropped jeans |                                                   |
 
 #  @rich_snippets @rich_snippets_product

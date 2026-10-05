@@ -22,6 +22,7 @@ use Sylius\Component\Currency\Context\CurrencyContextInterface;
 use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Inventory\Model\StockableInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
+use Sylius\Component\Product\Model\ProductVariantInterface as BaseProductVariantInterface;
 use Sylius\Component\Review\Model\ReviewInterface;
 use Webmozart\Assert\Assert;
 
@@ -133,7 +134,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
 
         if ($subject->getImages()->count() > 0) {
             $richSnippet->addData([
-                'image' => array_map(fn (ImageInterface $image) => $this->cacheManager->generateUrl($image->getPath(), 'sylius_shop_product_large_thumbnail'), $subject->getImages()->toArray()),
+                'image' => array_map(fn (ImageInterface $image) => $this->cacheManager->generateUrl((string) $image->getPath(), 'sylius_shop_product_large_thumbnail'), $subject->getImages()->toArray()),
             ]);
         }
 
@@ -162,11 +163,13 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
         $url = $this->productUrlGenerator->generateUrl($subject);
         $currencyCode = $this->currencyContext->getCurrencyCode();
 
+        /** @var ProductVariantInterface[] $enabledVariants */
+        $enabledVariants = array_values(array_filter(
+            $subject->getVariants()->toArray(),
+            fn (BaseProductVariantInterface $variant): bool => $variant->isEnabled(),
+        ));
+
         return array_map(function (ProductVariantInterface $variant) use ($channel, $url, $currencyCode) {
-            if (!$variant->isEnabled()) {
-                return;
-            }
-            
             $price = $this->priceHelper->getPrice(
                 $variant,
                 ['channel' => $channel],
@@ -179,7 +182,7 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
                 'price' => $this->formatCurrencyForRichSnippets($price, $currencyCode),
                 'availability' => $this->getAvailability($variant),
             ];
-        }, $subject->getVariants()->toArray());
+        }, $enabledVariants);
     }
 
     private function getAvailability(StockableInterface $stockable): string

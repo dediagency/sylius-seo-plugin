@@ -1,0 +1,174 @@
+name: Plugin integration
+
+on:
+  workflow_call:
+    inputs:
+      matrix_path:
+        type: string
+        default: '.github/workflows/matrix.json'
+      app_path:
+        type: string
+        default: 'tests/Application'
+      run_phpspec:
+        type: boolean
+        default: true
+      run_phpunit:
+        type: boolean
+        default: true
+      use_migrations:
+        type: boolean
+        default: false
+
+concurrency:
+  group: plugin-integration-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  get-matrix:
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 10
+    name: "Get matrix"
+    outputs:
+      matrix: ${{ steps.matrix.outputs.prop }}
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: "Get matrix"
+        id: matrix
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: ${{ inputs.matrix_path || '.github/workflows/matrix.json' }}
+          prop_path: 'integration'
+
+  php-test-spec:
+    if: inputs.run_phpspec
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 10
+    needs: get-matrix
+    name: "PhpSpec: PHP ${{ matrix.php }}, Sylius ${{ matrix.sylius }}, Symfony ${{ matrix.symfony }}"
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+    env:
+      php_extensions: intl, mbstring, gd, zip, pdo_mysql, bcmath, soap, opcache, sqlite3, imagick
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Install php
+        uses: shivammathur/setup-php@verbose
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.php_extensions }}
+          tools: composer:v2, flex
+          coverage: none
+
+      - name: Restrict Symfony version
+        if: matrix.symfony != ''
+        run: composer config extra.symfony.require "${{ matrix.symfony }}"
+
+      - name: Restrict Sylius version
+        if: matrix.sylius != ''
+        run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-
+
+      - name: Install dependencies
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: composer install --no-scripts --no-interaction --no-progress
+
+      - name: Run PhpSpec
+        run: vendor/bin/phpspec run --ansi -f progress --no-interaction
+
+  db-test:
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 15
+    needs: get-matrix
+    name: "DB test: PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}, Sylius ${{ matrix.sylius }}, Symfony ${{ matrix.symfony }}"
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          MYSQL_DATABASE: sylius_ci
+          MYSQL_ROOT_PASSWORD: nopassword
+        ports:
+          - 3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      APP_ENV: test
+      php_extensions: intl, mbstring, gd, zip, pdo_mysql, bcmath, soap, opcache, sqlite3, imagick
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Resolve MySQL connection
+        run: echo "DATABASE_URL=mysql://root:nopassword@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/sylius_ci?serverVersion=${{ matrix.mysql }}" >> "$GITHUB_ENV"
+
+      - name: Install php
+        uses: shivammathur/setup-php@verbose
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.php_extensions }}
+          tools: composer:v2, flex
+          coverage: none
+
+      - name: Restrict Symfony version
+        if: matrix.symfony != ''
+        run: composer config extra.symfony.require "${{ matrix.symfony }}"
+
+      - name: Restrict Sylius version
+        if: matrix.sylius != ''
+        run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-
+
+      - name: Install dependencies
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: composer install --no-scripts --no-interaction --no-progress
+
+      - name: Create database schema
+        if: ${{ !inputs.use_migrations }}
+        run: php ${{ inputs.app_path }}/bin/console doctrine:schema:create --no-interaction
+
+      - name: Run migrations
+        if: inputs.use_migrations
+        run: php ${{ inputs.app_path }}/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+      - name: Validate database schema
+        run: php ${{ inputs.app_path }}/bin/console doctrine:schema:validate
+
+      - name: Run PHPUnit
+        if: inputs.run_phpunit
+        run: vendor/bin/phpunit --colors=always

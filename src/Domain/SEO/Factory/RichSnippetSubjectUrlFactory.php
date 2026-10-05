@@ -29,6 +29,6 @@ final class RichSnippetSubjectUrlFactory implements RichSnippetSubjectUrlFactory
             }
         }
 
-        throw new LogicException('Can\'t generate route for Subject with type %s', $subject::class);
+        throw new LogicException(sprintf('Can\'t generate route for Subject with type %s', $subject::class));
     }
 }

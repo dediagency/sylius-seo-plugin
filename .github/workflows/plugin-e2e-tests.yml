@@ -1,0 +1,177 @@
+name: Plugin e2e tests
+
+on:
+  workflow_call:
+    inputs:
+      matrix_path:
+        type: string
+        default: '.github/workflows/matrix.json'
+      app_path:
+        type: string
+        default: 'tests/Application'
+      sylius_fixtures:
+        type: boolean
+        default: false
+      behat_tags:
+        type: string
+        default: ''
+
+concurrency:
+  group: plugin-e2e-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  get-matrix:
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 10
+    name: "Get matrix"
+    outputs:
+      matrix: ${{ steps.matrix.outputs.prop }}
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: "Get matrix"
+        id: matrix
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: ${{ inputs.matrix_path || '.github/workflows/matrix.json' }}
+          prop_path: 'e2e_tests'
+
+  behat:
+    runs-on: ${{ vars.RUNNER_LABEL }}
+    timeout-minutes: 40
+    needs: get-matrix
+    name: "Behat: PHP ${{ matrix.php }}, Node ${{ matrix.node }}, MySQL ${{ matrix.mysql }}, Sylius ${{ matrix.sylius }}, Symfony ${{ matrix.symfony }}"
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-matrix.outputs.matrix) }}
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          MYSQL_DATABASE: sylius_ci
+          MYSQL_ROOT_PASSWORD: nopassword
+        ports:
+          - 3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      APP_ENV: test
+      php_extensions: intl, mbstring, gd, zip, pdo_mysql, bcmath, soap, opcache, sqlite3, imagick
+      NODE_OPTIONS: --dns-result-order=ipv4first
+      npm_config_fetch_retries: 5
+      npm_config_fetch_retry_mintimeout: 5000
+      npm_config_fetch_retry_maxtimeout: 30000
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Resolve MySQL connection
+        run: echo "DATABASE_URL=mysql://root:nopassword@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/sylius_ci?serverVersion=${{ matrix.mysql }}" >> "$GITHUB_ENV"
+
+      - name: Install apt-key dependencies
+        run: |
+          sudo apt-get update -y || true
+          sudo apt-get install -y dirmngr gnupg
+
+      - uses: nanasess/setup-chromedriver@v3
+        with:
+          chromeapp: google-chrome-stable
+
+      - name: Install php
+        uses: shivammathur/setup-php@verbose
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.php_extensions }}
+          tools: composer:v2, flex, symfony-cli
+          coverage: none
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: ${{ inputs.app_path }}/package-lock.json
+
+      - name: Restrict Symfony version
+        if: matrix.symfony != ''
+        run: composer config extra.symfony.require "${{ matrix.symfony }}"
+
+      - name: Restrict Sylius version
+        if: matrix.sylius != ''
+        run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-sylius-${{ matrix.sylius }}-composer-
+
+      - name: Install PHP dependencies
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: composer install --no-interaction --no-progress
+
+      - name: Install frontend assets
+        working-directory: ${{ inputs.app_path }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare test application
+        working-directory: ${{ inputs.app_path }}
+        run: |
+          php bin/console doctrine:database:create --if-not-exists --no-interaction
+          php bin/console doctrine:schema:create --no-interaction
+          php bin/console assets:install public --no-interaction
+          php bin/console cache:warmup
+
+      - name: Load sylius fixtures
+        if: inputs.sylius_fixtures
+        working-directory: ${{ inputs.app_path }}
+        run: php bin/console sylius:fixtures:load --no-interaction -vvv
+
+      - name: Output PHP version for Symfony CLI
+        run: php -v | head -n 1 | awk '{ print $2 }' > .php-version
+
+      - name: Install certificates
+        run: |
+          command -v certutil || (sudo apt-get update && sudo apt-get install -y libnss3-tools)
+          mkdir -p $HOME/.pki/nssdb
+          [ -f $HOME/.pki/nssdb/cert9.db ] || certutil -d sql:$HOME/.pki/nssdb -N --empty-password
+          symfony server:ca:install
+
+      - name: Run Chrome headless
+        run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --disable-dev-shm-usage --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
+
+      - name: Run webserver
+        working-directory: ${{ inputs.app_path }}
+        run: symfony server:start --port=8080 --dir=public --daemon
+
+      - name: Run Behat
+        run: |
+          TAGS="${{ inputs.behat_tags }}"
+          ARGS="--colors --strict -vvv --no-interaction -f progress"
+          if [ -n "$TAGS" ]; then ARGS="$ARGS --tags=$TAGS"; fi
+          vendor/bin/behat $ARGS || vendor/bin/behat $ARGS --rerun
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: behat-logs-php${{ matrix.php }}-sylius${{ matrix.sylius }}-mysql${{ matrix.mysql }}
+          path: |
+            etc/build/
+            ${{ inputs.app_path }}/var/log/
+          if-no-files-found: ignore
+          retention-days: 7

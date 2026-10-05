@@ -1,0 +1,23 @@
+name: PR lint
+
+on:
+    pull_request:
+        branches:
+            - v3
+
+concurrency:
+    group: pr-lint-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    commitlint:
+        runs-on: ${{ vars.RUNNER_LABEL }}
+        timeout-minutes: 10
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+
+            - uses: wagoid/commitlint-github-action@v6
+              with:
+                  configFile: .github/commitlint.config.mjs

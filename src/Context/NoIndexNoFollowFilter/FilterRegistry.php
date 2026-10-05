@@ -8,8 +8,10 @@ use InvalidArgumentException;
 
 class FilterRegistry
 {
+    /** @var array<string, NoIndexNoFollowFilterInterface> */
     private array $filters;
 
+    /** @param iterable<string, NoIndexNoFollowFilterInterface> $filters */
     public function __construct(iterable $filters)
     {
         $this->filters = iterator_to_array($filters);
@@ -24,7 +26,8 @@ class FilterRegistry
         return $this->filters[$name];
     }
 
-    public function getAll()
+    /** @return array<string, NoIndexNoFollowFilterInterface> */
+    public function getAll(): array
     {
         return $this->filters;
     }

@@ -38,12 +38,12 @@ final class BreadcrumbRichSnippetFactory extends AbstractRichSnippetFactory
     ): BreadcrumbRichSnippet {
         if (null !== $parent = $subject->getRichSnippetSubjectParent()) {
             $this->build($parent, $richSnippet);
-        } elseif (!$subject instanceof HomepageRichSnippetSubject) {
-            $this->build($this->homepageSubjectFetcher->fetch(), $richSnippet);
+        } elseif (!$subject instanceof HomepageRichSnippetSubject && null !== $homepage = $this->homepageSubjectFetcher->fetch()) {
+            $this->build($homepage, $richSnippet);
         }
 
         $richSnippet->addElement(
-            $subject->getName(),
+            (string) $subject->getName(),
             $isLeaf ? null : $this->richSnippetSubjectUrlFactory->buildUrl($subject),
         );
 
