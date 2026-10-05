@@ -103,7 +103,7 @@ class SeoContext extends MinkContext
                         'url' => $this->getCurrentPage()->getCurrentUrl(),
                         'priceCurrency' => $currency,
                         'price' => $offer['price'],
-                        'availability' => $offer['isInStock'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                        'availability' => filter_var($offer['isInStock'], \FILTER_VALIDATE_BOOLEAN) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
                     ];
                 }, $table->getHash()),
             ],
