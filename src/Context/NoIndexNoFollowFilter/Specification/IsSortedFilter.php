@@ -11,6 +11,8 @@ class IsSortedFilter implements NoIndexNoFollowFilterInterface
 {
     public function isSatisfiedBy(Request $request): bool
     {
-        return false !== (bool) $request->query->all('sorting', false);
+        $sorting = $request->query->all()['sorting'] ?? null;
+
+        return null !== $sorting && '' !== $sorting && [] !== $sorting;
     }
 }

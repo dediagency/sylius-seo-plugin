@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class AndSpecification implements NoIndexNoFollowFilterInterface
 {
+    /** @var NoIndexNoFollowFilterInterface[] */
     private array $specifications;
 
     public function __construct(NoIndexNoFollowFilterInterface ...$specifications)
@@ -18,12 +19,16 @@ final class AndSpecification implements NoIndexNoFollowFilterInterface
 
     public function isSatisfiedBy(Request $request): bool
     {
-        return array_reduce($this->specifications, function ($carry, NoIndexNoFollowFilterInterface $specification) use ($request) {
-            if (null === $carry) {
-                return $specification->isSatisfiedBy($request);
-            }
+        if ([] === $this->specifications) {
+            return false;
+        }
 
-            return $carry && $specification->isSatisfiedBy($request);
-        });
+        foreach ($this->specifications as $specification) {
+            if (!$specification->isSatisfiedBy($request)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

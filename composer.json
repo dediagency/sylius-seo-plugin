@@ -6,13 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "sylius/sylius": "~1.11 || ~1.12",
+        "sylius/sylius": "~1.11 || ~1.12 || ~1.13 || ~1.14",
         "sylius/mailer-bundle":  "^1.8 || ^2.0@beta",
         "symfony/webpack-encore-bundle": "^1.15"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
-        "behat/mink-selenium2-driver": "^1.4",
         "dmore/behat-chrome-extension": "^1.3",
         "dmore/chrome-mink-driver": "^2.7",
         "friends-of-behat/mink": "^1.8",
@@ -53,6 +52,11 @@
             "dealerdirect/phpcodesniffer-composer-installer": false,
             "phpstan/extension-installer": true,
             "symfony/flex": false
+        },
+        "audit": {
+            "ignore": {
+                "PKSA-4g5g-4rkv-myqs": "enshrined/svg-sanitize CVE-2025-55166: no Sylius 1.12/1.13 release allows the patched >=0.22 version"
+            }
         }
     },
     "scripts": {

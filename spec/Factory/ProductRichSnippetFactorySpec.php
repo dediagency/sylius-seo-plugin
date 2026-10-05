@@ -93,14 +93,17 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
 
         $variantA = \Mockery::mock(ProductVariantInterface::class);
         $variantA->shouldReceive([
+            'isEnabled' => true,
             'isTracked' => false,
         ]);
         $variantB = \Mockery::mock(ProductVariantInterface::class);
         $variantB->shouldReceive([
+            'isEnabled' => true,
             'isTracked' => true,
         ]);
         $variantC = \Mockery::mock(ProductVariantInterface::class);
         $variantC->shouldReceive([
+            'isEnabled' => true,
             'isTracked' => true,
         ]);
 
@@ -109,7 +112,12 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
             true
         );
 
-        $variants = new ArrayCollection([$variantA, $variantB, $variantC]);
+        $disabledVariant = \Mockery::mock(ProductVariantInterface::class);
+        $disabledVariant->shouldReceive([
+            'isEnabled' => false,
+        ]);
+
+        $variants = new ArrayCollection([$variantA, $disabledVariant, $variantB, $variantC]);
 
         $productUrlGenerator->generateUrl($subject)->willReturn('/my_shop/products/ficus');
 

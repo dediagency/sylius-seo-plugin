@@ -51,7 +51,7 @@ class SeoContext extends MinkContext
                 'name' => $item['name'],
             ];
 
-            if (array_key_exists('url', $item) && !empty($item['url'])) {
+            if (array_key_exists('url', $item) && '' !== $item['url']) {
                 $itemData['item'] = $this->locatePath($item['url']);
             }
 
@@ -69,7 +69,11 @@ class SeoContext extends MinkContext
         Assert::same(
             $richSnippets[self::RICHSNIPPET_BREADCRUMB],
             $expected,
-            'Expected breadcrumb Rich Snippet and resolved breadcrumb Rich Snippet do not match',
+            sprintf(
+                'Expected breadcrumb Rich Snippet and resolved breadcrumb Rich Snippet do not match. Expected: %s, got: %s',
+                json_encode($expected),
+                json_encode($richSnippets[self::RICHSNIPPET_BREADCRUMB]),
+            ),
         );
     }
 
@@ -99,7 +103,7 @@ class SeoContext extends MinkContext
                         'url' => $this->getCurrentPage()->getCurrentUrl(),
                         'priceCurrency' => $currency,
                         'price' => $offer['price'],
-                        'availability' => $offer['isInStock'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                        'availability' => '1' === $offer['isInStock'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
                     ];
                 }, $table->getHash()),
             ],
@@ -108,14 +112,18 @@ class SeoContext extends MinkContext
         Assert::same(
             $richSnippets[self::RICHSNIPPET_PRODUCT],
             $expected,
-            'Expected product Rich Snippet and resolved product Rich Snippet do not match',
+            sprintf(
+                'Expected product Rich Snippet and resolved product Rich Snippet do not match. Expected: %s, got: %s',
+                json_encode($expected),
+                json_encode($richSnippets[self::RICHSNIPPET_PRODUCT]),
+            ),
         );
     }
 
     /**
      * @Then /^it should have the following og data:$/
      */
-    public function itShouldHaveTheOgTitleAndTheOgUrl(TableNode $table)
+    public function itShouldHaveTheOgTitleAndTheOgUrl(TableNode $table): void
     {
         $data = $this->getCurrentPage()->getOgData();
 
@@ -130,9 +138,10 @@ class SeoContext extends MinkContext
                 $ogDatum['data'] = $this->locatePath($ogDatum['data']);
             }
 
-            if (preg_match('/\%([a-z]+)\%/', $ogDatum['data'], $matches)) {
-                $type = $matches[1];
-                Assert::$type($ogDatum['data']);
+            if (1 === preg_match('/\%([a-z]+)\%/', $ogDatum['data'], $matches)) {
+                $assertion = [Assert::class, $matches[1]];
+                Assert::true(is_callable($assertion), sprintf('Unknown assertion "%s"', $matches[1]));
+                $assertion($data[sprintf('og:%s', $ogDatum['name'])]);
             } else {
                 Assert::same(
                     $data[sprintf('og:%s', $ogDatum['name'])],
@@ -146,7 +155,7 @@ class SeoContext extends MinkContext
     /**
      * @Then I should be able to read a canonical URL tag with value :link
      */
-    public function iShouldBeAbleToReadACanonicalUrlTagWithValue($link)
+    public function iShouldBeAbleToReadACanonicalUrlTagWithValue(string $link): void
     {
         $currentPage = $this->getCurrentPage();
         Assert::true($currentPage->hasLinkRelCanonical());
@@ -156,7 +165,7 @@ class SeoContext extends MinkContext
     /**
      * @Then I should be able to read an alternate URL tag with value :url and hreflang attribute value :hreflang
      */
-    public function iShouldBeAbleToReadAnAlternateUrlTagWithValueAndHreflangAttributeValue(string $url, string $hreflang)
+    public function iShouldBeAbleToReadAnAlternateUrlTagWithValueAndHreflangAttributeValue(string $url, string $hreflang): void
     {
         $currentPage = $this->getCurrentPage();
         Assert::true($currentPage->hasLinkAlternateForLocale($hreflang));
@@ -166,7 +175,7 @@ class SeoContext extends MinkContext
     /**
      * @When I visit the homepage
      */
-    public function iVisitTheHomepage()
+    public function iVisitTheHomepage(): void
     {
         $this->pageCollection->getPage('home')->open();
     }
@@ -174,7 +183,7 @@ class SeoContext extends MinkContext
     /**
      * @Then I should be able to read a no index no follow meta tag
      */
-    public function iShouldBeAbleToReadANoIndexNoFollowMetaTag()
+    public function iShouldBeAbleToReadANoIndexNoFollowMetaTag(): void
     {
         $currentPage = $this->getCurrentPage();
         Assert::true($currentPage->hasNoIndexNoFollowTag());
@@ -183,7 +192,7 @@ class SeoContext extends MinkContext
     /**
      * @Then I should not be able to read a no index no follow meta tag
      */
-    public function iShouldNotBeAbleToReadANoIndexNoFollowMetaTag()
+    public function iShouldNotBeAbleToReadANoIndexNoFollowMetaTag(): void
     {
         $currentPage = $this->getCurrentPage();
         Assert::false($currentPage->hasNoIndexNoFollowTag());
@@ -191,7 +200,6 @@ class SeoContext extends MinkContext
 
     private function getCurrentPage(): SeoPage
     {
-        /** @var SeoPage $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm($this->pageCollection->getAll());
         Assert::isInstanceOf($currentPage, SeoPage::class);
 
