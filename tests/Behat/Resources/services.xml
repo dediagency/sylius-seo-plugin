@@ -6,7 +6,7 @@
         <!-- Contexts -->
         <service id="dedi_sylius_seo_plugin.context.ui.shop.seo" class="Tests\Dedi\SyliusSEOPlugin\Behat\Context\Ui\Shop\SeoContext">
             <argument type="service" id="dedi_sylius_seo_plugin.behat.page.shop.collection"/>
-            <argument type="service" id="sylius.behat.current_page_resolver"/>
+            <argument type="service" id="router"/>
         </service>
 
         <!-- Pages -->

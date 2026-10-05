@@ -7,7 +7,7 @@
 >
     <resource class="%dedi_sylius_seo_plugin.model.seo_content_translation.class%">
         <operations>
-            <operation name="sylius_api_admin_seo_content_get" class="ApiPlatform\Metadata\Get"
+            <operation name="sylius_api_admin_seo_content_translation_get" class="ApiPlatform\Metadata\Get"
                        uriTemplate="/admin/seo-contents-translation/{id}">
                 <normalizationContext>
                     <values>
