@@ -1,6 +1,6 @@
-# UPGRADE FROM `4.x` TO `5.0`
+# UPGRADE FROM `3.x` TO `4.0`
 
-Version 5 is a large rewrite of the plugin. This guide only covers changes made to the plugin itself.
+Version 4 is a large rewrite of the plugin. This guide only covers changes made to the plugin itself.
 Upgrade your application to Sylius 2.0 first by following the official Sylius upgrade guide.
 
 ## Table of contents
@@ -22,7 +22,7 @@ Upgrade your application to Sylius 2.0 first by following the official Sylius up
 
 ## Requirements
 
-| | 4.x | 5.0 |
+| | 4.x | 4.0 |
 |---|---|---|
 | PHP | `^8.0` | `^8.2` |
 | Sylius | `~1.11 \|\| ~1.12` | `~2.0.0` |
@@ -85,7 +85,7 @@ Each entity must use a dedicated trait that declares the mapping:
 
 `createReferenceableContent()` must now return `SEOContentInterface` instead of `ReferenceableInterface`.
 
-**Before (4.x):**
+**Before (3.x):**
 
 ```php
 use Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface;
@@ -104,7 +104,7 @@ class Product extends BaseProduct implements ReferenceableInterface
 }
 ```
 
-**After (5.0):**
+**After (4.0):**
 
 ```php
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
@@ -172,8 +172,8 @@ Likewise, `{% set donothing = resource.referenceableContent.setCurrentLocale(loc
 
 - Indexability is now stored **per locale** in a new `SEOContentRobot` entity (`dedi_sylius_seo_content_robots` table), independently of translations. This allows setting indexability for a locale that has no translation.
   - New methods: `getRobots()`, `getRobot()` (robot of the current locale), `addRobot()`, `removeRobot()`.
-  - `SEOContent::isNotIndexable()` reads the robot of the current locale, then falls back to the robot of the fallback locale, and defaults to indexable. This keeps the 4.x behaviour, where an untranslated locale inherited the fallback translation's flag.
-  - `SEOContent::setNotIndexable()` now writes to the robot of the current locale and creates it if needed. In 4.x it wrote to the translation.
+  - `SEOContent::isNotIndexable()` reads the robot of the current locale, then falls back to the robot of the fallback locale, and defaults to indexable. This keeps the 3.x behaviour, where an untranslated locale inherited the fallback translation's flag.
+  - `SEOContent::setNotIndexable()` now writes to the robot of the current locale and creates it if needed. In 3.x it wrote to the translation.
   - `SEOContentTranslation::$notIndexable` is **deprecated** and no longer read.
   - `SEOContentTranslationInterface::isNotIndexable()` / `setNotIndexable()` were removed from the interface.
 - `openGraphMetadataType` moved from `SEOContentTranslation` to `SEOContent` (no longer translatable).
@@ -196,7 +196,7 @@ The schema changes are:
 - New column `referenceableContent_id` (+ foreign key, `ON DELETE SET NULL`) on `sylius_taxon`.
 - Foreign key on `sylius_product.referenceableContent_id` and `sylius_channel.referenceableContent_id` now uses `ON DELETE SET NULL`.
 
-> **Warning:** In 4.x the join column name came from your Doctrine naming strategy. In 5.0 it is hard-coded to `referenceableContent_id`.
+> **Warning:** In 3.x the join column name came from your Doctrine naming strategy. In 4.0 it is hard-coded to `referenceableContent_id`.
 > With the default naming strategy nothing changes. If you use another strategy (e.g. `underscore` → `referenceable_content_id`), the generated migration will drop the old column and create a new one, **losing the link between your entities and their SEO content**.
 > Edit the migration to rename the column instead of dropping it.
 
@@ -207,7 +207,7 @@ Then move existing data into the new structure. The plugin ships a data migratio
 - copies the Open Graph type from the translations to `dedi_sylius_seo_content.og_metadata_type`. The value from a channel's default locale is used first, then any non-empty translated value. If your translations had different Open Graph types per locale, only one is kept, so review them in the admin afterwards.
 
 It is safe to run more than once: robots, types and Open Graph types that are already set are not overwritten.
-Locales without a translation get no robot. They inherit the fallback locale's indexability at runtime, as they did in 4.x.
+Locales without a translation get no robot. They inherit the fallback locale's indexability at runtime, as they did in 3.x.
 
 Steps:
 
@@ -239,7 +239,7 @@ The deprecated columns `seo_not_indexable` and `seo_og_metadata_type` on `dedi_s
 
 All `sylius_template_event('dedi_sylius_seo_plugin.*')` events were removed:
 
-| 4.x event | 5.0 replacement |
+| 3.x event | 4.0 replacement |
 |---|---|
 | `dedi_sylius_seo_plugin.title` | `dedi_sylius_seo_get_title('Default title')` Twig function |
 | `dedi_sylius_seo_plugin.metatags` | Twig hook `sylius_shop.base#metatags` (registered by the plugin) |
@@ -288,7 +288,7 @@ The `resource` variable is no longer passed. The plugin finds the current page's
 
 If you overrode plugin templates, move them to the new paths. Overrides of removed templates must be rewritten.
 
-| 4.x | 5.0 |
+| 3.x | 4.0 |
 |---|---|
 | `Shop/Header/_title.html.twig` | removed, use `dedi_sylius_seo_get_title()` |
 | `Shop/Header/_metatags.html.twig` | `shop/head/metatags.html.twig` (rewritten, see below) |
@@ -330,7 +330,7 @@ Other output changes:
 
 Replace the old namespaces in your code:
 
-| 4.x | 5.0 |
+| 3.x | 4.0 |
 |---|---|
 | `Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableInterface` | `Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface` (see [Entities](#entities)) |
 | `Dedi\SyliusSEOPlugin\Domain\SEO\Adapter\ReferenceableTrait` | `Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTrait` (prefer the `Referenceable{Product,Taxon,Channel}Trait`) |
@@ -376,7 +376,7 @@ grep -rl 'Dedi\\SyliusSEOPlugin\\Domain\\SEO' src/ templates/ config/
 
 Renamed services:
 
-| 4.x | 5.0 |
+| 3.x | 4.0 |
 |---|---|
 | `dedi_sylius_seo_plugin.links.shop.no_index_no_follow_filter_registry` | `dedi_sylius_seo_plugin.links.shop.filter_registry` |
 | `dedi.sylius_seoplugin.context.no_index_no_follow_filter.specification.is_taxon_filter` | `dedi.sylius_seo_plugin.context.filter.specification.is_taxon_filter` |
