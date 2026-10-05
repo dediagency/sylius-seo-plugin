@@ -1,0 +1,19 @@
+# Exclude dev/repo-only files from Composer dist archives
+/.github            export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/.gitmodules        export-ignore
+/satisfactory       export-ignore
+/bin                export-ignore
+/doc/data           export-ignore
+/etc                export-ignore
+/features           export-ignore
+/spec               export-ignore
+/tests              export-ignore
+/behat.yml.dist     export-ignore
+/ecs.php            export-ignore
+/package.json       export-ignore
+/phpspec.yml.dist   export-ignore
+/phpstan.neon       export-ignore
+/phpunit.xml.dist   export-ignore
+/psalm.xml          export-ignore

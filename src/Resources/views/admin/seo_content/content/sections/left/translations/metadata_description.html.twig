@@ -1,0 +1,4 @@
+{% set form = hookable_metadata.context.form %}
+{% set locale = hookable_metadata.context.locale %}
+
+{{ form_row(form.metadataDescription, sylius_test_form_attribute('metadata-description', locale)|merge( { 'attr': { 'data-form-description': '' }})) }}

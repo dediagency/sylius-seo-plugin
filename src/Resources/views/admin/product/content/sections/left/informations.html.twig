@@ -1,0 +1,20 @@
+{% set form = hookable_metadata.context.product_form %}
+
+{% if form.SEOSku is defined %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="card-title">
+                {{ 'dedi_sylius_seo_plugin.ui.product_info_title'|trans }}
+                <small>
+                    <a target="_blank"
+                       href="https://developers.google.com/search/docs/data-types/product">{{ 'dedi_sylius_seo_plugin.ui.product_info_link'|trans }}</a>
+                </small>
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% hook 'informations' %}
+            </div>
+        </div>
+    </div>
+{% endif %}

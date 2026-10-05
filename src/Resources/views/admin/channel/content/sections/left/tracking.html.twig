@@ -1,0 +1,14 @@
+{% set form = hookable_metadata.context.channel_form %}
+
+{% if form.googleAnalyticsCode is defined %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="card-title">
+                {{ 'dedi_sylius_seo_plugin.ui.tracking'|trans }}
+            </h2>
+        </div>
+        <div class="card-body">
+            {% hook 'tracking' %}
+        </div>
+    </div>
+{% endif %}

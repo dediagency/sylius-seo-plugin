@@ -1,0 +1,36 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+    workflow_dispatch: ~
+
+concurrency:
+    group: plugin-ci-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    quality:
+        name: Quality
+        uses: ./.github/workflows/plugin-quality.yml
+        secrets: inherit
+        with:
+            matrix_path: .github/workflows/matrix.json
+
+    integration:
+        name: Integration
+        uses: ./.github/workflows/plugin-integration.yml
+        secrets: inherit
+        with:
+            matrix_path: .github/workflows/matrix.json
+
+    e2e-tests:
+        name: Tests
+        uses: ./.github/workflows/plugin-e2e-tests.yml
+        secrets: inherit
+        with:
+            matrix_path: .github/workflows/matrix.json

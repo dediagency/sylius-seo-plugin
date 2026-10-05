@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.api.filter.uri" parent="api_platform.doctrine.orm.search_filter"
+                 public="true">
+            <argument type="collection">
+                <argument key="translations.uri">end</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.filter.type" parent="api_platform.doctrine.orm.search_filter"
+                 public="true">
+            <argument type="collection">
+                <argument key="type">exact</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.filter.product_code" parent="api_platform.doctrine.orm.search_filter"
+                 public="true">
+            <argument type="collection">
+                <argument key="product.code">exact</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.filter.taxon_code" parent="api_platform.doctrine.orm.search_filter"
+                 public="true">
+            <argument type="collection">
+                <argument key="taxon.code">exact</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.filter.channel_code" parent="api_platform.doctrine.orm.search_filter"
+                 public="true">
+            <argument type="collection">
+                <argument key="channel.code">exact</argument>
+            </argument>
+            <tag name="api_platform.filter"/>
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.controller.taxon_metadata" public="true" class="Dedi\SyliusSEOPlugin\Api\Controller\GetTaxonMetadataAction">
+            <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="sylius.repository.taxon" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.referenceable_to_metadata" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.seo_content_to_metadata" />
+            <argument type="service" id="dedi_sylius_seo_plugin.builder.metadata.director" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="dedi_sylius_seo_plugin.repository.seo_content" />
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.controller.product_metadata" public="true" class="Dedi\SyliusSEOPlugin\Api\Controller\GetProductMetadataAction">
+            <argument type="service" id="sylius.context.channel" />
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.referenceable_to_metadata" />
+            <argument type="service" id="dedi_sylius_seo_plugin.transformer.seo_content_to_metadata" />
+            <argument type="service" id="dedi_sylius_seo_plugin.builder.metadata.director" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="sylius.context.locale" />
+            <argument type="service" id="dedi_sylius_seo_plugin.repository.seo_content" />
+        </service>
+        <service id="dedi_sylius_seo_plugin.api.processor.seo_content" class="Dedi\SyliusSEOPlugin\Api\Processor\SEOContentProcessor">
+            <argument type="service" id="api_platform.doctrine.orm.state.persist_processor" />
+            <argument type="service" id="api_platform.doctrine.orm.state.remove_processor" />
+            <tag name="api_platform.state_processor"/>
+        </service>
+    </services>
+</container>

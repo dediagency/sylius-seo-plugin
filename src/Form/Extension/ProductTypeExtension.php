@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Dedi\SyliusSEOPlugin\Form\Extension;
 
 use Dedi\SyliusSEOPlugin\Form\Type\SEOContentType;
-use Sylius\Bundle\ProductBundle\Form\Type\ProductType;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
+use Dedi\SyliusSEOPlugin\SEO\Enum\MetadataTypeEnum;
+use Sylius\Bundle\AdminBundle\Form\Type\ProductType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\AtLeastOneOf;
 use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Length;
@@ -16,13 +20,9 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class ProductTypeExtension extends AbstractTypeExtension
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('referenceableContent', SEOContentType::class, [
-                'label' => 'dedi_sylius_seo_plugin.ui.seo',
-                'constraints' => [new Valid()],
-            ])
             ->add('SEOBrand', TextType::class, [
                 'label' => 'dedi_sylius_seo_plugin.form.brand',
                 'required' => false,
@@ -31,14 +31,9 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin8',
                 'required' => false,
                 'constraints' => [
-                    new AtLeastOneOf([
-                        'constraints' => [
-                            new Length([
-                                'min' => 8,
-                                'max' => 8,
-                            ]),
-                            new Blank(),
-                        ],
+                    new AtLeastOneOf(constraints: [
+                        new Length(min: 8, max: 8),
+                        new Blank(),
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
@@ -47,14 +42,9 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin13',
                 'required' => false,
                 'constraints' => [
-                    new AtLeastOneOf([
-                        'constraints' => [
-                            new Length([
-                                'min' => 13,
-                                'max' => 13,
-                            ]),
-                            new Blank(),
-                        ],
+                    new AtLeastOneOf(constraints: [
+                        new Length(min: 13, max: 13),
+                        new Blank(),
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
@@ -63,14 +53,9 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'dedi_sylius_seo_plugin.form.gtin14',
                 'required' => false,
                 'constraints' => [
-                    new AtLeastOneOf([
-                        'constraints' => [
-                            new Length([
-                                'min' => 14,
-                                'max' => 14,
-                            ]),
-                            new Blank(),
-                        ],
+                    new AtLeastOneOf(constraints: [
+                        new Length(min: 14, max: 14),
+                        new Blank(),
                     ]),
                 ],
                 'validation_groups' => ['Default', 'sylius'],
@@ -88,6 +73,20 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'required' => false,
             ])
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+
+            if ($event->getData() instanceof ReferenceableInterface) {
+                $form
+                    ->add('referenceableContent', SEOContentType::class, [
+                        'label' => 'dedi_sylius_seo_plugin.ui.seo',
+                        'constraints' => [new Valid()],
+                        'type' => MetadataTypeEnum::PRODUCT->value,
+                    ])
+                ;
+            }
+        });
     }
 
     public static function getExtendedTypes(): iterable

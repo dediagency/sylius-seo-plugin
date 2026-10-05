@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+>
+    <class name="Dedi\SyliusSEOPlugin\Entity\SEOContentTranslation">
+        <attribute name="id">
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="locale">
+            <group>admin:seo_content:create</group>
+        </attribute>
+        <attribute name="uri">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="metadataTitle">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="metadataDescription">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="openGraphMetadataTitle">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="openGraphMetadataDescription">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="openGraphMetadataUrl">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+        <attribute name="openGraphMetadataImage">
+            <group>admin:seo_content:create</group>
+            <group>admin:seo_content:update</group>
+            <group>admin:seo_content:read</group>
+            <group>shop:seo_content:read</group>
+        </attribute>
+    </class>
+</serializer>

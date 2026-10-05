@@ -1,0 +1,22 @@
+{% set taxon = hookable_metadata.context.resource %}
+{% set form = hookable_metadata.context.form %}
+
+{% if form.referenceableContent is defined %}
+    <div class="card mb-3" id="dedi_sylius_seo_plugin_content_seo_admin_container">
+        <div class="card-header">
+            <div class="card-title">
+                {{ 'dedi_sylius_seo_plugin.ui.seo'|trans }}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-lg-7">
+                    {% hook 'seo#left' with { form: form.referenceableContent, taxon_form: form, resource: form.referenceableContent.vars.data } %}
+                </div>
+                <div class="col-12 col-lg-5">
+                    {% hook 'seo#right' with { form: form.referenceableContent, taxon_form: form } %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

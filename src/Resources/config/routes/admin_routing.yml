@@ -1,0 +1,29 @@
+dedi_sylius_seo_plugin_seo_admin:
+  resource: |
+    alias: dedi_sylius_seo_plugin.seo_content
+    section: admin
+    templates: "@SyliusAdmin/shared/crud"
+    grid: dedi_sylius_seo_plugin.seo_content
+    except: ['show']
+    permission: true
+    form: Dedi\SyliusSEOPlugin\Form\Type\Admin\SEOContentType
+  type: sylius.resource
+
+dedi_sylius_seo_plugin_admin_seo_content_create:
+  path: /seo-contents/{type}/new
+  methods: [GET, POST]
+  defaults:
+    _controller: dedi_sylius_seo_plugin.controller.seo_content::createAction
+    _sylius:
+      section: admin
+      factory:
+        method: createTyped
+        arguments:
+          type: $type
+      template: "@SyliusAdmin/shared/crud/create.html.twig"
+      redirect: dedi_sylius_seo_plugin_admin_seo_content_update
+      permission: true
+      vars:
+        route:
+          parameters:
+            type: $type

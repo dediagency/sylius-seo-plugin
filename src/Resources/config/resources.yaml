@@ -1,2 +1,17 @@
-imports:
-    - { resource: "resources/content_seo.yaml" }
+sylius_resource:
+    resources:
+        dedi_sylius_seo_plugin.seo_content:
+            driver: doctrine/orm
+            classes:
+                model: Dedi\SyliusSEOPlugin\Entity\SEOContent
+                form: Dedi\SyliusSEOPlugin\Form\Type\Admin\SEOContentType
+                repository: Dedi\SyliusSEOPlugin\Repository\SEOContentRepository
+                factory: Dedi\SyliusSEOPlugin\Factory\SEOContentFactory
+            translation:
+                classes:
+                    model: Dedi\SyliusSEOPlugin\Entity\SEOContentTranslation
+                    factory: Sylius\Component\Resource\Factory\TranslatableFactory
+        dedi_sylius_seo_plugin.seo_content_robot:
+            driver: doctrine/orm
+            classes:
+                model: Dedi\SyliusSEOPlugin\Entity\SEOContentRobot
