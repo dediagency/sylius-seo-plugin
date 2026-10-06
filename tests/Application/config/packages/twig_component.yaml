@@ -1,0 +1,5 @@
+twig_component:
+    anonymous_template_directory: 'components/'
+    defaults:
+        # Namespace & directory for components
+        Tests\Dedi\SyliusSEOPlugin\Application\Twig\Components\: 'components/'

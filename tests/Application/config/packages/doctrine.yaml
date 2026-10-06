@@ -7,7 +7,6 @@ parameters:
 
 doctrine:
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping: true
         mappings:
             App:

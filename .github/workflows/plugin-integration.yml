@@ -167,7 +167,8 @@ jobs:
         run: php ${{ inputs.app_path }}/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 
       - name: Validate database schema
-        run: php ${{ inputs.app_path }}/bin/console doctrine:schema:validate
+        # skip_mapping_validation: Sylius core mapping errors outside the plugin's scope (e.g. ShipmentUnit in Sylius 2.1)
+        run: php ${{ inputs.app_path }}/bin/console doctrine:schema:validate ${{ matrix.skip_mapping_validation && '--skip-mapping' || '' }}
 
       - name: Run PHPUnit
         if: inputs.run_phpunit

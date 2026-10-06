@@ -25,7 +25,7 @@ Upgrade your application to Sylius 2.0 first by following the official Sylius up
 | | 4.x | 4.0 |
 |---|---|---|
 | PHP | `^8.0` | `^8.2` |
-| Sylius | `~1.11 \|\| ~1.12` | `~2.0.0` |
+| Sylius | `~1.11 \|\| ~1.12` | `>=2.0 <2.4` (2.0, 2.1, 2.2, 2.3) |
 
 ```bash
 composer require dedi/sylius-seo-plugin:^5.0

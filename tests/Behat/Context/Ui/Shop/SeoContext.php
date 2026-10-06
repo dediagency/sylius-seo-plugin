@@ -6,7 +6,7 @@ namespace Tests\Dedi\SyliusSEOPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
-use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
+use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\PageCollection;
 use Tests\Dedi\SyliusSEOPlugin\Behat\Page\Shop\SeoPage;
 use Webmozart\Assert\Assert;
@@ -19,15 +19,15 @@ class SeoContext extends MinkContext
 
     private PageCollection $pageCollection;
 
-    private CurrentPageResolverInterface $currentPageResolver;
+    private UrlMatcherInterface $urlMatcher;
 
     public function __construct(
         PageCollection $pageCollection,
-        CurrentPageResolverInterface $currentPageResolver,
+        UrlMatcherInterface $urlMatcher,
     ) {
         $this->pageCollection = $pageCollection;
 
-        $this->currentPageResolver = $currentPageResolver;
+        $this->urlMatcher = $urlMatcher;
     }
 
     /**
@@ -103,7 +103,7 @@ class SeoContext extends MinkContext
                         'url' => $this->getCurrentPage()->getCurrentUrl(),
                         'priceCurrency' => $currency,
                         'price' => $offer['price'],
-                        'availability' => $offer['isInStock'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                        'availability' => filter_var($offer['isInStock'], \FILTER_VALIDATE_BOOLEAN) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
                     ];
                 }, $table->getHash()),
             ],
@@ -200,9 +200,16 @@ class SeoContext extends MinkContext
 
     private function getCurrentPage(): SeoPage
     {
-        $currentPage = $this->currentPageResolver->getCurrentPageWithForm($this->pageCollection->getAll());
-        Assert::isInstanceOf($currentPage, SeoPage::class);
+        $path = parse_url($this->getSession()->getCurrentUrl(), \PHP_URL_PATH);
+        Assert::string($path);
+        $routeName = $this->urlMatcher->match($path)['_route'] ?? null;
 
-        return $currentPage;
+        foreach ($this->pageCollection->getAll() as $page) {
+            if ($page instanceof SeoPage && $page->getRouteName() === $routeName) {
+                return $page;
+            }
+        }
+
+        throw new \LogicException(sprintf('Route "%s" could not be matched to any SEO page.', (string) $routeName));
     }
 }

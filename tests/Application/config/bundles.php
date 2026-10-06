@@ -28,7 +28,8 @@ return [
     Sylius\Bundle\CoreBundle\SyliusCoreBundle::class => ['all' => true],
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
-    Knp\Bundle\GaufretteBundle\KnpGaufretteBundle::class => ['all' => true],
+    // Gaufrette is configured by Sylius < 2.3 and was removed from Sylius 2.3 dependencies
+    ...(class_exists(Knp\Bundle\GaufretteBundle\KnpGaufretteBundle::class) ? [Knp\Bundle\GaufretteBundle\KnpGaufretteBundle::class => ['all' => true]] : []),
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
     Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],

@@ -8,6 +8,8 @@ use FriendsOfBehat\PageObjectExtension\Page\PageInterface;
 
 interface SeoPage extends PageInterface
 {
+    public function getRouteName(): string;
+
     /**
      * @return array where the key is the name of the rich snippet
      */
