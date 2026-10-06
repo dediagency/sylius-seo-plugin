@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/dediagency/sylius-seo-plugin/compare/v4.0.0...v4.1.0) (2026-10-06)
+
+
+### Features
+
+* add sylius 2.1+ compatibility ([#85](https://github.com/dediagency/sylius-seo-plugin/issues/85)) ([0edc308](https://github.com/dediagency/sylius-seo-plugin/commit/0edc308df7aa29702eba9806ebe5042d684568d6))
+
 ## [1.0.2](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v1.0.1...v1.0.2) (2021-01-05)
 
 
