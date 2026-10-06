@@ -175,6 +175,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
         $variantA->shouldReceive([
             'isEnabled' => true,
             'isTracked' => false,
+            'getCode' => 'FICUS_SMALL',
             'getName' => null,
             'getOptionValues' => new ArrayCollection([
                 $this->mockOptionValue('plant_size', 'Small'),
@@ -191,6 +192,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
         $variantB->shouldReceive([
             'isEnabled' => true,
             'isTracked' => true,
+            'getCode' => 'FICUS_LARGE',
             'getName' => 'Large',
             'getOptionValues' => new ArrayCollection([
                 $this->mockOptionValue('plant_size', 'Large'),
@@ -278,7 +280,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
                         'size' => 'Small',
                         'offers' => [
                             '@type' => 'Offer',
-                            'url' => '/my_shop/products/ficus',
+                            'url' => '/my_shop/products/ficus?variant=FICUS_SMALL',
                             'priceCurrency' => 'EUR',
                             'price' => '13.37',
                             'availability' => 'https://schema.org/InStock',
@@ -294,7 +296,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
                         'size' => 'Large',
                         'offers' => [
                             '@type' => 'Offer',
-                            'url' => '/my_shop/products/ficus',
+                            'url' => '/my_shop/products/ficus?variant=FICUS_LARGE',
                             'priceCurrency' => 'EUR',
                             'price' => '123.45',
                             'availability' => 'https://schema.org/OutOfStock',

@@ -214,11 +214,19 @@ Each variant `Product` has:
 | `image` | variant images, or product images when the variant has none |
 | `gtin8`, `gtin13`, `gtin14`, `mpn`, `sku` | variant SEO tab |
 | `size`, `color`, ... | option values mapped to a Google-supported property |
-| `offers` | price for the current channel and currency, availability from stock, product url |
+| `offers` | price for the current channel and currency, availability from stock, variant url (see below) |
 
 Product-level `gtin*`, `mpn` and `isbn` are not used in a `ProductGroup`, as they cannot identify several variants. Fill them per variant.
 
-The Sylius shop shows all variants on the product page, so every variant offer uses the product url (Google's "single-page" setup).
+#### Variant URLs
+
+Google requires each variant to be selectable through a distinct URL that preselects it (price, images, availability, add to cart), while the canonical URL stays the product URL. See [Google's technical guidelines](https://developers.google.com/search/docs/appearance/structured-data/product-variants#technical-guidelines).
+
+Each variant offer url is the product url with the variant code: `https://example.com/en_US/products/t-shirt?variant=T_SHIRT_S`. The plugin registers a Sylius product variant resolver (`RequestedProductVariantResolver`, tag `sylius.product_variant_resolver`, priority 100) which returns the variant given in the `variant` query parameter, when it is an enabled variant of the product. The product page then opens with this variant selected. Unknown or disabled codes fall back to the default variant.
+
+The canonical link of the page stays the product url, without the `variant` parameter.
+
+If your product page does not use the Sylius variant resolver to select the initial variant, read the `variant` query parameter in your template, or override `ProductRichSnippetFactory::getVariantUrl()`.
 
 Example:
 
@@ -240,7 +248,7 @@ Example:
             "size": "S",
             "offers": {
                 "@type": "Offer",
-                "url": "https://example.com/en_US/products/t-shirt",
+                "url": "https://example.com/en_US/products/t-shirt?variant=T_SHIRT_S",
                 "priceCurrency": "USD",
                 "price": "60.58",
                 "availability": "https://schema.org/InStock"

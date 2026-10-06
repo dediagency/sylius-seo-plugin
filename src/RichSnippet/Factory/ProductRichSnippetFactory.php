@@ -10,6 +10,7 @@ use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetSubjectInterface;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\ProductGroupRichSnippet;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\ProductRichSnippet;
 use Dedi\SyliusSEOPlugin\RichSnippet\Model\RichSnippet\RichSnippetInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Resolver\RequestedProductVariantResolver;
 use Dedi\SyliusSEOPlugin\RichSnippet\UrlGenerator\ProductUrlGenerator;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use NumberFormatter;
@@ -148,9 +149,23 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
             $this->getIdentifiers(null, $variant),
             $this->getVariantProperties($variant),
             [
-                'offers' => $this->buildOffer($variant, $url),
+                'offers' => $this->buildOffer($variant, $this->getVariantUrl($url, $variant)),
             ],
         ));
+    }
+
+    /**
+     * URL preselecting the variant on the product page (see RequestedProductVariantResolver).
+     */
+    protected function getVariantUrl(string $productUrl, ProductVariantInterface $variant): string
+    {
+        if (null === $variant->getCode()) {
+            return $productUrl;
+        }
+
+        return $productUrl
+            . (str_contains($productUrl, '?') ? '&' : '?')
+            . http_build_query([RequestedProductVariantResolver::QUERY_PARAMETER => $variant->getCode()]);
     }
 
     /**

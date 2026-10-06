@@ -59,6 +59,11 @@
             <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
         </service>
 
+        <service id="dedi_sylius_seo_plugin.rich_snippets.resolver.requested_product_variant" class="Dedi\SyliusSEOPlugin\RichSnippet\Resolver\RequestedProductVariantResolver">
+            <argument type="service" id="request_stack"/>
+            <tag name="sylius.product_variant_resolver" priority="100"/>
+        </service>
+
         <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url" class="Dedi\SyliusSEOPlugin\RichSnippet\Factory\RichSnippetSubjectUrlFactory">
             <argument key="$urlGenerators" type="tagged_iterator" tag="dedi_sylius_seo_plugin.rich_snippets.subject_url_generator"/>
         </service>

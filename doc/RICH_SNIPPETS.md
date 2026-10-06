@@ -201,7 +201,7 @@ Alternatively, your class can implement `RichSnippetFactoryInterface` directly t
 
 ## Extending a provided factory
 
-Factories are regular services. To add data to the product rich snippet, decorate or extend `dedi_sylius_seo_plugin.rich_snippets.factory.product` (`ProductRichSnippetFactory`). Its building methods are `protected` (`buildProductGroupRichSnippet()`, `buildVariant()`, `buildOffer()`, `getIdentifiers()`, `getVariantName()`, ...), so a subclass can change any part of the generated data. For example, override `buildOffer()` to add `itemCondition` or shipping details.
+Factories are regular services. To add data to the product rich snippet, decorate or extend `dedi_sylius_seo_plugin.rich_snippets.factory.product` (`ProductRichSnippetFactory`). Its building methods are `protected` (`buildProductGroupRichSnippet()`, `buildVariant()`, `buildOffer()`, `getIdentifiers()`, `getVariantName()`, `getVariantUrl()`, ...), so a subclass can change any part of the generated data. For example, override `buildOffer()` to add `itemCondition` or shipping details.
 
 ## Debug
 
