@@ -22,13 +22,13 @@ Upgrade your application to Sylius 2.0 first by following the official Sylius up
 
 ## Requirements
 
-| | 4.x | 4.0 |
+| | 3.x | 4.x |
 |---|---|---|
 | PHP | `^8.0` | `^8.2` |
-| Sylius | `~1.11 \|\| ~1.12` | `>=2.0 <2.4` (2.0, 2.1, 2.2, 2.3) |
+| Sylius | `~1.11 \|\| ~1.12 \|\| ~1.13 \|\| ~1.14` | `>=2.0 <2.4` (2.0, 2.1, 2.2, 2.3) |
 
 ```bash
-composer require dedi/sylius-seo-plugin:^5.0
+composer require dedi/sylius-seo-plugin:^4.0
 ```
 
 `symfony/webpack-encore-bundle` and `sylius/mailer-bundle` are no longer required by the plugin.
@@ -408,13 +408,13 @@ The Doctrine relation used to be added automatically to any entity implementing 
 3. Pass the `type` option when adding `SEOContentType` to your form.
 4. Create a class implementing `Dedi\SyliusSEOPlugin\SEO\Context\MetadataContextInterface` and tag it `dedi_sylius_seo_plugin.context.metadata`, so your entity metadata is rendered on its shop page.
 
-See [doc/SEO_CUSTOM.md](doc/SEO_CUSTOM.md) for a complete example.
+See [SEO_CUSTOM.md](SEO_CUSTOM.md) for a complete example.
 
 ## What's new
 
 ### Metadata contexts
 
-Shop metadata now comes from a prioritized chain of contexts (tag `dedi_sylius_seo_plugin.context.metadata`). The first one that returns a result wins:
+Shop metadata now comes from a prioritized chain of contexts (tag `dedi_sylius_seo_plugin.context.metadata`). Every context that applies returns metadata, and the results are merged field by field: for each field, the first non-empty value in priority order is used.
 
 | Priority | Context | Source |
 |---|---|---|

@@ -24,6 +24,9 @@ sylius_product:
         product:
             classes:
                 model: Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product\Product
+        product_variant:
+            classes:
+                model: Tests\Dedi\SyliusSEOPlugin\Application\src\Entity\Product\ProductVariant
 
 sylius_taxonomy:
     resources:

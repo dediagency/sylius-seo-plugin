@@ -7,66 +7,54 @@ there you will find the <a href="https://docs.sylius.com/en/latest/plugin-develo
 
 ## Quickstart Installation
 
+The test application lives in `tests/Application` and runs with Docker.
+
 ```bash
-$ make start
-$ make db-create
-$ make db-update
-$ make fixtures
-$ make build
+$ make coffee   # build and start containers, install dependencies and assets
+$ docker compose exec php bin/console doctrine:database:create
+$ docker compose exec php bin/console doctrine:schema:update --force
+$ docker compose exec php bin/console sylius:fixtures:load
 ```
+
+Console commands run from `tests/Application`, which is the working directory of the `php` container.
 
 ## Usage
 
+### Opening Sylius with your plugin
+
+With the containers running, go to http://localhost/ (admin: http://localhost/admin, `sylius` / `sylius`).
+
 ### Running plugin tests
 
-  - PHPUnit
+  - All checks (coding style, static analysis, specs)
 
     ```bash
-    $ vendor/bin/phpunit
+    $ make test
     ```
 
   - PHPSpec
 
     ```bash
-    $ vendor/bin/phpspec run
+    $ make test-spec
     ```
 
-  - Behat (non-JS scenarios)
+  - PHPStan
 
     ```bash
-    $ vendor/bin/behat --tags="~@javascript"
+    $ make phpstan
     ```
 
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/).
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
-        ```
-        
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run localhost:8080 -d public -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ vendor/bin/behat --tags="@javascript"
-        ```
+  - Behat
 
-### Opening Sylius with your plugin
+    ```bash
+    $ ENV=test make test-behat-all
+    $ ENV=test make test-behat TAGS="@seo"
+    ```
 
-After installation and with docker containers running, go to http://0.0.0.0:9000/
+Run `make help` to list all available commands.
 
 ### Contribution
     
 Learn more about our contribution workflow on http://docs.sylius.org/en/latest/contributing/.
 
-- [Learn how to create new RichSnippets](doc/RICH_SNIPPETS.md)
+- [Learn how to create new RichSnippets](RICH_SNIPPETS.md)

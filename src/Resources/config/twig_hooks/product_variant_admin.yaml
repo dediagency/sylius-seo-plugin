@@ -1,0 +1,55 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.product_variant.create.content.form.side_navigation':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/side_navigation/seo.html.twig'
+                priority: -100
+
+        'sylius_admin.product_variant.create.content.form.sections':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo.html.twig'
+                priority: -100
+
+        'sylius_admin.product_variant.create.content.form.sections.seo':
+            sku:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_sku.html.twig'
+                priority: 100
+            gtin8:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_gtin8.html.twig'
+                priority: 90
+            gtin13:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_gtin13.html.twig'
+                priority: 80
+            gtin14:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_gtin14.html.twig'
+                priority: 70
+            mpn:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_mpn.html.twig'
+                priority: 60
+
+        'sylius_admin.product_variant.update.content.form.side_navigation':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/side_navigation/seo.html.twig'
+                priority: -100
+
+        'sylius_admin.product_variant.update.content.form.sections':
+            seo:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo.html.twig'
+                priority: -100
+
+        'sylius_admin.product_variant.update.content.form.sections.seo':
+            sku:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_sku.html.twig'
+                priority: 100
+            gtin8:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_gtin8.html.twig'
+                priority: 90
+            gtin13:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_gtin13.html.twig'
+                priority: 80
+            gtin14:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_gtin14.html.twig'
+                priority: 70
+            mpn:
+                template: '@DediSyliusSEOPlugin/admin/product_variant/content/sections/seo/identification/seo_mpn.html.twig'
+                priority: 60
