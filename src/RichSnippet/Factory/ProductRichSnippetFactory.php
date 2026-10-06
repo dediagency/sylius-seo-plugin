@@ -140,13 +140,19 @@ class ProductRichSnippetFactory extends AbstractRichSnippetFactory
     {
         $variantImages = $this->getImages($variant);
 
+        $identifiers = $this->getIdentifiers(null, $variant);
+        // Google requires a unique identifier per variant: fall back on the Sylius variant code
+        if (!isset($identifiers['sku']) && null !== $variant->getCode() && '' !== $variant->getCode()) {
+            $identifiers['sku'] = $variant->getCode();
+        }
+
         return $this->filterEmptyValues(array_merge(
             [
                 '@type' => 'Product',
                 'name' => $this->getVariantName($product, $variant),
                 'image' => [] !== $variantImages ? $variantImages : $this->getImages($product),
             ],
-            $this->getIdentifiers(null, $variant),
+            $identifiers,
             $this->getVariantProperties($variant),
             [
                 'offers' => $this->buildOffer($variant, $this->getVariantUrl($url, $variant)),

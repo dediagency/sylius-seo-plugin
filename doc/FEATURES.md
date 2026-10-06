@@ -212,7 +212,8 @@ Each variant `Product` has:
 |---|---|
 | `name` | product name, followed by the variant name or its option values (e.g. `T-Shirt - XL`) |
 | `image` | variant images, or product images when the variant has none |
-| `gtin8`, `gtin13`, `gtin14`, `mpn`, `sku` | variant SEO tab |
+| `gtin8`, `gtin13`, `gtin14`, `mpn` | variant SEO tab |
+| `sku` | variant SEO tab, or variant code when empty (Google requires a unique identifier per variant) |
 | `size`, `color`, ... | option values mapped to a Google-supported property |
 | `offers` | price for the current channel and currency, availability from stock, variant url (see below) |
 

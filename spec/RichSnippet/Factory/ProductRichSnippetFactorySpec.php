@@ -293,6 +293,7 @@ class ProductRichSnippetFactorySpec extends ObjectBehavior
                             '/my_shop/images/large-thumbnail/image-a',
                             '/my_shop/images/large-thumbnail/image-b',
                         ],
+                        'sku' => 'FICUS_LARGE',
                         'size' => 'Large',
                         'offers' => [
                             '@type' => 'Offer',
