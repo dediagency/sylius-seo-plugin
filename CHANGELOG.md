@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/dediagency/sylius-seo-plugin/compare/v4.1.0...v4.2.0) (2026-10-06)
+
+
+### Features
+
+* add variant rich snippet. update documentation ([#86](https://github.com/dediagency/sylius-seo-plugin/issues/86)) ([daa9f48](https://github.com/dediagency/sylius-seo-plugin/commit/daa9f481d573aa8febc2c562163eefd0c118900c))
+
 # [4.1.0](https://github.com/dediagency/sylius-seo-plugin/compare/v4.0.0...v4.1.0) (2026-10-06)
 
 
