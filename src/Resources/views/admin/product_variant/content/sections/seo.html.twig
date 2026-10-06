@@ -1,0 +1,23 @@
+{% set form = hookable_metadata.context.form %}
+
+{% if form.SEOGtin8 is defined %}
+    <div class="tab-pane" id="product-variant-seo" role="tabpanel" tabindex="0">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h2 class="card-title">
+                    {{ 'dedi_sylius_seo_plugin.ui.global_identifiers_title'|trans }}
+                    <small>
+                        <a target="_blank"
+                           href="https://schema.org/Offer">{{ 'dedi_sylius_seo_plugin.ui.global_identifiers_link'|trans }}</a>
+                    </small>
+                </h2>
+            </div>
+            <div class="card-body">
+                <p class="text-secondary">{{ 'dedi_sylius_seo_plugin.ui.variant_identifiers_description'|trans }}</p>
+                <div class="row">
+                    {% hook 'seo' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

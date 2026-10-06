@@ -12,6 +12,7 @@ dedi_sylius_seo_plugin:
         brand_title: Merk van het product
         sku_title: Verkoper-specifieke ID van het product (SKU)
         global_identifiers_title: Globale ID's
+        variant_identifiers_description: Deze identificatoren zijn specifiek voor deze variant en worden toegevoegd aan het aanbod in de product rich snippet.
         google_tracking_info: Indien zowel Google Analytics als Google Tag Manager ingesteld zijn, zal Google Tag Manager gebruikt worden.
         metadata: Metadata
         tracking: Tracking

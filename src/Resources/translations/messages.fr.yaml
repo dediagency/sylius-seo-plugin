@@ -13,6 +13,7 @@ dedi_sylius_seo_plugin:
         brand_title: Marque du produit
         sku_title: Référence produit spécifique au marchand
         global_identifiers_title: Identifiants globaux
+        variant_identifiers_description: Ces identifiants sont propres à cette variante et sont ajoutés à son offre dans le rich snippet produit.
         google_tracking_info: Si Google Tag Manager et Google Analytics sont configurés, uniquement Google Tag Manager sera utilisé
         seo_contents: Contenus SEO
         seo_content: Contenu SEO

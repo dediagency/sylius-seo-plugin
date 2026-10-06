@@ -47,6 +47,10 @@
             <tag name="form.type_extension"/>
         </service>
 
+        <service id="dedi.sylius_seo_plugin.form.extension.product_variant_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\ProductVariantTypeExtension">
+            <tag name="form.type_extension"/>
+        </service>
+
         <service id="dedi.sylius_seo_plugin.form.extension.taxon_type_extension" class="Dedi\SyliusSEOPlugin\Form\Extension\TaxonTypeExtension">
             <tag name="form.type_extension"/>
         </service>

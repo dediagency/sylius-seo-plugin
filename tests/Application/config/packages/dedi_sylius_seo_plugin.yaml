@@ -1,2 +1,8 @@
 imports:
     - { resource: "@DediSyliusSEOPlugin/Resources/config/config.yaml" }
+
+parameters:
+    dedi_sylius_seo_plugin.rich_snippets.product.varies_by:
+        t_shirt_size: size
+        dress_size: size
+        jeans_size: size

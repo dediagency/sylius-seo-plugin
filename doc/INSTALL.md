@@ -1,5 +1,7 @@
 # Installation
 
+Requires PHP 8.2+ and Sylius 2.0 to 2.3. For Sylius 1.x, use the 3.x version of the plugin.
+
 Run `composer require dedi/sylius-seo-plugin --no-scripts`
 
 Change your `config/bundles.php` file to add the line for the plugin :
@@ -80,6 +82,7 @@ You have to implement `ReferenceableInterface` and use the related trait in Prod
 
 ```php
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableProductTrait;
 use Sylius\Component\Core\Model\Product as BaseProduct;
@@ -110,7 +113,7 @@ class Product extends BaseProduct implements ReferenceableInterface
         return $this->getBaseMetadataDescription();
     }
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }
@@ -119,8 +122,9 @@ class Product extends BaseProduct implements ReferenceableInterface
 
 ```php
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
-use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableProductTrait;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableTaxonTrait;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 
 class Taxon extends BaseTaxon implements ReferenceableInterface
@@ -148,7 +152,7 @@ class Taxon extends BaseTaxon implements ReferenceableInterface
         return $this->getBaseMetadataDescription();
     }
 
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }
@@ -157,6 +161,7 @@ class Taxon extends BaseTaxon implements ReferenceableInterface
 
 ```php
 use Dedi\SyliusSEOPlugin\Entity\SEOContent;
+use Dedi\SyliusSEOPlugin\Entity\SEOContentInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableInterface;
 use Dedi\SyliusSEOPlugin\SEO\Adapter\ReferenceableChannelTrait;
 use Sylius\Component\Core\Model\Channel as BaseChannel;
@@ -186,7 +191,7 @@ class Channel extends BaseChannel implements ReferenceableInterface
         return $this->getBaseMetadataDescription();
     }
     
-    protected function createReferenceableContent(): ReferenceableInterface
+    protected function createReferenceableContent(): SEOContentInterface
     {
         return new SEOContent();
     }
@@ -201,7 +206,7 @@ Rich snippet available are :
 - Breadcrumb for Product and Taxon entities
 - Product for Product entity
 
-Make your `Product` and `Taxon` classes implement the `RichSnippetSubjectInterface` interface.
+Make your `Product` class implement `RichSnippetProductSubjectInterface` (required: the product SEO tab edits its brand and global identifier fields), and your `Taxon` class implement `RichSnippetSubjectInterface`.
 
 ```php
 use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductSubjectInterface;
@@ -242,14 +247,33 @@ class Taxon extends BaseTaxon implements RichSnippetSubjectInterface
 }
 ```
 
-### Add Google Analytics Console Configuration
+## Product variant identifiers (optional)
 
-You have to add `SeoAwareChannelInterface` for Channel Entity
+GTIN, MPN and SKU identify a purchasable item, which in Sylius is the product variant. To manage them per variant, make your `ProductVariant` class implement `RichSnippetProductVariantSubjectInterface`.
 
 ```php
-use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelInterface;use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelTrait;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductVariantSubjectInterface;
+use Dedi\SyliusSEOPlugin\RichSnippet\Adapter\RichSnippetProductVariantSubjectTrait;
 
-class Channel extends BaseChannel implements SeoAwareChannelInterface
+class ProductVariant extends BaseProductVariant implements RichSnippetProductVariantSubjectInterface
+{
+    use RichSnippetProductVariantSubjectTrait;
+}
+```
+
+A SEO tab is then added to the product variant administration form. The identifiers are used in the product rich snippet: on the variant `Product` of the `ProductGroup` for products with several variants, and on the `Product` for products with one variant. See [Product rich snippet](FEATURES.md#product).
+
+Products with several variants can also declare what their variants vary by (size, color, ...). See [Configuration](FEATURES.md#configuration).
+
+## Add Google Analytics and Google Tag Manager configuration
+
+To configure Google Analytics or Google Tag Manager per channel, make your `Channel` class implement `SeoAwareChannelInterface`.
+
+```php
+use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelInterface;
+use Dedi\SyliusSEOPlugin\SEO\Adapter\SeoAwareChannelTrait;
+
+class Channel extends BaseChannel implements ReferenceableInterface, SeoAwareChannelInterface
 {
     use SeoAwareChannelTrait;
 
@@ -257,17 +281,22 @@ class Channel extends BaseChannel implements SeoAwareChannelInterface
 }
 ```
 
-### Create migration
+## Noindex rules on taxon pages (optional)
 
-Create migration, review and execute them 
+To mark paginated or sorted taxon pages as not indexable, add the `_seo.no_index_no_follow_filter` option to the taxon route. See [Noindex filters on routes](FEATURES.md#noindex-filters-on-routes).
+
+## Create migration
+
+Create migration, review and execute them
 
 ```bash
-bin/console doctrine:migration:diff
-bin/console doctrine:migration:migrate
+bin/console doctrine:migrations:diff
+bin/console doctrine:migrations:migrate
 ```
 
-### Guide
+## Guide
 
-- [Learn how to add SEO bloc for custom entity](SEO_CUSTOM.md);
+- [Features](FEATURES.md)
+- [Learn how to add SEO bloc for custom entity](SEO_CUSTOM.md)
 - [Learn how to create new RichSnippets](RICH_SNIPPETS.md)
 - [Learn how to set default values for your metadata](DEFAULT_VALUES.md)

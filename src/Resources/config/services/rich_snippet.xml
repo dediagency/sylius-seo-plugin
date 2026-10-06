@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="dedi_sylius_seo_plugin.rich_snippets.product.varies_by" type="collection"/>
+    </parameters>
+
     <services>
         <service id="dedi_sylius_seo_plugin.rich_snippets.context.rich_snippet_context" class="Dedi\SyliusSEOPlugin\RichSnippet\Context\RichSnippetContext">
             <argument key="$requestStack" type="service" id="request_stack"/>
@@ -51,7 +55,13 @@
             <argument key="$currencyContext" type="service" id="sylius.context.shopper"/>
             <argument key="$productUrlGenerator" type="service" id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url.product_url_generator"/>
             <argument key="$availabilityChecker" type="service" id="sylius.checker.inventory.availability"/>
+            <argument key="$variesByMapping">%dedi_sylius_seo_plugin.rich_snippets.product.varies_by%</argument>
             <tag name="dedi_sylius_seo_plugin.rich_snippets.factory"/>
+        </service>
+
+        <service id="dedi_sylius_seo_plugin.rich_snippets.resolver.requested_product_variant" class="Dedi\SyliusSEOPlugin\RichSnippet\Resolver\RequestedProductVariantResolver">
+            <argument type="service" id="request_stack"/>
+            <tag name="sylius.product_variant_resolver" priority="100"/>
         </service>
 
         <service id="dedi_sylius_seo_plugin.rich_snippets.factory.subject_url" class="Dedi\SyliusSEOPlugin\RichSnippet\Factory\RichSnippetSubjectUrlFactory">

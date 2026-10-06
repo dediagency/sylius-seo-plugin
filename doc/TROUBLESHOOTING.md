@@ -1,36 +1,29 @@
 # Troubleshooting
 
-## The title is shown in the header
-![Title Bug](data/title-bug.png)
+## The page title is not the SEO title
 
-Sylius's defaut `<title>` implementation might cause issues, with the title being rendered twice.
+The `<title>` is rendered by `dedi_sylius_seo_get_title()` in your `base.html.twig` override. Check that:
 
-As the plugin uses an event, we are forced to display the `<title>` tag within the event (to avoid the Debug comment to be printed in the title)
+- `templates/bundles/SyliusShopBundle/shared/layout/base.html.twig` is overridden (not extended), as described in [installation](INSTALL.md#override-default-layout-template),
+- the block around the title is named `seo_title`, not `title`. Sylius templates redefine `{% block title %}`, which would replace the SEO title.
 
-The following code from Sylius conflicts with the event `dedi_sylius_seo_plugin.title`
+`dedi_sylius_seo_get_title('Sylius')` returns its argument when no title is found for the page.
 
-```twig
-{% block title %}
-    {{ product.name }} | {{ parent() }}{% endblock %}
-{% block content %}
-```
+## Metadata or OpenGraph tags are missing
 
-This code will result in the product's name to be printed and then the event `dedi_sylius_seo_plugin.title` been executed, which will load the `<title` HTML tag
+- Check that the `#metatags`, `head` and `before_body` hooks are present in your `base.html.twig` override.
+- Check that your `Product`, `Taxon` and `Channel` entities implement `ReferenceableInterface` and use the matching trait. The channel provides the fallback values for every page.
+- A meta tag is only rendered when its value is not empty.
 
-```html
-000F office grey jeans | <!-- BEGIN EVENT | event name: "dedi_sylius_seo_plugin.title" -->
-<!-- BEGIN BLOCK | event name: "dedi_sylius_seo_plugin.title", block name: "dedi_seo_title", template: "@DediSyliusSEOPlugin/Shop/Header/_title.html.twig", priority: 0 -->
-    <title>Women | 000F office grey jeans</title>
-<!-- END BLOCK | event name: "dedi_sylius_seo_plugin.title", block name: "dedi_seo_title" -->
-<!-- END EVENT | event name: "dedi_sylius_seo_plugin.title" -->
-```
+## An SEO content of type `uri` is not applied
 
-The workaround for this is to override any template from Sylius that implements the block `title` like the exemple shown below
+The URL is compared with the full URL of the request, including the scheme, the host and the query string. Use the exact URL shown in the browser, for the right locale.
 
-```twig
-{% extends '@!SyliusShop/Product/show.html.twig' %}
+## Rich snippets are missing
 
-{% block title %}
-    {{ sylius_template_event('dedi_sylius_seo_plugin.title', { resource: product ?? sylius.channel }) }}
-{% endblock %}
-```
+- Check that `Product` implements `RichSnippetProductSubjectInterface` and `Taxon` implements `RichSnippetSubjectInterface`.
+- Use the Symfony Profiler: the rich snippets panel lists the rich snippets generated for the page.
+
+## The SEO tab is missing on product variants
+
+The variant SEO tab is only displayed when your `ProductVariant` implements `RichSnippetProductVariantSubjectInterface`. See [installation](INSTALL.md#product-variant-identifiers-optional).
