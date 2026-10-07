@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<resources xmlns="https://api-platform.com/schema/metadata"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata https://api-platform.com/schema/metadata/metadata-2.0.xsd"
+>
+    <resource class="%dedi_sylius_seo_plugin.model.seo_content.class%" shortName="SEOContent">
+        <collectionOperations />
+        <itemOperations>
+            <itemOperation name="admin_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/admin/seo-contents/{id}</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">
+                        <attribute>sylius:admin:seo_content:show</attribute>
+                    </attribute>
+                </attribute>
+            </itemOperation>
+            <itemOperation name="admin_put">
+                <attribute name="method">PUT</attribute>
+                <attribute name="path">/admin/seo-contents/{id}</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">
+                        <attribute>sylius:admin:seo_content:show</attribute>
+                    </attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">
+                        <attribute>sylius:admin:seo_content:update</attribute>
+                    </attribute>
+                </attribute>
+            </itemOperation>
+            <itemOperation name="shop_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/shop/seo-contents/{id}</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">
+                        <attribute>sylius:shop:seo_content:show</attribute>
+                    </attribute>
+                </attribute>
+            </itemOperation>
+        </itemOperations>
+
+        <property name="id" identifier="true" writable="false" />
+        <property name="translations" readable="true" writable="true" />
+    </resource>
+</resources>

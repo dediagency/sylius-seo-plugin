@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="dedi_sylius_seo_plugin.api.normalizer.unsaved_seo_content" class="Dedi\SyliusSEOPlugin\Api\Serializer\UnsavedSEOContentNormalizer">
+            <tag name="serializer.normalizer" priority="128"/>
+        </service>
+    </services>
+</container>

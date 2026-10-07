@@ -23,5 +23,6 @@ It provides integration for Google Analytics and Google Tag Manager through your
 
 - [Installation](doc/INSTALL.md)
 - [Features](doc/FEATURES.md)
+- [API](doc/API.md)
 - [Contribute](doc/CONTRIBUTE.md)
 - [Troubleshooting](doc/TROUBLESHOOTING.md)

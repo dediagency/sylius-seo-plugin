@@ -18,6 +18,11 @@ trait ReferenceableTrait
         return $this->referenceableContent;
     }
 
+    public function setReferenceableContent(?ReferenceableInterface $referenceableContent): void
+    {
+        $this->referenceableContent = $referenceableContent;
+    }
+
     public function isNotIndexable(): bool
     {
         return $this->getReferenceableContent()->isNotIndexable();

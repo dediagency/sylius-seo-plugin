@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+>
+    <class name="Sylius\Component\Core\Model\Product">
+        <attribute name="referenceableContent">
+            <group>admin:product:read</group>
+            <group>admin:product:show</group>
+            <group>sylius:admin:product:show</group>
+            <group>shop:product:read</group>
+            <group>shop:product:show</group>
+            <group>sylius:shop:product:show</group>
+            <group>admin:product:create</group>
+            <group>admin:product:update</group>
+            <group>sylius:admin:product:create</group>
+            <group>sylius:admin:product:update</group>
+        </attribute>
+    </class>
+    <class name="Sylius\Component\Core\Model\Taxon">
+        <attribute name="referenceableContent">
+            <group>admin:taxon:read</group>
+            <group>admin:taxon:show</group>
+            <group>sylius:admin:taxon:show</group>
+            <group>shop:taxon:read</group>
+            <group>shop:taxon:show</group>
+            <group>sylius:shop:taxon:show</group>
+            <group>admin:taxon:create</group>
+            <group>admin:taxon:update</group>
+            <group>sylius:admin:taxon:create</group>
+            <group>sylius:admin:taxon:update</group>
+        </attribute>
+    </class>
+    <class name="Sylius\Component\Core\Model\Channel">
+        <attribute name="referenceableContent">
+            <group>admin:channel:read</group>
+            <group>admin:channel:show</group>
+            <group>sylius:admin:channel:show</group>
+            <group>shop:channel:read</group>
+            <group>shop:channel:show</group>
+            <group>sylius:shop:channel:show</group>
+            <group>admin:channel:create</group>
+            <group>admin:channel:update</group>
+            <group>sylius:admin:channel:create</group>
+            <group>sylius:admin:channel:update</group>
+        </attribute>
+    </class>
+</serializer>

@@ -30,5 +30,15 @@ final class DediSyliusSEOExtension extends Extension implements PrependExtension
                 '@DediSyliusSEOPlugin/Admin/SEO/form_block_type.html.twig',
             ],
         ]);
+
+        if ($container->hasExtension('api_platform')) {
+            $container->prependExtensionConfig('api_platform', [
+                'mapping' => [
+                    'paths' => [
+                        __DIR__ . '/../Resources/config/api_resources',
+                    ],
+                ],
+            ]);
+        }
     }
 }
