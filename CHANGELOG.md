@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/dediagency/sylius-seo-plugin/compare/v3.1.0...v3.2.0) (2026-10-07)
+
+
+### Features
+
+* **api:** expose SEO content through Sylius API ([#88](https://github.com/dediagency/sylius-seo-plugin/issues/88)) ([36b204b](https://github.com/dediagency/sylius-seo-plugin/commit/36b204b3b2748bca8a824270b4178cc302e18b65))
+
 ## [1.0.2](https://gitlab.com/dedi-agency/interne/sylius/dedi-seo-plugin/compare/v1.0.1...v1.0.2) (2021-01-05)
 
 
