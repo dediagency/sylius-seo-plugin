@@ -6,19 +6,26 @@
 >
     <class name="Dedi\SyliusSEOPlugin\Entity\SEOContentRobot">
         <attribute name="id">
-            <group>admin:seo_content:read</group>
-            <group>shop:seo_content:read</group>
+            <group>sylius:admin:seo_content:index</group>
+            <group>sylius:admin:seo_content:show</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="notIndexable">
-            <group>admin:seo_content:create</group>
-            <group>admin:seo_content:update</group>
-            <group>admin:seo_content:read</group>
-            <group>shop:seo_content:read</group>
+            <group>sylius:admin:seo_content:create</group>
+            <group>sylius:admin:seo_content:update</group>
+            <group>sylius:admin:seo_content:index</group>
+            <group>sylius:admin:seo_content:show</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="locale">
-            <group>admin:seo_content:create</group>
-            <group>admin:seo_content:read</group>
-            <group>shop:seo_content:read</group>
+            <group>sylius:admin:seo_content:create</group>
+            <group>sylius:admin:seo_content:update</group>
+            <group>sylius:admin:seo_content:index</group>
+            <group>sylius:admin:seo_content:show</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
     </class>
 </serializer>
