@@ -1,3 +1,10 @@
+## [4.2.1](https://github.com/dediagency/sylius-seo-plugin/compare/v4.2.0...v4.2.1) (2026-10-07)
+
+
+### Bug Fixes
+
+* **api:** align serialization groups with API operations ([#87](https://github.com/dediagency/sylius-seo-plugin/issues/87)) ([eaae8da](https://github.com/dediagency/sylius-seo-plugin/commit/eaae8da82a053d1fa78ec51d04c364d257628d2b))
+
 # [4.2.0](https://github.com/dediagency/sylius-seo-plugin/compare/v4.1.0...v4.2.0) (2026-10-06)
 
 
