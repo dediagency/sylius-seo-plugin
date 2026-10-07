@@ -6,31 +6,40 @@
 >
     <class name="Dedi\SyliusSEOPlugin\SEO\Model\Metadata">
         <attribute name="origin">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="indexable">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="title">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="description">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="ogTitle">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="ogDescription">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="ogUrl">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="ogType">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="ogImage">
-            <group>shop:seo_content:read</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
     </class>
 </serializer>
