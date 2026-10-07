@@ -4,6 +4,7 @@ on:
     workflow_run:
         branches:
             - master
+            - v3
         workflows:
             - CI
         types:
