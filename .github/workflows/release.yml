@@ -54,9 +54,10 @@ jobs:
               id: semantic-release
               env:
                   GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+                  HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
               run: |
                   set -o pipefail
-                  npx semantic-release --extends ./.github/semantic-release.json | tee semantic-release.log
+                  GITHUB_REF="refs/heads/$HEAD_BRANCH" npx semantic-release --extends ./.github/semantic-release.json | tee semantic-release.log
                   VERSION=$(grep -oP 'Published release \K[^\s]+(?= on)' semantic-release.log || true)
                   if [ -n "$VERSION" ]; then
                     echo "version=$VERSION" >> "$GITHUB_OUTPUT"
