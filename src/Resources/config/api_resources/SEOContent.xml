@@ -40,5 +40,8 @@
                 </attribute>
             </itemOperation>
         </itemOperations>
+
+        <property name="id" identifier="true" writable="false" />
+        <property name="translations" readable="true" writable="true" />
     </resource>
 </resources>

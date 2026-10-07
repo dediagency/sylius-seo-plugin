@@ -37,7 +37,7 @@ Content-Type: application/ld+json
 ```
 
 To update an existing SEO content, pass its IRI and the IRI of the translations to update, as for any Sylius translation.
-Without `@id`, a new SEO content is created and replaces the previous one.
+Without `@id`, a new SEO content is created and the previous one is deleted.
 
 ```json
 {

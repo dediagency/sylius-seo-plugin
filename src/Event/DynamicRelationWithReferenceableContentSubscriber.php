@@ -39,6 +39,7 @@ class DynamicRelationWithReferenceableContentSubscriber implements EventSubscrib
             'targetEntity' => SEOContent::class,
             'fieldName' => self::REFERENCIABLE_FIELD_NAME,
             'cascade' => ['persist', 'remove'],
+            'orphanRemoval' => true,
             'joinTable' => [
                 'name' => strtolower($namingStrategy->classToTableName($metadata->getName())) . '_referenceable_content_id',
                 'referencedColumnName' => $namingStrategy->referenceColumnName(),

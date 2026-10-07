@@ -26,5 +26,16 @@
                 </attribute>
             </itemOperation>
         </itemOperations>
+
+        <property name="id" identifier="true" writable="false" />
+        <property name="locale" required="true" />
+        <property name="notIndexable" required="false" />
+        <property name="metadataTitle" required="false" />
+        <property name="metadataDescription" required="false" />
+        <property name="openGraphMetadataTitle" required="false" />
+        <property name="openGraphMetadataDescription" required="false" />
+        <property name="openGraphMetadataUrl" required="false" />
+        <property name="openGraphMetadataImage" required="false" />
+        <property name="openGraphMetadataType" required="false" />
     </resource>
 </resources>
