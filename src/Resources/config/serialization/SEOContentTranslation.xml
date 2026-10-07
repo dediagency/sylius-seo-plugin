@@ -14,6 +14,10 @@
         <attribute name="locale">
             <group>sylius:admin:seo_content:create</group>
             <group>sylius:admin:seo_content:update</group>
+            <group>sylius:admin:seo_content:index</group>
+            <group>sylius:admin:seo_content:show</group>
+            <group>sylius:shop:seo_content:index</group>
+            <group>sylius:shop:seo_content:show</group>
         </attribute>
         <attribute name="uri">
             <group>sylius:admin:seo_content:create</group>
